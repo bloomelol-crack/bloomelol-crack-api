@@ -1,0 +1,17 @@
+<html lang='<%= langCode %>'>
+
+<head>
+    <%- include('components/head.ejs') %>
+        <%- style(include('style/index.css')) %>
+</head>
+
+<body>
+    <%- include('components/navbar.ejs') %>
+        <%- include('./section.ejs') %>
+            <%- include('./contact.ejs') %>
+                <script>
+                    //<%= '\n' %><%- include('js/commons.js') %>
+                </script>
+</body>
+
+</html>

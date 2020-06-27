@@ -1,0 +1,8 @@
+{
+  "messageBox": {
+    "transition": 0.5,
+    "shadowSize": "3px",
+    "green": "rgb(22, 153, 22)",
+    "red": "#F56"
+  }
+}
