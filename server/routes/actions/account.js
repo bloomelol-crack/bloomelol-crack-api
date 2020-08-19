@@ -37,14 +37,14 @@ module.exports = {
       Name: name,
       Surname: surname,
       Email: email,
-      Password: password,
+      Password: encrypt(password),
       PurchasedAccounts: []
     });
     if (!saved) return res.status(500).json({ error: 'Could not save user' });
     Users = await user.get({ Email: email });
     if (!Users) return res.status(500).json({ error: 'Problem finding users after register' });
     [User] = Users;
-    if (!User) return res.status(404).json({ error: 'User not found after register.' });
+    if (!User) return res.status(500).json({ error: 'User not found after register.' });
     req.session.user = User;
     req.session.save();
     res.status(200).json({ redirectTo: '/dashboard' });
