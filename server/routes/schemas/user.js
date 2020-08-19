@@ -34,5 +34,14 @@ module.exports = {
     body: joi.object().keys({
       email: joi.string().email().required()
     })
+  },
+  getCurrentUser: {
+    method: 'get',
+    paths: '/session/current_user',
+    middlewares: sessionMiddleware,
+    errorMessage: 'Bad parameters',
+    body: joi.object().keys({
+      email: joi.string().email().required()
+    })
   }
 };
