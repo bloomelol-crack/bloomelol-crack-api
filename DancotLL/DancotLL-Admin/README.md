@@ -1,3 +1,0 @@
-# GriseldaEscalante
-
-Página para abogada.
