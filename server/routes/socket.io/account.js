@@ -1,4 +1,5 @@
 const { account } = require('../../database/models');
+const { getAccountPrice } = require('../../commons/account');
 
 const constants = require('./constants/account');
 /**
@@ -11,6 +12,7 @@ const define = socket => {
       { sort: { Level: -1 } }
     );
     if (!Accounts) return socket.emit(constants.emit.GET_ACCOUNTS_FAILURE);
+    Accounts.forEach(Account => (Account.Price = getAccountPrice(Account)));
     socket.emit(constants.emit.GET_ACCOUNTS_SUCCESS, Accounts);
   });
 };

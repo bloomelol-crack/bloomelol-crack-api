@@ -5,6 +5,6 @@ module.exports = Object.freeze({
     GET_ACCOUNTS_FAILURE: 'GET_ACCOUNTS_FAILURE'
   },
   broadcast: {
-    // TEAM_UPDATED: 'TEAM_UPDATED'
+    ACCOUNT_CREATED: 'ACCOUNT_CREATED'
   }
 });
