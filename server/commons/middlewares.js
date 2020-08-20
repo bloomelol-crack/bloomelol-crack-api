@@ -3,6 +3,9 @@ const RedisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
+const socketIo = require('socket.io');
+
+const http = require('http');
 
 const { WEB_URL_PROTOCOL, WEB_DOMAIN_NAME } = require('./env');
 const redis = require('./redis');
@@ -10,6 +13,7 @@ const rollbar = require('./rollbar');
 
 const webOrigin = `${WEB_URL_PROTOCOL}${WEB_DOMAIN_NAME}`;
 const app = express();
+const server = http.createServer(app);
 app.use(
   cors({
     origin: [`${WEB_URL_PROTOCOL}${WEB_DOMAIN_NAME}`],
@@ -51,11 +55,11 @@ app.use('/api', router);
 
 console.log('Listen');
 try {
-  app.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, () => {
     console.log(`Listening on ${process.env.PORT} with environment ${process.env.NODE_ENV}`);
   });
 } catch (e) {
   console.log('Could not listen in port', process.env.PORT);
 }
 
-module.exports = { app, router, sessionMiddleware };
+module.exports = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };
