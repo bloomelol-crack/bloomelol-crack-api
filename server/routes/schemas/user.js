@@ -30,10 +30,7 @@ module.exports = {
     method: 'post',
     paths: '/logout',
     middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters',
-    body: joi.object().keys({
-      email: joi.string().email().required()
-    })
+    errorMessage: 'Bad parameters'
   },
   getCurrentUser: {
     method: 'get',

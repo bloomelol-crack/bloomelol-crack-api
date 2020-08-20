@@ -25,7 +25,7 @@ module.exports = {
   logout: async (req, res) => {
     delete req.session.user;
     req.session.save();
-    return res.status(200).json({ redirectTo: '/' });
+    return res.status(200).json({ redirectTo: '/login' });
   },
   register: async (req, res) => {
     const { name, surname, email, password } = req.body;
@@ -52,6 +52,6 @@ module.exports = {
   getCurrentUser: (req, res) => {
     if (!req.session.user)
       return res.status(404).json({ error: 'Not logged in', redirectTo: '/login', session: req.session });
-    res.status(200).json({ user: req.session.user });
+    res.status(200).json({ user: req.session.user, redirectTo: '/dashboard' });
   }
 };
