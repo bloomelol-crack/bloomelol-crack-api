@@ -2,12 +2,21 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
 
-require('./env');
+const { WEB_URL_PROTOCOL, WEB_DOMAIN_NAME } = require('./env');
 const redis = require('./redis');
 const rollbar = require('./rollbar');
 
+const webOrigin = `${WEB_URL_PROTOCOL}${WEB_DOMAIN_NAME}`;
 const app = express();
+app.use(
+  cors({
+    origin: [`${WEB_URL_PROTOCOL}${WEB_DOMAIN_NAME}`],
+    methods: ['get', 'GET', 'POST', 'post', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true // enable set cookie
+  })
+);
 const sessionMiddleware = (...args) => {
   if ((process.env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
@@ -19,7 +28,6 @@ const sessionMiddleware = (...args) => {
   args[0].session = {};
   args[2]();
 };
-app.get('/:test', (req, res) => res.send({ params: req.params, headers: req.headers }));
 
 const router = express.Router();
 app.disable('x-powered-by');
@@ -32,7 +40,7 @@ app.use(rollbar.errorHandler());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', webOrigin);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });

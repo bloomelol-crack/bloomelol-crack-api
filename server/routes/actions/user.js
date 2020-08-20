@@ -23,7 +23,7 @@ module.exports = {
     res.status(200).json({ redirectTo: '/dashboard' });
   },
   logout: async (req, res) => {
-    delete req.session.User;
+    delete req.session.user;
     req.session.save();
     return res.status(200).json({ redirectTo: '/' });
   },
@@ -50,7 +50,8 @@ module.exports = {
     res.status(200).json({ redirectTo: '/dashboard' });
   },
   getCurrentUser: (req, res) => {
-    if (!req.session.User) return res.status(404).json({ error: 'Not logged in', redirectTo: '/login' });
-    res.status(200).json({ user: req.session.User });
+    if (!req.session.user)
+      return res.status(404).json({ error: 'Not logged in', redirectTo: '/login', session: req.session });
+    res.status(200).json({ user: req.session.user });
   }
 };

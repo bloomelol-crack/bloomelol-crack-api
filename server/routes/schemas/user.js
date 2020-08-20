@@ -39,9 +39,6 @@ module.exports = {
     method: 'get',
     paths: '/session/current_user',
     middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters',
-    body: joi.object().keys({
-      email: joi.string().email().required()
-    })
+    errorMessage: 'Bad parameters'
   }
 };
