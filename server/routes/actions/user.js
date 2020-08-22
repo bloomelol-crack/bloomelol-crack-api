@@ -23,9 +23,8 @@ module.exports = {
     res.status(200).json({ redirectTo: '/dashboard' });
   },
   logout: async (req, res) => {
-    delete req.session.user;
-    req.session.save();
-    return res.status(200).json({ redirectTo: '/login' });
+    req.session.destroy();
+    res.status(200).json({ redirectTo: '/login' });
   },
   register: async (req, res) => {
     const { name, surname, email, password } = req.body;
