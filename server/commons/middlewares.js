@@ -7,16 +7,16 @@ const socketIo = require('socket.io');
 
 const http = require('http');
 
-const { WEB_URL_PROTOCOL, WEB_DOMAIN_NAME } = require('./env');
+const { WEB_ORIGINS } = require('./env');
 const redis = require('./redis');
 const rollbar = require('./rollbar');
 
-const webOrigin = `${WEB_URL_PROTOCOL}${WEB_DOMAIN_NAME}`;
+const webOrigins = WEB_ORIGINS.split(/\s*,\s*/g);
 const app = express();
 const server = http.createServer(app);
 app.use(
   cors({
-    origin: webOrigin,
+    origin: webOrigins,
     methods: ['get', 'GET', 'POST', 'post', 'PUT', 'put', 'PATCH', 'patch', 'DELETE', 'delete'],
     credentials: true // enable set cookie
   })
@@ -44,7 +44,9 @@ app.use(rollbar.errorHandler());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', webOrigin);
+  const origin = req.get('origin');
+  if (webOrigins.includes(origin)) res.header('Access-Control-Allow-Origin', origin);
+  else res.header('Access-Control-Allow-Origin', webOrigins[0]);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
