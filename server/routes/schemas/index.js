@@ -62,9 +62,7 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
 };
 
 const getRoute = (method, paths, schemaName, schema, epName, callbacks) => {
-  if (!Array.isArray(callbacks)) {
-    callbacks = [callbacks];
-  }
+  if (!Array.isArray(callbacks)) callbacks = [callbacks];
   const validator = getValidator(schemaName, schema);
   router[method](paths, validator, ...callbacks);
   return req =>
