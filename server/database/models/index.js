@@ -6,9 +6,9 @@ require('..');
 
 const models = {};
 
-const get = Model => (where = {}, { sort = {}, skip = 0, limit = 0 } = {}) =>
+const get = Model => (where = {}, { sort = {}, projection = {}, skip = 0, limit = 0 } = {}) =>
   new Promise(resolve => {
-    Model.find(where)
+    Model.find(where, projection)
       .lean({ defaults: true })
       .sort(sort)
       .skip(skip)
