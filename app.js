@@ -5,7 +5,7 @@ const env = require('./env.json');
 const threads = +env.THREADS;
 
 const start = threadID => {
-  require('./server/commons/middlewares');
+  require('./server/utils/middlewares');
   require('./server/routes/schemas');
   require('./server/database');
   require('./server/tasks');

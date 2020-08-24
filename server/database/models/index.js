@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const rollbar = require('../../commons/rollbar');
+const rollbar = require('../../utils/rollbar');
 
 require('..');
 

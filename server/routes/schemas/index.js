@@ -6,9 +6,9 @@ const joi = require('@hapi/joi');
 const fs = require('fs');
 const url = require('url');
 
-const { router } = require('../../commons/middlewares');
-const rollbar = require('../../commons/rollbar');
-const projectDir = require('../../commons/projectDir');
+const { router } = require('../../utils/middlewares');
+const rollbar = require('../../utils/rollbar');
+const projectDir = require('../../utils/projectDir');
 const env = require('../../../env.json');
 
 const SCHEMA = require('./constants/schema');

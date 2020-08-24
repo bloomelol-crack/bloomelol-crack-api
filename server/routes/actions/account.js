@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const { account } = require('../../database/models');
 const { socketIo } = require('../socket.io');
 const { broadcast } = require('../socket.io/constants/account');
-const { getAccountPrice } = require('../../commons/account');
+const { getAccountPrice } = require('../../utils/account');
 
 module.exports = {
   setCredentials: async (req, res) => {

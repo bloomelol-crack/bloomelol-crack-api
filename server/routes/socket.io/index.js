@@ -1,4 +1,4 @@
-const { socketIo } = require('../../commons/middlewares');
+const { socketIo } = require('../../utils/middlewares');
 
 const account = require('./account');
 

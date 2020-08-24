@@ -1,5 +1,5 @@
 const { account } = require('../../database/models');
-const { getAccountPrice } = require('../../commons/account');
+const { getAccountPrice } = require('../../utils/account');
 
 const constants = require('./constants/account');
 /**

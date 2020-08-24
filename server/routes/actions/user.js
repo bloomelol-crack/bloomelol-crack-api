@@ -1,10 +1,10 @@
 const uuid = require('uuid');
 
 const { account, user } = require('../../database/models');
-const rollbar = require('../../commons/rollbar');
-const { axios } = require('../../commons/request');
-const { sort } = require('../../commons/redis');
-const { compare, encrypt } = require('../../commons/passwords');
+const rollbar = require('../../utils/rollbar');
+const { axios } = require('../../utils/request');
+const { sort } = require('../../utils/redis');
+const { compare, encrypt } = require('../../utils/passwords');
 
 module.exports = {
   login: async (req, res) => {
