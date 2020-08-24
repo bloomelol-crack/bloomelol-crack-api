@@ -9,7 +9,7 @@ module.exports = {
   setCredentials: async (req, res) => {
     const Accounts = await account.get(
       { EmailVerified: false, NewPassword: { $exists: false } },
-      { sort: { Level: -1 }, limit: 1 }
+      { sort: { Level: -1 } }
     );
     if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
     const [Account] = Accounts;
