@@ -57,8 +57,8 @@ app.get('/checkip', (req, res) => res.status(200).send(req.ip));
 app.use('/api', router);
 
 console.log('Listen');
+const port = env.PORT || process.env.PORT;
 try {
-  const port = env.PORT || process.env.PORT;
   server.listen(port, () => {
     console.log(`Listening on ${port} with environment ${env.NODE_ENV}`);
   });
