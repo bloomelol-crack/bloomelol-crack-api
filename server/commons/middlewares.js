@@ -58,11 +58,12 @@ app.use('/api', router);
 
 console.log('Listen');
 try {
-  server.listen(env.PORT || process.env.PORT, () => {
-    console.log(`Listening on ${env.PORT} with environment ${env.NODE_ENV}`);
+  const port = env.PORT || process.env.PORT;
+  server.listen(port, () => {
+    console.log(`Listening on ${port} with environment ${env.NODE_ENV}`);
   });
 } catch (e) {
-  console.error('Could not listen in port', env.PORT);
+  console.error('Could not listen in port', port);
   console.error(e);
 }
 
