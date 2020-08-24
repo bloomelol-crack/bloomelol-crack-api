@@ -58,7 +58,7 @@ app.use('/api', router);
 
 console.log('Listen');
 try {
-  server.listen(env.PORT || undefined, () => {
+  server.listen(env.PORT || process.env.PORT, () => {
     console.log(`Listening on ${env.PORT} with environment ${env.NODE_ENV}`);
   });
 } catch (e) {
