@@ -7,11 +7,12 @@ const socketIo = require('socket.io');
 
 const http = require('http');
 
-const { WEB_ORIGINS } = require('./env');
+const env = require('../../env.json');
+
 const redis = require('./redis');
 const rollbar = require('./rollbar');
 
-const webOrigins = WEB_ORIGINS.split(/\s*,\s*/g);
+const webOrigins = env.WEB_ORIGINS.split(/\s*,\s*/g);
 const app = express();
 const server = http.createServer(app);
 app.use(
@@ -22,10 +23,10 @@ app.use(
   })
 );
 const sessionMiddleware = (...args) => {
-  if ((process.env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
+  if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
       store: new RedisStore({ client: redis }),
-      secret: process.env.WEB_SESSION_SECRET,
+      secret: env.WEB_SESSION_SECRET,
       saveUninitialized: true,
       resave: false
     })(...args);
@@ -57,11 +58,11 @@ app.use('/api', router);
 
 console.log('Listen');
 try {
-  server.listen(process.env.PORT, () => {
-    console.log(`Listening on ${process.env.PORT} with environment ${process.env.NODE_ENV}`);
+  server.listen(env.PORT, () => {
+    console.log(`Listening on ${env.PORT} with environment ${env.NODE_ENV}`);
   });
 } catch (e) {
-  console.log('Could not listen in port', process.env.PORT);
+  console.log('Could not listen in port', env.PORT);
 }
 
 module.exports = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };

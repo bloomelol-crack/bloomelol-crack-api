@@ -6,8 +6,8 @@ const { default: axios } = require('axios');
 const os = require('os');
 
 const { request } = require('../database/models');
+const { NODE_ENV } = require('../../env.json');
 
-const { NODE_ENV } = require('./env');
 const { wait } = require('./wait');
 const { Tor } = require('./tor');
 const rollbar = require('./rollbar');

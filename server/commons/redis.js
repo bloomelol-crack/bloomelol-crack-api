@@ -1,7 +1,9 @@
 const { check } = require('@lefcott/filter-json');
+const Redis = require('redis');
 
-require('./env');
-const redis = require('redis').createClient(process.env.REDISCLOUD_URL);
+const env = require('../../env.json');
+
+const redis = Redis.createClient(env.REDISCLOUD_URL);
 
 const rollbar = require('./rollbar');
 

@@ -1,7 +1,6 @@
 const joi = require('@hapi/joi');
 
 const { sessionMiddleware } = require('../../commons/middlewares');
-require('../../commons/env');
 
 module.exports = {
   register: {

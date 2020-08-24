@@ -1,7 +1,8 @@
 const throng = require('throng');
-require('./server/commons/env');
 
-const threads = +process.env.THREADS;
+const env = require('./env.json');
+
+const threads = +env.THREADS;
 
 const start = threadID => {
   require('./server/commons/middlewares');
@@ -11,7 +12,7 @@ const start = threadID => {
   require('./server/routes/socket.io');
 };
 
-if (process.env.MULTIPLE_THREADS.toLowerCase() === 'true') throng(threads, start);
+if (env.MULTIPLE_THREADS.toLowerCase() === 'true') throng(threads, start);
 else start(1);
 
 process.on('uncaughtException', (err, origin) => {

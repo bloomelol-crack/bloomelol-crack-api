@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { MONGODB_URL } = require('../commons/env');
+const { MONGODB_URL } = require('../../env.json');
 
 const { connect } = mongoose;
 

@@ -2,8 +2,9 @@
 const { check } = require('@lefcott/filter-json');
 const tor = require('tor-request');
 
+const { TOR_PASSWORD } = require('../../env.json');
+
 const { wait } = require('./wait');
-const { TOR_PASSWORD } = require('./env');
 const { getCookies, setCookies } = require('./cookies');
 
 tor.TorControlPort.password = TOR_PASSWORD;

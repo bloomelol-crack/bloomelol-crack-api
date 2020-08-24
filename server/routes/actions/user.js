@@ -1,14 +1,10 @@
 const uuid = require('uuid');
 
-const env = require('../../commons/env');
 const { account, user } = require('../../database/models');
 const rollbar = require('../../commons/rollbar');
 const { axios } = require('../../commons/request');
 const { sort } = require('../../commons/redis');
 const { compare, encrypt } = require('../../commons/passwords');
-
-const baseUrl = env.NGROK_URL || `${env.URL_PREFIX}${env.DOMAIN_NAME}`;
-const notification_url = `${baseUrl}/api/mercadopago/notification`;
 
 module.exports = {
   login: async (req, res) => {

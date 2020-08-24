@@ -9,7 +9,7 @@ const url = require('url');
 const { router } = require('../../commons/middlewares');
 const rollbar = require('../../commons/rollbar');
 const projectDir = require('../../commons/projectDir');
-require('../../commons/env');
+const env = require('../../../env.json');
 
 const SCHEMA = require('./constants/schema');
 
@@ -35,7 +35,7 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
     if (!schema.domains.includes(host)) return res.status(401).json({ error: 'Domain is not in whitelist' });
   }
   const { errorMessage } = schema;
-  if (schema.admin && req.headers[`admin_secret_${process.env.NODE_ENV}`] !== process.env.ADMIN_SECRET) {
+  if (schema.admin && req.headers[`admin_secret_${env.NODE_ENV}`] !== env.ADMIN_SECRET) {
     return res.status(401).json({
       error: "What are you doing ?? You're not an administrator"
     });

@@ -1,4 +1,3 @@
-require('../../commons/env');
 const mongoose = require('mongoose');
 const leanDefaults = require('mongoose-lean-defaults');
 
