@@ -58,11 +58,12 @@ app.use('/api', router);
 
 console.log('Listen');
 try {
-  server.listen(env.PORT, () => {
+  server.listen(env.PORT || undefined, () => {
     console.log(`Listening on ${env.PORT} with environment ${env.NODE_ENV}`);
   });
 } catch (e) {
-  console.log('Could not listen in port', env.PORT);
+  console.error('Could not listen in port', env.PORT);
+  console.error(e);
 }
 
 module.exports = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };
