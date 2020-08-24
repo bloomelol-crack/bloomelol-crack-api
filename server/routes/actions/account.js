@@ -13,7 +13,7 @@ module.exports = {
     );
     if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
     const [Account] = Accounts;
-    if (!Account) return res.status(404).json({ error: 'Account not found' });
+    if (!Account) return res.status(404).json({ error: 'Accounts not found for updating' });
     const { emails } = req.body;
     Account.NewPassword = uuid().replace(/-/g, '').toUpperCase() + uuid().replace(/-/g, '').substring(0, 5);
     Account.NewEmail = emails[Math.floor(Math.random() * emails.length)];
@@ -28,7 +28,7 @@ module.exports = {
         }
       }
     );
-    res.status(200).json({ remaining: Accounts.length, account: Account });
+    res.status(200).json({ remaining: Accounts.length - 1, account: Account });
     socketIo.emit(broadcast.ACCOUNT_CREATED, Account);
   },
   getPendingAccounts: async (req, res) => {
