@@ -1,3 +1,3 @@
-const { getPayLink } = require('./pay_link');
+const { getOrder } = require('./pay_link');
 
-module.exports = { getPayLink };
+module.exports = { getOrder };

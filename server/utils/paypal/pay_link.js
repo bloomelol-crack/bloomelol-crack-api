@@ -9,7 +9,7 @@ const { getToken } = require('./token');
 
 const [webUrl] = env.WEB_ORIGINS.split(/\s*,\s*/g);
 
-const getPayLink = async (price, currency) => {
+const getOrder = async (price, currency) => {
   if (!price || !currency) {
     rollbar.error(`Tried to create a payment with price "${price}" and currency ${currency}`);
     return null;
@@ -52,8 +52,15 @@ const getPayLink = async (price, currency) => {
   }
   const [{ href: Link }] = response.body.links.filter(l => l.rel === 'approve');
   const { id: OrderID, status: OrderStatus } = response.body;
-  paypalPayment.save({ OrderID, OrderStatus, Amount: price, Currency: currency, Link });
-  return Link;
+  paypalPayment.save({
+    OrderID,
+    OrderStatus,
+    Amount: price,
+    Currency: currency,
+    Link,
+    Active: false
+  });
+  return { link: Link, orderId: OrderID };
 };
 
-module.exports = { getPayLink };
+module.exports = { getOrder };

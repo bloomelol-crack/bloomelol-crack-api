@@ -9,7 +9,8 @@ module.exports = mongoose.model(
       OrderStatus: { type: String, required: true },
       Amount: { type: Number, required: true },
       Currency: { type: String, required: true },
-      Link: { type: String, required: true }
+      Link: { type: String, required: true },
+      Active: { type: Boolean, required: true }
     },
     { collection: 'PaypalPayments' }
   ).plugin(leanDefaults)
