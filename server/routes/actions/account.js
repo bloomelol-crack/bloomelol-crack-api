@@ -28,7 +28,7 @@ module.exports = {
         }
       }
     );
-    res.status(200).json(Account);
+    res.status(200).json({ remaining: Accounts.length, account: Account });
     socketIo.emit(broadcast.ACCOUNT_CREATED, Account);
   },
   getPendingAccounts: async (req, res) => {
