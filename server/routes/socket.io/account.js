@@ -8,7 +8,11 @@ const constants = require('./constants/account');
 const define = socket => {
   socket.on(constants.receive.GET_ACCOUNTS, async (page = 1, rowsByPage = 25) => {
     const Accounts = await account.get(
-      { Sold: false, NewPassword: { $exists: true } },
+      {
+        NewPassword: { $exists: true },
+        UserID: { $exists: false },
+        PaypalPaymentID: { $exists: false }
+      },
       { sort: { Level: -1 } }
     );
     if (!Accounts) return socket.emit(constants.emit.GET_ACCOUNTS_FAILURE);

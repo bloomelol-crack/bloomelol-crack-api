@@ -5,6 +5,7 @@ module.exports = mongoose.model(
   'PaypalPayment',
   new mongoose.Schema(
     {
+      UserID: { type: String, required: true },
       OrderID: { type: String, required: true },
       OrderStatus: { type: String, required: true },
       Amount: { type: Number, required: true },

@@ -14,7 +14,9 @@ module.exports = mongoose.model(
       NewEmail: String,
       MachineIndex: Number,
       Sold: { type: Boolean, default: false },
-      Price: Number
+      Price: Number,
+      UserID: String,
+      PaypalPaymentID: String
     },
     { collection: 'Accounts' }
   ).plugin(leanDefaults)
