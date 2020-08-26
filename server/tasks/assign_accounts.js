@@ -22,6 +22,7 @@ const execute = async () => {
     let { body: order } = response;
     if (status === 404) {
       paypalPayment.delete({ _id: Payment._id });
+      account.update({ PaypalPaymentID: Payment._id }, { $unset: { PaypalPaymentID: 1 } });
       return next();
     }
 
