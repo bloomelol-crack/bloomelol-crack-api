@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node scripts/start",
     "build": "node scripts/build",
-    "redis": "rdcli -h redis-11869.c80.us-east-1-2.ec2.cloud.redislabs.com -a Shvap6kzyuNWoydypv9VMqHl64FZ5wyP -p 11869",
+    "redis": "rdcli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
     "dev": "nodemon app -e env,js,json"
   },
   "engines": {
