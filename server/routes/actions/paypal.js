@@ -17,9 +17,9 @@ module.exports = {
     const [Account] = Accounts;
     const price = getAccountPrice(Account);
     if (price <= 0) return res.status(500).json({ error: 'There was a problem with price calculation' });
-    const { link, orderId } = await getOrder(user_id, price, 'USD');
+    const { link, order } = await getOrder(user_id, price, 'USD');
     if (!link) return res.status(500).json({ error: 'Could not get a payment link' });
-    res.status(200).json({ payment_link: link, order_id: orderId });
+    res.status(200).json({ payment_link: link, order_id: order.id });
   },
   activatePayment: async (req, res) => {
     const { order_id, account_id } = req.body;

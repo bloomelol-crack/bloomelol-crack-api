@@ -8,8 +8,7 @@ module.exports = mongoose.model(
       Name: { type: String, required: true },
       Surname: { type: String, required: true },
       Email: { type: String, required: true },
-      Password: { type: String, required: true },
-      PurchasedAccounts: [String]
+      Password: { type: String, required: true }
     },
     { collection: 'Users' }
   ).plugin(leanDefaults)

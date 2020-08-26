@@ -32,8 +32,7 @@ module.exports = {
       Name: `${name[0].toUpperCase()}${name.substr(1).toLowerCase()}`,
       Surname: `${surname[0].toUpperCase()}${surname.substr(1).toLowerCase()}`,
       Email: email,
-      Password: await encrypt(password),
-      PurchasedAccounts: []
+      Password: await encrypt(password)
     });
     if (!saved) return res.status(500).json({ error: 'Could not save user' });
     Users = await user.get({ Email: email });
