@@ -1,7 +1,10 @@
 const interval = 1000 * 60 * 1;
-const { account, paypalPayment } = require('../database/models');
-const rollbar = require('../utils/rollbar');
-const { getOrder, getPaymentStatus, captureOrder } = require('../utils/paypal');
+const { account, paypalPayment } = require('../../database/models');
+const rollbar = require('../../utils/rollbar');
+const { getOrder, getPaymentStatus, captureOrder } = require('../../utils/paypal');
+const { socketIo } = require('../../routes/socket.io');
+
+const { emit } = require('./constants');
 
 const execute = async () => {
   const next = () => setTimeout(execute, interval);
@@ -35,6 +38,16 @@ const execute = async () => {
       paypalPayment.update({ _id: Payment._id }, { $set: { OrderStatus: order.status } });
 
     if (order.status !== 'COMPLETED') return next();
+    const Accounts = await account.get({ PaypalPaymentID: Payment._id });
+    if (!Accounts) {
+      rollbar.critical(`After Payment: Could not find account with payment ${Payment._id}`);
+      return next();
+    }
+    if (!Accounts.length) {
+      rollbar.critical(`After Payment: Didn't find account with payment ${Payment._id}`);
+      return next();
+    }
+    const [Account] = Accounts;
     const accountUpdated = await account.update({ PaypalPaymentID: Payment._id }, { UserID: Payment.UserID });
     if (!accountUpdated) {
       rollbar.critical(`After Payment: Could not update account with payment ${Payment._id}`);
@@ -44,6 +57,8 @@ const execute = async () => {
       `Purchased account with Payment ${Payment._id} ($${Payment.Amount} USD), updated ${accountUpdated}`
     );
     next();
+
+    socketIo.emit(emit.ACCOUNT_PURCHASED, Account);
   });
 };
 

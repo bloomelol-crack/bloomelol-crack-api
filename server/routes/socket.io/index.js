@@ -2,7 +2,8 @@ const { socketIo } = require('../../utils/middlewares');
 const env = require('../../../env.json');
 const redis = require('../../utils/redis');
 
-const account = require('./account');
+const allAccounts = require('./all_accounts');
+const myAccounts = require('./my_accounts');
 const { USER_SOCKETS_KEY, receive, emit } = require('./constants/connection');
 
 socketIo.sockets.on('connect', socket => {
@@ -16,7 +17,8 @@ socketIo.sockets.on('connect', socket => {
   socket.on('disconnect', () => {
     if (userId) redis.Delete(USER_SOCKETS_KEY, { socketId: socket.id });
   });
-  account.define(socket);
+  allAccounts.define(socket);
+  myAccounts.define(socket);
 });
 
 redis.Delete(USER_SOCKETS_KEY, {});

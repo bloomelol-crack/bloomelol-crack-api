@@ -2,7 +2,7 @@ const uuid = require('uuid');
 
 const { account } = require('../../database/models');
 const { socketIo } = require('../socket.io');
-const { broadcast } = require('../socket.io/constants/account');
+const { broadcast } = require('../socket.io/all_accounts/constants');
 const { getAccountPrice } = require('../../utils/account');
 
 module.exports = {
