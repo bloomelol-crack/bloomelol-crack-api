@@ -5,14 +5,14 @@ const projectDir = require('../../server/utils/projectDir');
 
 const envPath = `${projectDir}/env.json`;
 
-const updateEnv = () =>
+const updateEnv = mustHaveFileKeys =>
   new Promise(resolve => {
     const env = JSON.stringify(process.env);
     fs.readFile(envPath, 'utf8', (error, data) => {
       if (error) console.error(error);
       const localEnv = JSON.parse(data);
       Object.keys(localEnv).forEach(key => {
-        if (process.env[key] === undefined) {
+        if (mustHaveFileKeys && process.env[key] === undefined) {
           console.error(`Missing key in process.env: "${key}"\n`.red);
           process.exit(1);
         }
