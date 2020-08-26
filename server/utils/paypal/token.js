@@ -21,7 +21,6 @@ const updateToken = async () => {
         2
       )}\nResponse:\n${JSON.stringify(response, null, 2)}`
     );
-    setTimeout(() => updateToken, 2000);
     return null;
   }
   const { access_token, expires_in } = response.body;
@@ -33,7 +32,7 @@ const updateToken = async () => {
 const getToken = async ({ _tries = 7 } = {}) => {
   if (!token) await updateToken();
   if (!token && _tries >= 0) {
-    await wait(777);
+    await wait(5000);
     return getToken({ _tries });
   }
   return token;

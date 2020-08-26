@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --max-old-space-size=4096 app",
+    "start": "node scripts/start",
     "build": "node scripts/build",
     "redis": "rdcli -h redis-11869.c80.us-east-1-2.ec2.cloud.redislabs.com -a Shvap6kzyuNWoydypv9VMqHl64FZ5wyP -p 11869",
     "dev": "nodemon app -e env,js,json"
