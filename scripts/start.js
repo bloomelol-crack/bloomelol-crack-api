@@ -1,8 +1,7 @@
-const { updateEnv } = require('./build');
-const { update } = require('./build');
+const { updateEnv } = require('./build/update_env');
 const { run } = require('./utils');
 
-async () => {
+(async () => {
   await updateEnv();
   run('node --max-old-space-size=4096 app');
-};
+})();

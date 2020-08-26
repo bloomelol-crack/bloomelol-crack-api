@@ -7,5 +7,3 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'localhost') {
   process.exit(1);
 }
 updateEnv();
-
-module.exports = { updateEnv };
