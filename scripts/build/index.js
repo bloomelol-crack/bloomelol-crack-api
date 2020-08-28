@@ -1,5 +1,7 @@
 require('colors');
 
+const { run } = require('../utils');
+
 const { updateEnv } = require('./update_env');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'localhost') {
@@ -8,3 +10,4 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'localhost') {
 }
 
 updateEnv(true);
+run('tsc');

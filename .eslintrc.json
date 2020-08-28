@@ -10,18 +10,23 @@
     "node": true,
     "es6": true
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "parser": "babel-eslint",
+    "parser": "@typescript-eslint/parser",
     "sourceType": "module",
     "ecmaVersion": 9
   },
   "plugins": [
     "react",
     "prettier",
-    "flowtype"
+    "flowtype",
+    "@typescript-eslint"
   ],
   "rules": {
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2
+    ],
     "linebreak-style": 0,
     "no-loop-func": "off",
     "camelcase": "off",
@@ -32,7 +37,10 @@
     "no-continue": "off",
     "no-unused-expressions": "off",
     "global-require": "off",
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "arrow-parens": "off",
     "import/no-dynamic-require": "off",
     "max-len": [
@@ -45,7 +53,7 @@
       {
         "printWidth": 110,
         "singleQuote": true,
-        "endOfLine":"auto"
+        "endOfLine": "auto"
       }
     ],
     "no-invalid-this": "off",

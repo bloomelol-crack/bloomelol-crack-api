@@ -1,0 +1,9 @@
+export const receive = { GET_ACCOUNTS: 'GET_ACCOUNTS' };
+export const emit = {
+  GET_ACCOUNTS_SUCCESS: 'GET_ACCOUNTS_SUCCESS',
+  GET_ACCOUNTS_FAILURE: 'GET_ACCOUNTS_FAILURE'
+};
+export const broadcast = {
+  ACCOUNT_CREATED: 'ACCOUNT_CREATED',
+  ACCOUNT_TAKEN: 'ACCOUNT_TAKEN'
+};
