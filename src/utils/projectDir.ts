@@ -1,1 +1,3 @@
-export default require('path').join(__dirname, '../..');
+import path from 'path';
+
+export default path.join(__dirname, '../..');

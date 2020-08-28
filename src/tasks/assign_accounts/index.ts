@@ -6,7 +6,7 @@ import { isArray } from 'utils/types';
 import { socketIo } from 'routes/socket.io';
 import * as constants from 'tasks/assign_accounts/constants';
 
-const execute = async (): Promise<NodeJS.Timeout | undefined> => {
+const execute = async (): Promise<any> => {
   const next = () => setTimeout(execute, interval);
   const Payments = await db.paypalPayment?.get({
     UserID: { $exists: true },

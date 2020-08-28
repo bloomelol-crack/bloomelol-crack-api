@@ -1,26 +1,30 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
-const joi = require('@hapi/joi');
+import joi from '@hapi/joi';
 
-const fs = require('fs');
-const url = require('url');
+import fs from 'fs';
+import url from 'url';
 
-const { router } = require('../../utils/middlewares');
-const rollbar = require('../../utils/rollbar');
-const projectDir = require('../../utils/projectDir');
-const env = require('../../../env.json');
+import { router } from 'utils/middlewares';
+import rollbar from 'utils/rollbar';
+import projectDir from 'utils/projectDir';
+import env from 'env.json';
 
-const SCHEMA = require('./constants/schema');
+import SCHEMA from 'routes/schemas/constants/schema';
 
-const getSchemaError = (schema = joi.object(), objectToValidate = {}, options) => {
+const getSchemaError = (schema = joi.object(), objectToValidate = {}, options: any) => {
   options = options || { stripUnknown: false };
   const { error, value } = schema.validate(objectToValidate, options);
   const errors = (error && error.details.map(err => err.message)) || null;
   return { errors, value };
 };
 
-const getValidator = (schemaName, schema) => async (req, res, next) => {
+const getValidator = (schemaName: string, schema: any) => async (
+  req: ExpressRequest,
+  res: ExpressResponse,
+  next: ExpressNext
+) => {
   const { method } = req;
   const { path } = req.route;
   if (!schema) {
@@ -40,8 +44,11 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
       error: "What are you doing ?? You're not an administrator"
     });
   }
-  const schemaError = [];
-  SCHEMA.REQUEST_TYPES.forEach(type => {
+  const schemaError: any[] = [];
+  type reqType = 'headers' | 'params' | 'body';
+  const isReqType = (str: string): str is reqType => ['headers', 'params', 'body'].includes(str);
+  SCHEMA.REQUEST_TYPES.forEach((type: string): any => {
+    if (!isReqType(type)) return;
     if (schema[type]) {
       if (typeof schema[type].validate !== 'function') {
         const error = `Invalid schema object. path '${path}'. Method '${method}'. Schema: '${schemaName}'. Key:'${type}'`;
@@ -61,43 +68,17 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
   } else next();
 };
 
-const getRoute = (method, paths, schemaName, schema, epName, callbacks) => {
+const getRoute = (
+  method: 'get' | 'post' | 'put' | 'patch',
+  paths: string | string[],
+  schemaName: string,
+  schema: import('@hapi/joi').Schema,
+  _epName: string,
+  callbacks: import('express').RequestHandler[]
+) => {
   if (!Array.isArray(callbacks)) callbacks = [callbacks];
   const validator = getValidator(schemaName, schema);
   router[method](paths, validator, ...callbacks);
-  return req =>
-    new Promise(resolve => {
-      if (!req) {
-        rollbar.warn(
-          `No req was provided, this request simulation will be ignored. Schema: "${schemaName}". Endpoint: "${epName}"`
-        );
-        return resolve({ statusCode: 400, message: 'Bad request' });
-      }
-      req.route = { path: paths[0] };
-      const endings = statusCode => ({
-        send: body => resolve({ statusCode, body }),
-        json: body => resolve({ statusCode, body }),
-        redirect: url => resolve({ statusCode, body: { message: `Redirecting to ${url}` } }),
-        zip: () => resolve({ statusCode, body: { message: 'Zipping file' } }),
-        render: file => resolve({ statusCode, body: { message: `Rendering file ${file}` } }),
-        sendFile: file => resolve({ statusCode, body: { message: `Sending file ${file}` } })
-      });
-      const res = {
-        status: statusCode => endings(statusCode),
-        ...endings(200)
-      };
-      let currMiddleware = -1;
-      const middlewares = [validator, ...callbacks, forward];
-      const next = () => {
-        if (middlewares[currMiddleware + 1]) {
-          currMiddleware += 1;
-          return middlewares[currMiddleware](req, res, next);
-        }
-        rollbar.warn(`Called next middleware but it does not exist.
-Schema: "${schemaName}". Endpoint: "${epName}"`);
-      };
-      next();
-    });
 };
 const getRoutes = () => {
   const actionFiles = fs
@@ -105,15 +86,15 @@ const getRoutes = () => {
     .filter(
       file => fs.statSync(`${projectDir}/src/routes/actions/${file}`).isFile() && file.slice(-3) === '.js'
     );
-  const actions = {};
+  const actions: { [key: string]: any } = {};
   for (let k = 0; k < actionFiles.length; k += 1) {
     const name = actionFiles[k].substring(0, actionFiles[k].length - 3);
     actions[name] = require(`../actions/${name}`);
   }
   let schemaFiles = fs.readdirSync(__dirname);
   schemaFiles = schemaFiles.filter(file => file !== 'index.js' && file.slice(-3) === '.js');
-  const schemas = {};
-  const routes = { Paths: {} };
+  const schemas: { [key: string]: { [key: string]: import('@hapi/joi').Schema } } = {};
+  const routes: { Paths: { [key: string]: any }; [key: string]: any } = { Paths: {} };
   for (let k = 0; k < schemaFiles.length; k += 1) {
     const name = schemaFiles[k].substring(0, schemaFiles[k].length - 3);
     const schema = require(`./${name}`);
@@ -138,7 +119,7 @@ Please review "server/routes/actions/${name}.js"`
         );
         continue;
       }
-      schemas[name][epName] = {};
+      schemas[name][epName] = joi.bool();
       let { paths } = schema[epName];
       const { method } = schema[epName];
       if (!method) {
@@ -148,17 +129,17 @@ Please review "server/routes/actions/${name}.js"`
         continue;
       }
       paths = Array.isArray(paths) ? paths : [paths];
-      paths = paths.filter(path => path);
+      paths = paths.filter((path: string) => path);
       if (paths.length === 0) {
         rollbar.warn(
           `No "paths" specified at schemas "${name}", endpoint ${epName}. This route definition will be ignored`
         );
         continue;
       }
-      routes.Paths[name][epName] = paths.map(path => `/api${path}`);
+      routes.Paths[name][epName] = paths.map((path: string) => `/api${path}`);
       routes.Paths[name][epName].method = method;
 
-      routes[name][epName] = getRoute(method, paths, name, schema[epName], epName, actions[name][epName]);
+      getRoute(method, paths, name, schema[epName], epName, actions[name][epName]);
     }
   }
   return routes;

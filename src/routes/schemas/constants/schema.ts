@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+export default Object.freeze({
   REQUEST_TYPES: ['query', 'body', 'params', 'headers'],
   METHODS: [
     'get',
