@@ -1,5 +1,5 @@
-import db from 'database';
-import env from 'env.json';
+import db from 'database/index';
+import env from 'env/';
 import rollbar from 'utils/rollbar';
 import { isArray } from 'utils/types';
 import { axios } from 'utils/request';

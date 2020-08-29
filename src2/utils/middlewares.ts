@@ -7,7 +7,7 @@ import SocketIo from 'socket.io';
 
 import http from 'http';
 
-import env from 'env.json';
+import env from 'env/';
 
 import * as redis from 'utils/redis';
 import rollbar from './rollbar';

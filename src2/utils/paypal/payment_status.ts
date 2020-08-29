@@ -1,4 +1,4 @@
-import env from 'env.json';
+import env from 'env/';
 import { axios } from 'utils/request';
 import { getToken } from 'utils/paypal/token';
 

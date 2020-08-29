@@ -9,7 +9,7 @@ import url from 'url';
 import { router } from 'utils/middlewares';
 import rollbar from 'utils/rollbar';
 import projectDir from 'utils/projectDir';
-import env from 'env.json';
+import env from 'env/';
 
 import SCHEMA from 'routes/schemas/constants/schema';
 

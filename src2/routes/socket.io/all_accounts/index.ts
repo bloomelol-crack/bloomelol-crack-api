@@ -1,4 +1,4 @@
-import db from 'database';
+import db from 'database/index';
 import { getAccountPrice } from 'utils/account';
 import * as constants from 'routes/socket.io/all_accounts/constants';
 

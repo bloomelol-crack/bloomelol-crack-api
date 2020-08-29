@@ -1,6 +1,6 @@
 import { axios } from 'utils/request';
 import rollbar from 'utils/rollbar';
-import env from 'env.json';
+import env from 'env/';
 import { wait } from 'utils/wait';
 import { isArray } from 'utils/types';
 

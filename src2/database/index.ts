@@ -1,10 +1,10 @@
 import mongoose, { connect } from 'mongoose';
 import db from 'database/models';
 
-import { MONGODB_URL } from 'env.json';
+import env from 'env/';
 
 mongoose.set('useCreateIndex', true);
-connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, async (error: Error) => {
+connect(env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, async (error: Error) => {
   if (error) return console.error(error);
   console.log('Connected to MongoDB!');
 });

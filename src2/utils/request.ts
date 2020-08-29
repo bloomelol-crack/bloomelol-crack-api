@@ -3,8 +3,8 @@ import { uuid } from 'uuidv4';
 import { check } from '@lefcott/filter-json';
 import axios from 'axios';
 
-import db from 'database';
-import { NODE_ENV } from 'env.json';
+import db from 'database/index';
+import env from 'env/';
 import { Tor } from 'utils/tor';
 import rollbar from 'utils/rollbar';
 
@@ -67,7 +67,7 @@ const Persist = (lib: string) => async (
     const reg = response
       ? {
           uid: config.id,
-          env: NODE_ENV,
+          env: env.NODE_ENV,
           url: url || '',
           method: method || '',
           failed: false,
@@ -82,7 +82,7 @@ const Persist = (lib: string) => async (
         }
       : {
           uid: config.id,
-          env: NODE_ENV,
+          env: env.NODE_ENV,
           url: url || '',
           method: method || '',
           failed: true,

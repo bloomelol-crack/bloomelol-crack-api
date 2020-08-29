@@ -2,14 +2,14 @@
 import { check } from '@lefcott/filter-json';
 import tor from 'tor-request';
 
-import { TOR_PASSWORD } from 'env.json';
+import env from 'env/';
 
 import { wait } from 'utils/wait';
 import { getCookies } from 'utils/cookies';
 import { RequestConfig, RequestResponse } from 'utils/request';
 import { arrayOfIndexes } from 'utils/arrays';
 
-tor.TorControlPort.password = TOR_PASSWORD;
+tor.TorControlPort.password = env.TOR_PASSWORD;
 const limits = [
   {
     max: 20,

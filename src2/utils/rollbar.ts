@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const Rollbar = require('rollbar');
 
-import env from 'env.json';
+import env from 'env/';
 
 export default new Rollbar({
   accessToken: env.ROLLBAR_ACCESS_TOKEN,

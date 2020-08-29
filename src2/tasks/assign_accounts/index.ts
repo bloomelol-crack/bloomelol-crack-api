@@ -1,4 +1,4 @@
-import db from 'database';
+import db from 'database/index';
 import rollbar from 'utils/rollbar';
 const interval = 1000 * 60 * 1;
 import { getPaymentStatus, captureOrder } from 'utils/paypal';

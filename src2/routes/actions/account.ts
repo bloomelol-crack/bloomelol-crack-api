@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import db from 'database';
+import db from 'database/index';
 
 import { socketIo } from 'routes/socket.io';
 

@@ -1,7 +1,7 @@
 import { getOrder } from 'utils/paypal';
 import { getAccountPrice } from 'utils/account';
 import rollbar from 'utils/rollbar';
-import db from 'database';
+import db from 'database/index';
 import { socketIo } from 'routes/socket.io';
 import { broadcast } from 'routes/socket.io/all_accounts/constants';
 

@@ -1,4 +1,4 @@
-import db from 'database';
+import db from 'database/index';
 import { compare, encrypt } from 'utils/passwords';
 module.exports = {
   login: async (req: ExpressRequest, res: ExpressResponse): Promise<any> => {
