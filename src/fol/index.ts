@@ -1,4 +1,4 @@
-import env from 'env/';
+import { env } from 'env/index';
 
-export default 'HW';
-console.log(env.hola);
+console.log(env);
+export const test = 999;

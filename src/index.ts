@@ -1,3 +1,3 @@
-import fol from 'fol/index';
+import { test } from 'fol/index';
 
-console.log(fol);
+console.log(test);

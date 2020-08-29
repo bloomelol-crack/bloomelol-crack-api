@@ -1,49 +1,30 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2015",
     "module": "commonjs",
-    "lib": [
-      "dom",
-      "es6",
-      "es2017",
-      "esnext.asynciterable"
-    ],
-    "sourceMap": true,
-    "outDir": "./dist",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "baseUrl": "./",
+    "types": [
+      "node"
+    ],
+    "outDir": "dist",
     "rootDir": "./",
+    "baseUrl": "./src",
     "paths": {
       "fol/*": [
-        "src/fol/*"
+        "fol/*"
       ],
       "env/*": [
-        "src/env.json"
+        "env/*"
       ]
     },
-    "typeRoots": [
-      "./node_modules/@types"
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      }
     ]
   },
   "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src"
-  ],
-  "compileOnSave": true
+    "node_modules",
+    "src2"
+  ]
 }
