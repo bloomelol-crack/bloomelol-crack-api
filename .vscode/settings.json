@@ -1,13 +1,9 @@
 {
   "javascript.validate.enable": false,
   "eslint.validate": [
-    "javascript",
-    "typescript"
+    "javascript","typescript"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  },
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  }
 }
