@@ -133,7 +133,7 @@ module.exports = {
       );
     }
     const result = {};
-    (await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = r));
+    (await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = r === true ? 'created' : r));
     return res.status(200).json({ result });
   }
 };
