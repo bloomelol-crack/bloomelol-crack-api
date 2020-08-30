@@ -10,6 +10,7 @@ const define = socket => {
     const Accounts = await account.get(
       {
         NewPassword: { $exists: true },
+        Region: { $exists: true },
         UserID: { $exists: false },
         PaypalPaymentID: { $exists: false }
       },
