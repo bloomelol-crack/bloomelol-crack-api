@@ -38,5 +38,32 @@ module.exports = {
     );
     if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
     res.status(200).json({ count: Accounts.length, accounts: Accounts });
+  },
+  getCombo: async (req, res) => {
+    const { region, count, min_level, email_verified } = req.body;
+    const Accounts = await account.aggregate([
+      {
+        $match: {
+          Level: { $gte: min_level },
+          EmailVerified: email_verified,
+          Refunds: { $exists: false },
+          ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) })
+        }
+      },
+      { $sample: { size: count } },
+      { $project: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
+    ]);
+    if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
+    if (!Accounts.length)
+      return res
+        .status(404)
+        .send(
+          `No encontramos cuentas con nivel mayor o igual a ${min_level} en "${region}" ${
+            email_verified ? 'con' : 'sin'
+          } email verificado.`
+        );
+    res
+      .status(200)
+      .send(Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n'));
   }
 };

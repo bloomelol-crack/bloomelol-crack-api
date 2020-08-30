@@ -1,0 +1,3 @@
+EUN1 | temo1010:temo1010 | LV: 4 | BE: 734 | RP: 400 | Refunds: 3 | Champs: 0 | Skins: 0 | Email Verified: false | Lastplay: Error
+EUN1 | seanjkim1:seanjkim1 | LV: 2 | BE: 343 | RP: 1 | Refunds: 3 | Champs: 0 | Skins: 0 | Email Verified: false | Lastplay: Error
+EUN1 | DarkieCZ:darkiecz1 | LV: 30 | BE: 4893 | RP: 9 | Refunds: 1 | Champs: 121 | Skins: 35 | Email Verified: true | Lastplay: Error

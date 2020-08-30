@@ -19,6 +19,15 @@ const get = Model => (where = {}, { sort = {}, projection = {}, skip = 0, limit 
         resolve(null);
       });
   });
+const aggregate = Model => aggregations =>
+  new Promise(resolve => {
+    Model.aggregate(aggregations)
+      .then(resolve)
+      .catch(error => {
+        rollbar.error(error);
+        resolve(null);
+      });
+  });
 const Delete = Model => (where = {}) =>
   new Promise(resolve => {
     Model.deleteMany(where)
@@ -68,6 +77,7 @@ fs.readdirSync(__dirname)
     models[file] = {
       save: save(Model),
       get: get(Model),
+      aggregate: aggregate(Model),
       delete: Delete(Model),
       update: update(Model),
       insertOrUpdate: insertOrUpdate(Model)
