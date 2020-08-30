@@ -133,7 +133,12 @@ module.exports = {
       );
     }
     const result = {};
-    (await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = r === true ? 'created' : r));
+    const resultMapper = {
+      0: 'not updated',
+      1: 'updated',
+      true: 'created',
+      error: 'error'
+    }(await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = resultMapper[r]));
     return res.status(200).json({ result });
   }
 };
