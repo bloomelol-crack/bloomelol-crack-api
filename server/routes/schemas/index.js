@@ -100,14 +100,12 @@ Schema: "${schemaName}". Endpoint: "${epName}"`);
     });
 };
 const getRoutes = () => {
-  const actionFiles = fs
-    .readdirSync(`${projectDir}/server/routes/actions`)
-    .filter(
-      file => fs.statSync(`${projectDir}/server/routes/actions/${file}`).isFile() && file.slice(-3) === '.js'
-    );
+  const actionFiles = fs.readdirSync(`${projectDir}/server/routes/actions`);
   const actions = {};
   for (let k = 0; k < actionFiles.length; k += 1) {
-    const name = actionFiles[k].substring(0, actionFiles[k].length - 3);
+    const name = actionFiles[k].endsWith('.js')
+      ? actionFiles[k].substring(0, actionFiles[k].length - 3)
+      : actionFiles[k];
     actions[name] = require(`../actions/${name}`);
   }
   let schemaFiles = fs.readdirSync(__dirname);
@@ -115,7 +113,9 @@ const getRoutes = () => {
   const schemas = {};
   const routes = { Paths: {} };
   for (let k = 0; k < schemaFiles.length; k += 1) {
-    const name = schemaFiles[k].substring(0, schemaFiles[k].length - 3);
+    const name = schemaFiles[k].endsWith('.js')
+      ? schemaFiles[k].substring(0, schemaFiles[k].length - 3)
+      : schemaFiles[k];
     const schema = require(`./${name}`);
     routes.Paths[name] = {};
     if (!actions[name]) {

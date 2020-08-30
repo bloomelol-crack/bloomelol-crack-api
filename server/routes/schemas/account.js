@@ -29,5 +29,11 @@ module.exports = {
       count: joi.number().min(1).max(1000).required()
     }),
     admin: true
+  },
+  updateAccounts: {
+    method: 'put',
+    paths: '/lol_accounts/update',
+    body: joi.string().required(),
+    admin: true
   }
 };

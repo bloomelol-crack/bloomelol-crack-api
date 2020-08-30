@@ -36,12 +36,14 @@ const sessionMiddleware = (...args) => {
 
 const router = express.Router();
 app.disable('x-powered-by');
-app.use(
+app.use((req, res, next) => {
+  if (req.headers['content-type'] === 'text/plain') return next();
   express.json({
     type: ['application/json', 'text/plain']
-  })
-);
+  })(req, res, next);
+});
 app.use(rollbar.errorHandler());
+app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {

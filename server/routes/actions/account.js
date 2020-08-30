@@ -64,6 +64,39 @@ module.exports = {
         );
     res
       .status(200)
-      .send(Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n'));
+      .send(`${Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n')}\n`);
+  },
+  updateAccounts: async (req, res) => {
+    const { body: data } = req;
+    const arrData = data.split('\n').map(reg => reg.split(/\s*\|\s*/g));
+    const updates = [];
+    const accountNames = [];
+
+    for (let i = 0; i < arrData.length; i += 1) {
+      const row = arrData[i];
+      const UserName = row[1].split(':')[0];
+
+      const BlueEssence = +row[3].split(':')[1].trim();
+      const RP = +row[4].split(':')[1].trim();
+      const Refunds = +row[5].split(':')[1].trim();
+      const Champs = +row[6].split(':')[1].trim();
+      const Skins = +row[7].split(':')[1].trim();
+      accountNames[i] = UserName;
+      updates.push(
+        account.update(
+          { UserName },
+          {
+            BlueEssence: !BlueEssence && BlueEssence !== 0 ? null : BlueEssence,
+            RP: !RP && RP !== 0 ? null : RP,
+            Refunds: !Refunds && Refunds !== 0 ? null : Refunds,
+            Champs: !Champs && Champs !== 0 ? null : Champs,
+            Skins: !Skins && Skins !== 0 ? null : Skins
+          }
+        )
+      );
+    }
+    const result = {};
+    (await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = r));
+    return res.status(200).json({ result });
   }
 };
