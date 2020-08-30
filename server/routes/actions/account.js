@@ -71,7 +71,7 @@ module.exports = {
       const row = arrData[i];
       const UserName = row[1].split(':')[0];
 
-      const EmailVerified = +row[8].split(':')[1].trim();
+      const EmailVerified = row[8].split(':')[1].trim();
       const BlueEssence = +row[3].split(':')[1].trim();
       const RP = +row[4].split(':')[1].trim();
       const Refunds = +row[5].split(':')[1].trim();
@@ -82,12 +82,14 @@ module.exports = {
         account.update(
           { UserName },
           {
-            EmailVerified: EmailVerified.toLowerCase() === 'true',
-            BlueEssence: !BlueEssence && BlueEssence !== 0 ? null : BlueEssence,
-            RP: !RP && RP !== 0 ? null : RP,
-            Refunds: !Refunds && Refunds !== 0 ? null : Refunds,
-            Champs: !Champs && Champs !== 0 ? null : Champs,
-            Skins: !Skins && Skins !== 0 ? null : Skins
+            $set: {
+              EmailVerified: EmailVerified.toLowerCase() === 'true',
+              BlueEssence: !BlueEssence && BlueEssence !== 0 ? null : BlueEssence,
+              RP: !RP && RP !== 0 ? null : RP,
+              Refunds: !Refunds && Refunds !== 0 ? null : Refunds,
+              Champs: !Champs && Champs !== 0 ? null : Champs,
+              Skins: !Skins && Skins !== 0 ? null : Skins
+            }
           }
         )
       );

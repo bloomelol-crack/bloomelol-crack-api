@@ -10,6 +10,7 @@ module.exports = mongoose.model(
       NewPassword: String,
       FromUrl: String,
       Email: String,
+      EmailVerified: Boolean,
       NewEmail: String,
       BlueEssence: Number,
       Level: Number,
