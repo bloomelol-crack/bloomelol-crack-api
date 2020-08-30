@@ -132,14 +132,20 @@ module.exports = {
         })()
       );
     }
-    const result = {};
+    const details = {};
+    const summary = {};
     const resultMapper = {
-      0: 'not updated',
+      0: 'not_updated',
       1: 'updated',
       true: 'created',
       error: 'error'
     };
-    (await Promise.all(updates)).forEach((r, i) => (result[accountNames[i]] = resultMapper[r]));
-    return res.status(200).json({ result });
+    (await Promise.all(updates)).forEach((r, i) => {
+      const result = resultMapper[r];
+      details[accountNames[i]] = result;
+      if (!summary[result]) summary[result] = 0;
+      summary[result] += 1;
+    });
+    return res.status(200).json({ summary, details });
   }
 };
