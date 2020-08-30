@@ -1,10 +1,12 @@
 const uuid = require('uuid');
 const moment = require('moment');
 
-const { account } = require('../../database/models');
-const { socketIo } = require('../socket.io');
-const { broadcast } = require('../socket.io/all_accounts/constants');
-const { getAccountPrice } = require('../../utils/account');
+const { account } = require('../../../database/models');
+const { socketIo } = require('../../socket.io');
+const { broadcast } = require('../../socket.io/all_accounts/constants');
+const { getAccountPrice } = require('../../../utils/account');
+
+const { REGION_MAPPING } = require('./constants');
 
 module.exports = {
   setCredentials: async (req, res) => {
@@ -70,32 +72,64 @@ module.exports = {
 
     for (let i = 0; i < arrData.length; i += 1) {
       const row = arrData[i];
-      const UserName = row[1].split(':')[0];
+      const [UserName, Password] = row[1].split(':');
 
-      const EmailVerified = row[8].split(':')[1].trim();
+      let Region = row[0].trim();
+      let EmailVerified = row[8].split(':')[1].trim();
       let LastPlay = row[9].replace(':', ';').split(';')[1].trim();
+      let BlueEssence = +row[3].split(':')[1].trim();
+      let Level = +row[2].split(':')[1].trim();
+      let RP = +row[4].split(':')[1].trim();
+      let Refunds = +row[5].split(':')[1].trim();
+      let Champs = +row[6].split(':')[1].trim();
+      let Skins = +row[7].split(':')[1].trim();
+
+      Region = REGION_MAPPING[Region] || null;
+      EmailVerified = EmailVerified.toLowerCase() === 'true';
       LastPlay = moment(LastPlay, 'DD/MM/YY hh:mm:ss').toDate();
-      const BlueEssence = +row[3].split(':')[1].trim();
-      const RP = +row[4].split(':')[1].trim();
-      const Refunds = +row[5].split(':')[1].trim();
-      const Champs = +row[6].split(':')[1].trim();
-      const Skins = +row[7].split(':')[1].trim();
+      LastPlay = LastPlay.toString() === 'Invalid Date' ? undefined : LastPlay;
+      BlueEssence = !BlueEssence && BlueEssence !== 0 ? null : BlueEssence;
+      Level = !Level && Level !== 0 ? null : Level;
+      RP = !RP && RP !== 0 ? null : RP;
+      Refunds = !Refunds && Refunds !== 0 ? null : Refunds;
+      Champs = !Champs && Champs !== 0 ? null : Champs;
+      Skins = !Skins && Skins !== 0 ? null : Skins;
       accountNames[i] = UserName;
       updates.push(
-        account.update(
-          { UserName },
-          {
-            $set: {
-              EmailVerified: EmailVerified.toLowerCase() === 'true',
-              LastPlay: LastPlay.toString() === 'Invalid Date' ? undefined : LastPlay,
-              BlueEssence: !BlueEssence && BlueEssence !== 0 ? null : BlueEssence,
-              RP: !RP && RP !== 0 ? null : RP,
-              Refunds: !Refunds && Refunds !== 0 ? null : Refunds,
-              Champs: !Champs && Champs !== 0 ? null : Champs,
-              Skins: !Skins && Skins !== 0 ? null : Skins
+        (async () => {
+          const Accounts = await account.get({ UserName });
+          if (!Accounts) return null;
+          if (!Accounts.length)
+            return account.save({
+              UserName,
+              Password,
+              Region,
+              EmailVerified,
+              LastPlay,
+              BlueEssence,
+              Level,
+              RP,
+              Refunds,
+              Champs,
+              Skins
+            });
+          return account.update(
+            { UserName },
+            {
+              $set: {
+                Region,
+                EmailVerified,
+                LastPlay,
+                BlueEssence,
+                Level,
+                RP,
+                Refunds,
+                Champs,
+                Skins
+              }
             }
-          }
-        )
+          );
+        })()
       );
     }
     const result = {};

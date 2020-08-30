@@ -12,6 +12,7 @@ module.exports = mongoose.model(
       Email: String,
       EmailVerified: Boolean,
       NewEmail: String,
+      Region: String,
       BlueEssence: Number,
       Level: Number,
       RP: Number,
