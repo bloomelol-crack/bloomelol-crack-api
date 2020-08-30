@@ -42,7 +42,7 @@ const getOrder = async (user_id, price, currency) => {
         shipping_preference: 'NO_SHIPPING',
         brand_name: 'BloomeBot Store',
         user_action: 'PAY_NOW',
-        return_url: `${webUrl}/payment_completed`
+        return_url: `${webUrl}/dashboard/my_accounts`
       }
     }
   };
