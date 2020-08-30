@@ -138,10 +138,10 @@ module.exports = {
       0: 'not_updated',
       1: 'updated',
       true: 'created',
-      error: 'error'
+      null: 'error'
     };
     (await Promise.all(updates)).forEach((r, i) => {
-      const result = resultMapper[r];
+      const result = resultMapper[r] || 'unknown';
       details[accountNames[i]] = result;
       if (!summary[result]) summary[result] = 0;
       summary[result] += 1;
