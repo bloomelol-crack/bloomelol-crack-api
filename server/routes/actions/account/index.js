@@ -65,7 +65,7 @@ module.exports = {
       .send(`${Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n')}\n`);
   },
   updateAccounts: async (req, res) => {
-    const { body: data } = req;
+    const data = req.body.trim();
     const arrData = data.split('\n').map(reg => reg.split(/\s*\|\s*/g));
     const updates = [];
     const accountNames = [];
