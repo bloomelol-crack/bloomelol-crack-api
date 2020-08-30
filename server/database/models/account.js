@@ -18,7 +18,7 @@ module.exports = mongoose.model(
       Refunds: Number,
       Champs: Number,
       Skins: Number,
-      LastPlay: String,
+      LastPlay: Date,
       MachineIndex: Number,
       Sold: { type: Boolean, default: false },
       Price: Number,
