@@ -21,7 +21,6 @@ module.exports = mongoose.model(
       Skins: Number,
       LastPlay: Date,
       MachineIndex: Number,
-      Sold: { type: Boolean, default: false },
       Price: Number,
       UserID: String,
       PaypalPaymentID: String
