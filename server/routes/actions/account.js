@@ -40,12 +40,11 @@ module.exports = {
     res.status(200).json({ count: Accounts.length, accounts: Accounts });
   },
   getCombo: async (req, res) => {
-    const { region, count, min_level, email_verified } = req.body;
+    const { region, count, min_level } = req.body;
     const Accounts = await account.aggregate([
       {
         $match: {
           Level: { $gte: min_level },
-          EmailVerified: email_verified,
           Refunds: { $exists: false },
           ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) })
         }
@@ -57,11 +56,7 @@ module.exports = {
     if (!Accounts.length)
       return res
         .status(404)
-        .send(
-          `No encontramos cuentas con nivel mayor o igual a ${min_level} en "${region}" ${
-            email_verified ? 'con' : 'sin'
-          } email verificado.`
-        );
+        .send(`No encontramos cuentas con nivel mayor o igual a ${min_level} en "${region}".`);
     res
       .status(200)
       .send(`${Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n')}\n`);
@@ -76,6 +71,7 @@ module.exports = {
       const row = arrData[i];
       const UserName = row[1].split(':')[0];
 
+      const EmailVerified = +row[8].split(':')[1].trim();
       const BlueEssence = +row[3].split(':')[1].trim();
       const RP = +row[4].split(':')[1].trim();
       const Refunds = +row[5].split(':')[1].trim();
@@ -86,6 +82,7 @@ module.exports = {
         account.update(
           { UserName },
           {
+            EmailVerified: EmailVerified.toLowerCase() === 'true',
             BlueEssence: !BlueEssence && BlueEssence !== 0 ? null : BlueEssence,
             RP: !RP && RP !== 0 ? null : RP,
             Refunds: !Refunds && Refunds !== 0 ? null : Refunds,
