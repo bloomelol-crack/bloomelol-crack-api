@@ -6,6 +6,7 @@ const env = require('../../../env.json');
 const { paypalPayment } = require('../../database/models');
 
 const { getToken } = require('./token');
+const { getRandomService } = require('./constants');
 
 const [webUrl] = env.WEB_ORIGINS.split(/\s*,\s*/g);
 
@@ -40,7 +41,7 @@ const getOrder = async (user_id, price, currency) => {
       ],
       application_context: {
         shipping_preference: 'NO_SHIPPING',
-        brand_name: 'BloomeBot Store',
+        brand_name: `BloomeBot: ${getRandomService()}`,
         user_action: 'PAY_NOW',
         return_url: `${webUrl}/dashboard/my_accounts`
       }
