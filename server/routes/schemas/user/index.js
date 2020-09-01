@@ -1,6 +1,8 @@
 const joi = require('@hapi/joi');
 
-const { sessionMiddleware } = require('../../utils/middlewares');
+const { sessionMiddleware } = require('../../../utils/middlewares');
+
+const { LANGUAGES } = require('./constants');
 
 module.exports = {
   register: {
@@ -35,6 +37,24 @@ module.exports = {
     method: 'get',
     paths: '/session/current_user',
     middlewares: sessionMiddleware,
+    errorMessage: 'Bad parameters'
+  },
+  getLanguage: {
+    method: 'get',
+    paths: '/session/current_language',
+    middlewares: sessionMiddleware,
+    errorMessage: 'Bad parameters'
+  },
+  setLanguage: {
+    method: 'post',
+    paths: '/session/current_language',
+    middlewares: sessionMiddleware,
+    body: joi.object().keys({
+      new_language: joi
+        .string()
+        .valid(...Object.values(LANGUAGES))
+        .required()
+    }),
     errorMessage: 'Bad parameters'
   }
 };

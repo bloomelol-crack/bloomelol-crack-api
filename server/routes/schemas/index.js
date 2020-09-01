@@ -11,7 +11,23 @@ const rollbar = require('../../utils/rollbar');
 const projectDir = require('../../utils/projectDir');
 const env = require('../../../env.json');
 
-const SCHEMA = require('./constants/schema');
+const SCHEMA = {
+  REQUEST_TYPES: ['query', 'body', 'params', 'headers'],
+  METHODS: [
+    'get',
+    'post',
+    'put',
+    'patch',
+    'delete',
+    'copy',
+    'head',
+    'options',
+    'purge',
+    'lock',
+    'unlock',
+    'propfind'
+  ]
+};
 
 const getSchemaError = (schema = joi.object(), objectToValidate = {}, options) => {
   options = options || { stripUnknown: false };
@@ -109,7 +125,7 @@ const getRoutes = () => {
     actions[name] = require(`../actions/${name}`);
   }
   let schemaFiles = fs.readdirSync(__dirname);
-  schemaFiles = schemaFiles.filter(file => file !== 'index.js' && file.slice(-3) === '.js');
+  schemaFiles = schemaFiles.filter(file => file !== 'index.js');
   const schemas = {};
   const routes = { Paths: {} };
   for (let k = 0; k < schemaFiles.length; k += 1) {
