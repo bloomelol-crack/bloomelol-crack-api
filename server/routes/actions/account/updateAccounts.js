@@ -93,5 +93,5 @@ module.exports = async (req, res) => {
     if (!summary[result]) summary[result] = 0;
     summary[result] += 1;
   });
-  return res.status(200).json({ summary, details });
+  return res.status(200).json({ summary, details, arrData });
 };
