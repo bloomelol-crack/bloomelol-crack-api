@@ -16,10 +16,9 @@ module.exports = async (req, res) => {
     const [UserName, Password] = row[1].split(':');
     if (row.length === 3) {
       const code = row[2].replace(/ +/g, '').toLowerCase();
-      if (code === 'summonernotcreated') {
-        account.update({ UserName }, { SummonerCreated: false });
-        continue;
-      }
+      if (code === 'summonernotcreated') account.update({ UserName }, { SummonerCreated: false });
+
+      continue;
     }
 
     let Region = row[0].trim();
