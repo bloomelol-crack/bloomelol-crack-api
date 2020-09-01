@@ -23,7 +23,8 @@ module.exports = mongoose.model(
       MachineIndex: Number,
       Price: Number,
       UserID: String,
-      PaypalPaymentID: String
+      PaypalPaymentID: String,
+      SummonerCreated: Boolean
     },
     { collection: 'Accounts' }
   ).plugin(leanDefaults)
