@@ -11,8 +11,9 @@ module.exports = async (req, res) => {
     { sort: { Level: -1 } }
   );
   if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
-  const [Account] = Accounts;
-  if (!Account) return res.status(404).json({ error: 'Accounts not found for updating' });
+  if (!Accounts.length) return res.status(404).json({ error: 'Accounts not found for updating' });
+  const ReapedAccounts = Accounts.filter(acc => acc.Region);
+  const [Account] = ReapedAccounts.length ? ReapedAccounts : Accounts;
   const { emails } = req.body;
   Account.NewPassword = uuid().replace(/-/g, '').toUpperCase() + uuid().replace(/-/g, '').substring(0, 5);
   Account.NewEmail = emails[Math.floor(Math.random() * emails.length)];
