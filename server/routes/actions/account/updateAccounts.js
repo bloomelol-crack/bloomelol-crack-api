@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
 
   for (let i = 0; i < arrData.length; i += 1) {
     const row = arrData[i];
+    if (row.length === 1) continue;
     const [UserName, Password] = row[1].split(':');
     if (row.length === 3) {
       const code = row[2].replace(/ +/g, '').toLowerCase();
