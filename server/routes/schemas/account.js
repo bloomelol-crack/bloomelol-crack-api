@@ -1,13 +1,18 @@
 const joi = require('@hapi/joi');
 
+const { stream } = require('../../utils/redis');
+
 module.exports = {
   setCredentials: {
     method: 'post',
-    paths: '/lol_accounts/set_credentials',
+    paths: ['/lol_accounts/set_credentials', '/lol_accounts/set_credentials/:user_name'],
     admin: true,
     errorMessage: 'Bad parameters',
     body: joi.object().keys({
       emails: joi.array().items(joi.string().email()).min(1).required()
+    }),
+    params: joi.object().keys({
+      user_name: joi.string()
     })
   },
   getPendingAccounts: {
