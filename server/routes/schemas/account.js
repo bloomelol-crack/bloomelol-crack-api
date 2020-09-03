@@ -39,5 +39,11 @@ module.exports = {
     paths: '/lol_accounts/update',
     body: joi.string().required(),
     admin: true
+  },
+  ignoreAccounts: {
+    method: 'put',
+    paths: '/lol_accounts/ignore/:region',
+    body: joi.string().required(),
+    admin: true
   }
 };

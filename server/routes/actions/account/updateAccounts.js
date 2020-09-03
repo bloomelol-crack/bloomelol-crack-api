@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     const [UserName, Password] = row[1].split(':');
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
-      if (code === 'summonernotcreated') account.update({ UserName }, { SummonerCreated: false });
+      // if (code === 'summonernotcreated') account.update({ UserName }, { SummonerCreated: false });
 
       continue;
     }

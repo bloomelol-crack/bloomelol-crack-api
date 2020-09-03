@@ -24,7 +24,7 @@ module.exports = mongoose.model(
       Price: Number,
       UserID: String,
       PaypalPaymentID: String,
-      SummonerCreated: Boolean
+      NotInRegions: [String]
     },
     { collection: 'Accounts' }
   ).plugin(leanDefaults)

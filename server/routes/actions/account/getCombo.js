@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   const Accounts = await account.aggregate([
     {
       $match: {
-        SummonerCreated: true,
+        NotInRegions: { $ne: region },
         Level: { $gte: min_level },
         Refunds: { $exists: false },
         ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) })
