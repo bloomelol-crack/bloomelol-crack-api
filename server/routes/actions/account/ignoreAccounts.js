@@ -12,5 +12,5 @@ module.exports = async (req, res) => {
   const usernames = data.split('\n').map(username => username.split(':')[0]);
   const where = { Region: region, UserName: { $in: usernames } };
   const updated = await account.update(where, { $addToSet: { NotInRegions: region } });
-  res.status(200).json({ updated_accounts: updated, where });
+  res.status(200).json({ total_accounts: usernames.length, updated_accounts: updated, where });
 };
