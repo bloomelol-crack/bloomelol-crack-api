@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
               EmailVerified,
               LastPlay,
               BlueEssence,
-              // Level,
+              Level,
               RP,
               Refunds,
               Champs,
