@@ -16,7 +16,6 @@ module.exports = async (req, res) => {
     const [UserName, Password] = row[1].split(':');
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
-      // if (code === 'summonernotcreated') account.update({ UserName }, { SummonerCreated: false });
 
       continue;
     }
@@ -25,7 +24,7 @@ module.exports = async (req, res) => {
     let EmailVerified = row[8].split(':')[1].trim();
     let LastPlay = row[9].replace(':', ';').split(';')[1].trim();
     let BlueEssence = +row[3].split(':')[1].trim();
-    // let Level = +row[2].split(':')[1].trim();
+    let Level = +row[2].split(':')[1].trim();
     let RP = +row[4].split(':')[1].trim();
     let Refunds = +row[5].split(':')[1].trim();
     let Champs = +row[6].split(':')[1].trim();
@@ -36,7 +35,7 @@ module.exports = async (req, res) => {
     LastPlay = moment(LastPlay, 'DD/MM/YY hh:mm:ss').toDate();
     LastPlay = LastPlay.toString() === 'Invalid Date' ? undefined : LastPlay;
     BlueEssence = !BlueEssence && BlueEssence !== 0 ? null : BlueEssence;
-    // Level = !Level && Level !== 0 ? null : Level;
+    Level = !Level && Level !== 0 ? null : Level;
     RP = !RP && RP !== 0 ? null : RP;
     Refunds = !Refunds && Refunds !== 0 ? null : Refunds;
     Champs = !Champs && Champs !== 0 ? null : Champs;
@@ -54,7 +53,7 @@ module.exports = async (req, res) => {
             EmailVerified,
             LastPlay,
             BlueEssence,
-            // Level,
+            Level,
             RP,
             Refunds,
             Champs,
