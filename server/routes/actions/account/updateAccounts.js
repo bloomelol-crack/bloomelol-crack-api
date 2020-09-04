@@ -14,13 +14,16 @@ module.exports = async (req, res) => {
     const row = arrData[i];
     if (row.length === 1) continue;
     const [UserName, Password] = row[1].split(':');
+    let Region = row[0].trim();
+    Region = REGION_MAPPING[Region] || null;
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
+      if (code === 'summonernotcreated' && Region)
+        account.update({ UserName }, { $addToSet: { NotInRegions: Region } });
 
       continue;
     }
 
-    let Region = row[0].trim();
     let EmailVerified = row[8].split(':')[1].trim();
     let LastPlay = row[9].replace(':', ';').split(';')[1].trim();
     let BlueEssence = +row[3].split(':')[1].trim();
@@ -30,7 +33,6 @@ module.exports = async (req, res) => {
     let Champs = +row[6].split(':')[1].trim();
     let Skins = +row[7].split(':')[1].trim();
 
-    Region = REGION_MAPPING[Region] || null;
     EmailVerified = EmailVerified.toLowerCase() === 'true';
     LastPlay = moment(LastPlay, 'DD/MM/YY hh:mm:ss').toDate();
     LastPlay = LastPlay.toString() === 'Invalid Date' ? undefined : LastPlay;
