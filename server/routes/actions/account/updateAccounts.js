@@ -18,8 +18,7 @@ module.exports = async (req, res) => {
     Region = REGION_MAPPING[Region] || null;
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
-      if (code === 'summonernotcreated' && Region)
-        account.update({ UserName }, { $addToSet: { NotInRegions: Region } });
+      if (code === 'summonernotcreated') account.update({ UserName }, { $set: { Region, Level: 0 } });
 
       continue;
     }
