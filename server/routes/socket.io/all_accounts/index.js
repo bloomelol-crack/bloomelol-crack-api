@@ -9,7 +9,8 @@ const define = socket => {
   socket.on(constants.receive.GET_ACCOUNTS, async () => {
     const Accounts = await account.get(
       {
-        $or: [{ NewPassword: { $exists: true } }, { EmailVerified: true }],
+        EmailVerified: false,
+        NewPassword: { $exists: true },
         Region: { $exists: true },
         UserID: { $exists: false },
         PaypalPaymentID: { $exists: false }
