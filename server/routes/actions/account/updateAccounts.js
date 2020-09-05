@@ -60,6 +60,8 @@ module.exports = async (req, res) => {
             Champs,
             Skins
           });
+        let eloUpdate = {};
+        if (Accounts[0].Level === Level) eloUpdate = { Elo: 'unknown' };
         return account.update(
           { UserName },
           {
@@ -72,7 +74,8 @@ module.exports = async (req, res) => {
               RP,
               Refunds,
               Champs,
-              Skins
+              Skins,
+              ...eloUpdate
             }
           }
         );
