@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
             Skins
           });
         let eloUpdate = {};
-        if (Accounts[0].Level === Level) eloUpdate = { Elo: 'unknown' };
+        if (Accounts[0].Level !== Level) eloUpdate = { Elo: 'unknown' };
         return account.update(
           { UserName },
           {
