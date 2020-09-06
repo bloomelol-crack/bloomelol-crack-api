@@ -1,7 +1,7 @@
 const joi = require('@hapi/joi');
 
 const { sessionMiddleware } = require('../../utils/middlewares');
-const { PACK_TYPES } = require('../actions/paypal/constants');
+const { PACKS } = require('../actions/paypal/constants');
 
 module.exports = {
   getAccountOrder: {
@@ -21,7 +21,7 @@ module.exports = {
     query: joi.object().keys({
       pack_type: joi
         .string()
-        .valid(...Object.values(PACK_TYPES))
+        .valid(...Object.keys(PACKS))
         .required()
     })
   },

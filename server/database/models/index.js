@@ -19,6 +19,15 @@ const get = Model => (where = {}, { sort = {}, projection = {}, skip = 0, limit 
         resolve(null);
       });
   });
+const count = Model => (where = {}) =>
+  new Promise(resolve => {
+    Model.countDocuments(where)
+      .then(resolve)
+      .catch(error => {
+        rollbar.error(error);
+        resolve(null);
+      });
+  });
 const aggregate = Model => aggregations =>
   new Promise(resolve => {
     Model.aggregate(aggregations)
@@ -77,6 +86,7 @@ fs.readdirSync(__dirname)
     models[file] = {
       save: save(Model),
       get: get(Model),
+      count: count(Model),
       aggregate: aggregate(Model),
       delete: Delete(Model),
       update: update(Model),
