@@ -8,7 +8,7 @@ const { broadcast } = require('../../socket.io/all_accounts/constants');
 module.exports = async (req, res) => {
   const userNameFilter = req.params.user_name ? { UserName: req.params.user_name } : {};
   const Accounts = await account.get(
-    { ...userNameFilter, EmailVerified: false, NewPassword: { $exists: false } },
+    { ...userNameFilter, Level: { $gte: 20 }, EmailVerified: false, NewPassword: { $exists: false } },
     { sort: { Level: -1 } }
   );
   if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
