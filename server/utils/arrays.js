@@ -4,6 +4,6 @@ const haveSameElements = (arr1 = [], arr2 = []) => {
   return true;
 };
 
-const randomSort = (a, b) => (Math.random() > 0.5 ? 1 : -1);
+const randomSort = () => (Math.random() > 0.5 ? 1 : -1);
 
 module.exports = { haveSameElements, randomSort };
