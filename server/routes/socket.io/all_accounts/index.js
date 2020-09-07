@@ -11,8 +11,7 @@ const define = socket => {
       {
         EmailVerified: false,
         NewPassword: { $exists: true },
-        // TODO discomment
-        // Region: { $exists: true },
+        Region: { $exists: true },
         UserID: { $exists: false },
         PaypalPaymentID: { $exists: false }
       },
