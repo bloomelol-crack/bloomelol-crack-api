@@ -29,7 +29,7 @@ const updateToken = async () => {
   token = access_token;
 };
 
-const getToken = async ({ _tries = 7 } = {}) => {
+const getToken = async ({ _tries = 8 } = {}) => {
   if (!token) await updateToken();
   if (!token && _tries >= 0) {
     await wait(5000);

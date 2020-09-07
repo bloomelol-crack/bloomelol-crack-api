@@ -19,7 +19,7 @@ module.exports = {
     middlewares: sessionMiddleware,
     errorMessage: 'Bad parameters',
     query: joi.object().keys({
-      pack_type: joi
+      pack_name: joi
         .string()
         .valid(...Object.keys(PACKS))
         .required()
@@ -28,10 +28,10 @@ module.exports = {
   activatePayment: {
     method: 'post',
     paths: '/paypal/activate_payment',
+    middlewares: sessionMiddleware,
     errorMessage: 'Bad parameters',
     body: joi.object().keys({
-      order_id: joi.string().required(),
-      account_id: joi.string().required()
+      order_id: joi.string().required()
     })
   }
 };

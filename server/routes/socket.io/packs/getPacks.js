@@ -13,7 +13,7 @@ module.exports = socket => {
       const pack = PACKS[name];
       const levelFilter = getLevelFilter(pack);
 
-      const availableAccounts = await account.count({ Level: levelFilter });
+      const availableAccounts = await account.count({ Level: levelFilter, EmailVerified: true });
       if (availableAccounts === null) return socket.emit(emit.GET_PACK_FAILURE);
       pack.stock = Math.floor(availableAccounts / pack.count);
       if (pack.stock > 0) socket.emit(emit.GET_PACK_SUCCESS, pack);

@@ -6,6 +6,6 @@ module.exports = Object.freeze({
   },
   broadcast: {
     ACCOUNT_CREATED: 'ACCOUNT_CREATED',
-    ACCOUNT_TAKEN: 'ACCOUNT_TAKEN'
+    ACCOUNTS_TAKEN: 'ACCOUNTS_TAKEN'
   }
 });

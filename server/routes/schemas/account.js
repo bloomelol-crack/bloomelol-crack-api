@@ -1,7 +1,5 @@
 const joi = require('@hapi/joi');
 
-const { stream } = require('../../utils/redis');
-
 module.exports = {
   setCredentials: {
     method: 'post',
