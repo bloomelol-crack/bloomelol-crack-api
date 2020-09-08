@@ -6,6 +6,7 @@ const rollbar = require('../../utils/rollbar');
 const { wait } = require('../../utils/wait');
 const { getPaymentStatus, captureOrder } = require('../../utils/paypal');
 const { socketIo } = require('../../routes/socket.io');
+const { broadcastGetPacks } = require('../../routes/socket.io/packs');
 
 const { emit } = require('./constants');
 
@@ -66,6 +67,7 @@ const execute = async () => {
 
       Accounts.forEach(Account => (Account.UserID = Payment.UserID));
       socketIo.emit(emit.ACCOUNTS_PURCHASED, Accounts);
+      broadcastGetPacks();
     })();
     await wait(1000);
   }

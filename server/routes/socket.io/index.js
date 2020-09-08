@@ -1,5 +1,4 @@
 const { socketIo } = require('../../utils/middlewares');
-const env = require('../../../env.json');
 const redis = require('../../utils/redis');
 
 const allAccounts = require('./all_accounts');
