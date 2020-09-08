@@ -14,13 +14,22 @@ module.exports = async (req, res) => {
 
   const levelFilter = getLevelFilter(pack);
 
-  const Accounts = await account.get(levelFilter, { limit: pack.count });
+  const Accounts = await account.get(
+    {
+      Level: levelFilter,
+      EmailVerified: pack.email_verified,
+      PaypalPaymentID: { $exists: false },
+      UserID: { $exists: false }
+    },
+    { limit: pack.count }
+  );
   if (!Accounts) return res.status(500).json({ error: 'Error searching Account' });
   if (Accounts.length < pack.count)
     return res.status(404).json({ error: `Out of stock, ${Accounts.length}/${pack.count} accounts found` });
   const { link, order } = await getOrder(user_id, pack.price, 'USD');
   if (!link) return res.status(500).json({ error: 'Could not get a payment link' });
-  req.session.orders = { [order.id]: Accounts.map(acc => acc._id) };
+  req.session.order_id = order.id;
+  req.session.account_ids = Accounts.map(acc => acc._id);
   req.session.save(() => {
     res.status(200).json({ payment_link: link, order_id: order.id });
   });

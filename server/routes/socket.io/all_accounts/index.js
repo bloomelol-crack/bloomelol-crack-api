@@ -11,14 +11,14 @@ const define = socket => {
       {
         EmailVerified: false,
         NewPassword: { $exists: true },
-        Region: { $exists: true },
+        // TODO remove
+        // Region: { $exists: true },
         UserID: { $exists: false },
         PaypalPaymentID: { $exists: false }
       },
       { sort: { Level: -1 } }
     );
     if (!Accounts) return socket.emit(constants.emit.GET_ACCOUNTS_FAILURE);
-    console.log('Accounts.length', Accounts.length);
     Accounts.forEach(Account => (Account.Price = getAccountPrice(Account)));
     socket.emit(constants.emit.GET_ACCOUNTS_SUCCESS, Accounts);
   });

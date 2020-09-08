@@ -1,60 +1,6 @@
-const joi = require('@hapi/joi');
-
-const { sessionMiddleware } = require('../../../utils/middlewares');
-
-const { LANGUAGES } = require('./constants');
-
-module.exports = {
-  register: {
-    method: 'post',
-    paths: '/register',
-    middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters',
-    body: joi.object().keys({
-      email: joi.string().email().required(),
-      password: joi.string().required(),
-      name: joi.string().required(),
-      surname: joi.string().required()
-    })
-  },
-  login: {
-    method: 'post',
-    paths: '/login',
-    middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters',
-    body: joi.object().keys({
-      email: joi.string().email().required(),
-      password: joi.string().required()
-    })
-  },
-  logout: {
-    method: 'post',
-    paths: '/logout',
-    middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters'
-  },
-  getCurrentUser: {
-    method: 'get',
-    paths: '/session/current_user',
-    middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters'
-  },
-  getLanguage: {
-    method: 'get',
-    paths: '/session/current_language',
-    middlewares: sessionMiddleware,
-    errorMessage: 'Bad parameters'
-  },
-  setLanguage: {
-    method: 'post',
-    paths: '/session/current_language',
-    middlewares: sessionMiddleware,
-    body: joi.object().keys({
-      new_language: joi
-        .string()
-        .valid(...Object.values(LANGUAGES))
-        .required()
-    }),
-    errorMessage: 'Bad parameters'
-  }
-};
+exports.register = require('./register');
+exports.login = require('./login');
+exports.logout = require('./logout');
+exports.getCurrentUser = require('./getCurrentUser');
+exports.getLanguage = require('./getLanguage');
+exports.setLanguage = require('./setLanguage');

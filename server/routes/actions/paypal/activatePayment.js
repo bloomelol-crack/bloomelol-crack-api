@@ -4,12 +4,11 @@ const { socketIo } = require('../../socket.io');
 const { broadcast } = require('../../socket.io/all_accounts/constants');
 
 module.exports = async (req, res) => {
-  const { order_id } = req.body;
-  const account_ids = (req.session.orders || {})[order_id];
-  if (!account_ids) return res.status(404).json({ error: 'Order not found' });
+  const { order_id, account_ids } = req.session;
+  if (!order_id) return res.status(400).json({ error: 'order_id not in session' });
+  if (!account_ids) return res.status(400).json({ error: 'account_ids not in session' });
 
   const Payments = await paypalPayment.get({ OrderID: order_id });
-
   if (!Payments) return res.status(500).json({ error: 'Error searching Payment' });
   if (!Payments.length) return res.status(404).json({ error: 'Payment not found' });
   const [Payment] = Payments;
@@ -27,8 +26,7 @@ module.exports = async (req, res) => {
     );
   }
   res.status(200).json({ message: 'The order was activated' });
-  console.log('ACCOUNTS_TAKEN', account_ids);
   socketIo.emit(broadcast.ACCOUNTS_TAKEN, account_ids);
   const paymentUpdated = await paypalPayment.update({ _id: Payment._id }, { $set: { Active: true } });
-  if (!paypalPayment) rollbar.error(`Could not activate payment with id "${Payment._id}"`);
+  if (!paymentUpdated) rollbar.error(`Could not activate payment with id "${Payment._id}"`);
 };

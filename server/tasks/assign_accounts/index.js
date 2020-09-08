@@ -52,7 +52,6 @@ const execute = async () => {
         rollbar.critical(`After Payment: Didn't find account with payment ${Payment._id}`);
         return;
       }
-      const [Account] = Accounts;
       const accountUpdated = await account.update(
         { PaypalPaymentID: Payment._id },
         { UserID: Payment.UserID }
@@ -62,10 +61,11 @@ const execute = async () => {
         return;
       }
       rollbar.info(
-        `Purchased account with Payment ${Payment._id} ($${Payment.Amount} USD), updated ${accountUpdated}`
+        `Purchased ${accountUpdated} accounts with Payment ${Payment._id} ($${Payment.Amount} USD)`
       );
 
-      socketIo.emit(emit.ACCOUNT_PURCHASED, Account);
+      Accounts.forEach(Account => (Account.UserID = Payment.UserID));
+      socketIo.emit(emit.ACCOUNTS_PURCHASED, Accounts);
     })();
     await wait(1000);
   }

@@ -1,5 +1,5 @@
 module.exports = Object.freeze({
   receive: {},
-  emit: { ACCOUNT_PURCHASED: 'ACCOUNT_PURCHASED' },
+  emit: { ACCOUNTS_PURCHASED: 'ACCOUNTS_PURCHASED' },
   broadcast: {}
 });
