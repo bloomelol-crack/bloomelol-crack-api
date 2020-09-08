@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     let EmailVerified = row[8].split(':')[1].trim();
     let LastPlay = row[9].replace(':', ';').split(';')[1].trim();
     let BlueEssence = +row[3].split(':')[1].trim();
-    let Level = +row[2].split(':')[1].trim();
+    let Level = +row[2].split(':')[1].trim() || null;
     let RP = +row[4].split(':')[1].trim();
     let Refunds = +row[5].split(':')[1].trim();
     let Champs = +row[6].split(':')[1].trim();
