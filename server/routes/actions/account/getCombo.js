@@ -1,14 +1,15 @@
 const { account } = require('../../../database/models');
 
 module.exports = async (req, res) => {
-  const { region, count, min_level } = req.body;
+  const { region, count, min_level, not_in_regions } = req.body;
   let notFoundOnRegion = false;
   let Accounts = await account.get(
     {
       NotInRegions: { $ne: region },
       Level: { $gte: min_level },
       Refunds: { $exists: false },
-      ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) })
+      ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) }),
+      ...(not_in_regions ? { NotInRegions: { $elemMatch: { $in: not_in_regions } } } : {})
     },
     { limit: count, sort: { Level: -1 }, projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
   );
