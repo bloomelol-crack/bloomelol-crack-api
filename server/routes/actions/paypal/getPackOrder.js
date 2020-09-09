@@ -1,5 +1,5 @@
 const { getOrder } = require('../../../utils/paypal');
-const { getLevelFilter } = require('../../../utils/packs');
+const { getPackAccountFilter } = require('../../../utils/packs');
 const { account } = require('../../../database/models');
 
 const { PACKS } = require('./constants');
@@ -12,17 +12,7 @@ module.exports = async (req, res) => {
   if (!user_id) return res.status(403).json({ error: 'Not logged in' });
   if (!pack) return res.status(500).json({ error: `Pack ${pack_name} not defined` });
 
-  const levelFilter = getLevelFilter(pack);
-
-  const Accounts = await account.get(
-    {
-      Level: levelFilter,
-      EmailVerified: pack.email_verified,
-      PaypalPaymentID: { $exists: false },
-      UserID: { $exists: false }
-    },
-    { limit: pack.count }
-  );
+  const Accounts = await account.get(getPackAccountFilter(pack), { limit: pack.count });
   if (!Accounts) return res.status(500).json({ error: 'Error searching Account' });
   if (Accounts.length < pack.count)
     return res.status(404).json({ error: `Out of stock, ${Accounts.length}/${pack.count} accounts found` });

@@ -1,7 +1,15 @@
 const getLevelFilter = pack => {
-  const levelFilter = { $gte: pack.from_level };
+  const levelFilter = pack.from_level ? { $gte: pack.from_level } : { $exists: true };
   if (pack.to_level) levelFilter.$lte = pack.to_level;
   return levelFilter;
 };
 
-module.exports = { getLevelFilter };
+const getPackAccountFilter = pack => ({
+  Level: getLevelFilter(pack),
+  ...(pack.email_verified ? { EmailVerified: pack.email_verified } : {}),
+  PaypalPaymentID: { $exists: false },
+  UserID: { $exists: false },
+  ...(pack.filter || {})
+});
+
+module.exports = { getLevelFilter, getPackAccountFilter };

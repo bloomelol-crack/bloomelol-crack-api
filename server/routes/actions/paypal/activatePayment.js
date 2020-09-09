@@ -2,6 +2,7 @@ const rollbar = require('../../../utils/rollbar');
 const { account, paypalPayment } = require('../../../database/models');
 const { socketIo } = require('../../socket.io');
 const { broadcast } = require('../../socket.io/all_accounts/constants');
+const { broadcastGetPacks } = require('../../socket.io/packs');
 
 module.exports = async (req, res) => {
   const { order_id, account_ids } = req.session;
@@ -27,6 +28,7 @@ module.exports = async (req, res) => {
   }
   res.status(200).json({ message: 'The order was activated' });
   socketIo.emit(broadcast.ACCOUNTS_TAKEN, account_ids);
+  broadcastGetPacks();
   const paymentUpdated = await paypalPayment.update({ _id: Payment._id }, { $set: { Active: true } });
   if (!paymentUpdated) rollbar.error(`Could not activate payment with id "${Payment._id}"`);
 };

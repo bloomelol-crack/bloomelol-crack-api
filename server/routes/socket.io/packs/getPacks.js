@@ -1,4 +1,4 @@
-const { getLevelFilter } = require('../../../utils/packs');
+const { getPackAccountFilter } = require('../../../utils/packs');
 const { account } = require('../../../database/models');
 const { PACKS } = require('../../actions/paypal/constants');
 const { socketIo } = require('../../../utils/middlewares');
@@ -9,14 +9,8 @@ const packNames = Object.keys(PACKS);
 
 const getPack = async name => {
   const pack = PACKS[name];
-  const levelFilter = getLevelFilter(pack);
 
-  const availableAccounts = await account.count({
-    Level: levelFilter,
-    EmailVerified: true,
-    UserID: { $exists: false },
-    PaypalPaymentID: { $exists: false }
-  });
+  const availableAccounts = await account.count(getPackAccountFilter(pack));
   pack.stock = Math.floor(availableAccounts / pack.count);
   if (availableAccounts === null) return null;
   return pack;
