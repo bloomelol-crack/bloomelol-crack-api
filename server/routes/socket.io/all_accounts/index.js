@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const { account } = require('../../../database/models');
 const { getAccountPrice } = require('../../../utils/account');
 
@@ -13,7 +15,8 @@ const define = socket => {
         NewPassword: { $exists: true },
         Region: { $exists: true },
         UserID: { $exists: false },
-        PaypalPaymentID: { $exists: false }
+        PaypalPaymentID: { $exists: false },
+        $or: [{ LastPlay: { $type: 10 } }, { createdAt: { $lte: moment().subtract(7, 'days') } }]
       },
       { sort: { Level: -1 } }
     );
