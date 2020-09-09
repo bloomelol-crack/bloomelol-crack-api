@@ -4,8 +4,9 @@ const getLevelFilter = pack => {
   return levelFilter;
 };
 
-const getPackAccountFilter = pack => ({
+const getPackAccountFilter = (pack, region) => ({
   Level: getLevelFilter(pack),
+  ...(!region || region === 'any' ? {} : { Region: region }),
   ...(pack.email_verified ? { EmailVerified: pack.email_verified } : {}),
   PaypalPaymentID: { $exists: false },
   UserID: { $exists: false },

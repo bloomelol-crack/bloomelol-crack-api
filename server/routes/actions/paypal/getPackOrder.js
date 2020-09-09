@@ -5,14 +5,14 @@ const { account } = require('../../../database/models');
 const { PACKS } = require('./constants');
 
 module.exports = async (req, res) => {
-  const { pack_name } = req.query;
+  const { pack_name, region } = req.query;
   const pack = PACKS[pack_name];
   const { _id: user_id } = req.session.user || {};
 
   if (!user_id) return res.status(403).json({ error: 'Not logged in' });
   if (!pack) return res.status(500).json({ error: `Pack ${pack_name} not defined` });
 
-  const Accounts = await account.get(getPackAccountFilter(pack), { limit: pack.count });
+  const Accounts = await account.get(getPackAccountFilter(pack, region), { limit: pack.count });
   if (!Accounts) return res.status(500).json({ error: 'Error searching Account' });
   if (Accounts.length < pack.count)
     return res.status(404).json({ error: `Out of stock, ${Accounts.length}/${pack.count} accounts found` });
