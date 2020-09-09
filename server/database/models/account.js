@@ -27,6 +27,6 @@ module.exports = mongoose.model(
       PaypalPaymentID: String,
       NotInRegions: [String]
     },
-    { collection: 'Accounts' }
+    { collection: 'Accounts', timestamps: true }
   ).plugin(leanDefaults)
 );
