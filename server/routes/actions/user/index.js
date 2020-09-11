@@ -1,15 +1,7 @@
-const login = require('./login');
-const register = require('./register');
-const logout = require('./logout');
-const getCurrentUser = require('./current');
-const getLanguage = require('./getLanguage');
-const setLanguage = require('./setLanguage');
-
-module.exports = {
-  login,
-  logout,
-  register,
-  getCurrentUser,
-  getLanguage,
-  setLanguage
-};
+exports.register = require('./register');
+exports.confirmRegister = require('./confirmRegister');
+exports.login = require('./login');
+exports.logout = require('./logout');
+exports.getCurrentUser = require('./getCurrentUser');
+exports.getLanguage = require('./getLanguage');
+exports.setLanguage = require('./setLanguage');
