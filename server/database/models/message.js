@@ -6,6 +6,8 @@ module.exports = mongoose.model(
   new mongoose.Schema(
     {
       UserID: { type: String, required: true },
+      UserName: String,
+      UserSurname: String,
       Text: { type: String, required: true },
       Status: {
         type: String,
