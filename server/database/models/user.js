@@ -11,7 +11,9 @@ module.exports = mongoose.model(
       Surname: { type: String, required: true },
       Email: { type: String, required: true },
       Password: { type: String, required: true },
-      Language: { type: String, default: LANGUAGES.EN }
+      Language: { type: String, default: LANGUAGES.EN },
+      EmailVerified: { type: Boolean, default: false },
+      ConfirmID: String
     },
     { collection: 'Users' }
   ).plugin(leanDefaults)
