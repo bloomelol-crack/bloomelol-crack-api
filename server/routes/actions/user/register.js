@@ -18,7 +18,8 @@ module.exports = async (req, res) => {
     Email: email,
     Password: await encrypt(password),
     EmailVerified: false,
-    ConfirmID
+    ConfirmID,
+    Permissions: { ViewLogins: false }
   };
   const saved = await user.save(User);
   if (!saved) return res.status(500).json({ error: 'Could not save user' });

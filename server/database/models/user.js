@@ -13,7 +13,10 @@ module.exports = mongoose.model(
       Password: { type: String, required: true },
       Language: { type: String, default: LANGUAGES.EN },
       EmailVerified: { type: Boolean, default: false },
-      ConfirmID: String
+      ConfirmID: String,
+      Permissions: {
+        ViewLogins: { type: Boolean, default: false }
+      }
     },
     { collection: 'Users' }
   ).plugin(leanDefaults)
