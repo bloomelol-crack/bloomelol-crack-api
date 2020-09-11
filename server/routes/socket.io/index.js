@@ -3,6 +3,7 @@ const redis = require('../../utils/redis');
 
 const allAccounts = require('./all_accounts');
 const myAccounts = require('./my_accounts');
+const messages = require('./messages');
 const packs = require('./packs');
 const { USER_SOCKETS_KEY, receive, emit } = require('./constants/connection');
 
@@ -20,6 +21,7 @@ socketIo.sockets.on('connect', socket => {
   allAccounts.define(socket);
   myAccounts.define(socket);
   packs.define(socket);
+  messages.define(socket);
 });
 
 redis.Delete(USER_SOCKETS_KEY, {});
