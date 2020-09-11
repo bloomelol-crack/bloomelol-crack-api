@@ -9,7 +9,7 @@ const defineGetMessages = socket => {
     if (!count) return socket.emit(emit.GET_MESSAGES_FAILURE);
     const Messages = await message.get({}, { sort: { _id: -1 }, skip, limit: count });
     if (!Messages) return socket.emit(emit.GET_MY_ACCOUNTS_FAILURE);
-    socket.emit(emit.GET_MESSAGES_SUCCESS, Messages);
+    socket.emit(emit.GET_MESSAGES_SUCCESS, Messages.reverse());
   });
 };
 
