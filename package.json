@@ -29,6 +29,7 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "@lefcott/filter-json": "^1.8.1",
+    "aws-sdk": "^2.750.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -41,6 +42,7 @@
     "moment": "^2.25.3",
     "mongoose": "^5.9.12",
     "mongoose-lean-defaults": "^0.4.1",
+    "mustache": "^4.0.1",
     "redis": "^3.0.2",
     "rollbar": "^2.19.0",
     "socket.io": "^2.3.0",

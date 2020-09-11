@@ -2,9 +2,10 @@ const mustache = require('mustache');
 
 const fs = require('fs');
 
-const projectDir = require('./projectDir');
+const { EMAIL, EMAIL_USER } = require('../../env.json');
+
 const rollbar = require('./rollbar');
-const { EMAIL, EMAIL_USER } = require('./env');
+const projectDir = require('./projectDir');
 const { ses } = require('./aws');
 
 const templates = {};
