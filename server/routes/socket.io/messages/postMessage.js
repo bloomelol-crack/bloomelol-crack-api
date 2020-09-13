@@ -9,6 +9,7 @@ const definePostMessage = socket => {
     if (!user || !text) return socket.emit(emit.GET_MESSAGES_FAILURE);
     socket.emit(emit.MESSAGE_SENT, messageUid);
     const newMessage = {
+      Uid: messageUid,
       UserID: user._id,
       UserName: user.Name,
       UserSurname: user.Surname,

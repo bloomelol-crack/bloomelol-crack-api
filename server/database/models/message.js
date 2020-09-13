@@ -5,6 +5,7 @@ module.exports = mongoose.model(
   'Message',
   new mongoose.Schema(
     {
+      Uid: { type: String, required: true },
       UserID: { type: String, required: true },
       UserName: String,
       UserSurname: String,
