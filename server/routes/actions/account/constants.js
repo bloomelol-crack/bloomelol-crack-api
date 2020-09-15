@@ -3,7 +3,7 @@ module.exports = Object.freeze({
     LA2: 'las',
     LA1: 'lan',
     NA1: 'na',
-    EUN1: 'eun',
+    EUN1: 'eune',
     EUW: 'euw',
     TR1: 'tr',
     OC1: 'oce',
