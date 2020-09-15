@@ -7,7 +7,7 @@ module.exports = Object.freeze({
     EUW: 'euw',
     TR1: 'tr',
     OC1: 'oce',
-    BR: 'br',
+    BR1: 'br',
     RU: 'ru',
     KR: 'kr',
     PBE1: 'pbe'
