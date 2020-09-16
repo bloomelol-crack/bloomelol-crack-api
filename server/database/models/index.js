@@ -40,7 +40,7 @@ const aggregate = Model => aggregations =>
 const Delete = Model => (where = {}) =>
   new Promise(resolve => {
     Model.deleteMany(where)
-      .then(resolve)
+      .then(({ deletedCount }) => deletedCount)
       .catch(error => {
         rollbar.error(error);
         resolve(null);

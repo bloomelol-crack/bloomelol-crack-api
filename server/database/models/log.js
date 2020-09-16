@@ -5,6 +5,7 @@ module.exports = mongoose.model(
   'Log',
   new mongoose.Schema(
     {
+      IP: String,
       Data: { type: mongoose.SchemaTypes.Mixed, required: true }
     },
     { collection: 'Logs', timestamps: true }
