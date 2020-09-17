@@ -10,6 +10,11 @@
     "node": true,
     "es6": true
   },
+  "settings": {
+    "import/resolver": {
+      "babel-plugin-root-import": {}
+    }
+  },
   "parserOptions": {
     "parser": "babel-eslint",
     "sourceType": "module",
@@ -21,7 +26,10 @@
     "flowtype"
   ],
   "rules": {
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2
+    ],
     "linebreak-style": 0,
     "no-loop-func": "off",
     "camelcase": "off",
@@ -31,7 +39,10 @@
     "no-continue": "off",
     "no-unused-expressions": "off",
     "global-require": "off",
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "arrow-parens": "off",
     "import/no-dynamic-require": "off",
     "max-len": [
@@ -44,7 +55,7 @@
       {
         "printWidth": 110,
         "singleQuote": true,
-        "endOfLine":"auto"
+        "endOfLine": "auto"
       }
     ],
     "no-invalid-this": "off",
@@ -52,22 +63,6 @@
     "no-return-assign": "off",
     "no-param-reassign": "off",
     "no-nested-ternary": "off",
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "groups": [
-          "external",
-          [
-            "builtin",
-            "internal"
-          ],
-          "parent",
-          "sibling",
-          "index"
-        ]
-      }
-    ],
     "import/prefer-default-export": "off",
     "import/no-unresolved": "off",
     "import/named": "off",
@@ -76,6 +71,12 @@
     "import/default": "off",
     "import/namespace": "off",
     "import/no-absolute-path": "error",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/no-self-import": "off",
+    "import/no-duplicates": "off",
+    "import/order": "off",
+    "import/export": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "jsx-a11y/anchor-is-valid": [
       "error",

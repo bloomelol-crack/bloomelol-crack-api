@@ -1,9 +1,11 @@
 {
   "javascript.validate.enable": false,
   "eslint.validate": [
-    "javascript","typescript"
+    "javascript",
+    "typescript"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "javascript.preferences.importModuleSpecifier": "non-relative"
 }

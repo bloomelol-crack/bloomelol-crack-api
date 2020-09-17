@@ -5,11 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node scripts/before_start; node --max-old-space-size=4096 app",
+    "start": "node scripts/before_start; nodemon src --exec babel-node --max-old-space-size=4096",
     "reap": "node scripts/reap",
     "build": "node scripts/build",
     "redis": "rdcli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
-    "dev": "nodemon app -e env,js,json"
+    "dev": "nodemon src --exec babel-node"
   },
   "engines": {
     "node": "14.5.0"
@@ -32,6 +32,7 @@
     "@lefcott/filter-json": "^1.8.1",
     "aws-sdk": "^2.750.0",
     "axios": "^0.19.2",
+    "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
@@ -55,12 +56,17 @@
     "uuidv4": "^6.0.7"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-root-import": "^6.5.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "css-loader": "^3.6.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-strongloop": "^2.1.0",
+    "eslint-import-resolver-webpack": "^0.12.2",
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
@@ -68,8 +74,8 @@
     "eslint-plugin-react": "^7.11.0",
     "extract-loader": "^5.1.0",
     "file-loader": "^6.0.0",
-    "prettier": "^2.0.5",
     "husky": "^1.2.0",
+    "prettier": "^2.0.5",
     "prettier-eslint": "^8.2.1",
     "sass": "^1.26.9",
     "sass-loader": "^9.0.1",

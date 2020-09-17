@@ -1,0 +1,10 @@
+export const receive = { GET_PACKS: 'GET_PACKS' };
+export const emit = {
+  GET_PACKS_SUCCESS: 'GET_PACKS_SUCCESS',
+  GET_PACKS_FAILURE: 'GET_PACKS_FAILURE'
+};
+export const broadcast = {
+  PACK_IN_STOCK: 'PACK_IN_STOCK',
+  PACK_OUT_OF_STOCK: 'PACK_OUT_OF_STOCK',
+  PACKS_UPDATED: 'PACKS_UPDATED'
+};
