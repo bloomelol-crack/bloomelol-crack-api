@@ -32,6 +32,7 @@
     "@lefcott/filter-json": "^1.8.1",
     "aws-sdk": "^2.750.0",
     "axios": "^0.19.2",
+    "babel-core": "^6.26.3",
     "babel-node": "0.0.1-security",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
@@ -58,7 +59,6 @@
     "uuidv4": "^6.0.7"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-root-import": "^6.5.0",
