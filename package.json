@@ -46,6 +46,7 @@
     "mongoose": "^5.9.12",
     "mongoose-lean-defaults": "^0.4.1",
     "mustache": "^4.0.1",
+    "nodemon": "^2.0.4",
     "redis": "^3.0.2",
     "rollbar": "^2.19.0",
     "socket.io": "^2.3.0",
