@@ -1,4 +1,4 @@
-const env = require('../../../env.json');
+const env = require('env.json');
 const { run } = require('../../../scripts/utils');
 
 const { getRandomTime } = require('./utils');

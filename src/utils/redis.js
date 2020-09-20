@@ -1,26 +1,27 @@
-const { check } = require('@lefcott/filter-json');
-const Redis = require('redis');
+import { check } from '@lefcott/filter-json';
 
-const env = require('../../env.json');
+import Redis from 'redis';
+
+import env from 'env.json';
+
+import rollbar from './rollbar';
 
 const redis = Redis.createClient(env.REDISCLOUD_URL);
-
-const rollbar = require('./rollbar');
 
 let active = false;
 
 redis.on('error', err => {
-  console.error(`Redis error: ${err}`);
+  logError(`Redis error: ${err}`);
 });
 
 redis.on('end', () => {
   active = false;
-  console.log('Redis connection closed');
+  log('Redis connection closed');
 });
 
 redis.on('connect', () => {
   active = true;
-  console.log('Connected to REDIS!');
+  log('Connected to REDIS!');
 });
 
 redis.isActive = () => active;
@@ -35,7 +36,7 @@ redis.Find = (key, where = {}) =>
   new Promise(resolve => {
     redis.smembers(key, (error, docs) => {
       if (error) {
-        console.error(__filename, 'Find', error);
+        logError(__filename, 'Find', error);
         return resolve({ string: null, json: null });
       }
       const results = { string: [], json: [] };
@@ -62,7 +63,7 @@ redis.Add = (key, registers) =>
     regs = regs.map(reg => JSON.stringify(reg));
     redis.sadd(key, ...regs, (error, added) => {
       if (error) {
-        console.error(__filename, 'Add', error);
+        logError(__filename, 'Add', error);
         return resolve(null);
       }
       resolve(added);
@@ -125,7 +126,7 @@ redis.Delete = (key, where = {}) =>
     if (regs.length === 0) return resolve(0);
     redis.srem(key, ...regs, (error, deleted) => {
       if (error) {
-        console.error(__filename, 'Delete', error);
+        logError(__filename, 'Delete', error);
         return resolve(null);
       }
       resolve(deleted);
@@ -151,7 +152,7 @@ redis.Update = (key, where = {}, update, strRegisters) =>
 
     redis.srem(key, ...strRegisters, async (error, deleted) => {
       if (error) {
-        console.error(__filename, 'Update', error);
+        logError(__filename, 'Update', error);
         return resolve(null);
       }
       if (deleted === 0) return resolve(0);

@@ -7,7 +7,7 @@ const socketIo = require('socket.io');
 
 const http = require('http');
 
-const env = require('../../env.json');
+const env = require('env.json');
 
 const redis = require('./redis');
 const rollbar = require('./rollbar');
@@ -58,15 +58,15 @@ app.get('/', (req, res) => res.status(200).send('Hello World!'));
 app.get('/checkip', (req, res) => res.status(200).send(req.ip));
 app.use('/api', router);
 
-console.log('Listen');
+log('Listen');
 const port = env.PORT || process.env.PORT;
 try {
   server.listen(port, () => {
-    console.log(`Listening on ${port} with environment ${env.NODE_ENV}`);
+    log(`Listening on ${port} with environment ${env.NODE_ENV}`);
   });
 } catch (e) {
-  console.error('Could not listen in port', port);
-  console.error(e);
+  logError('Could not listen in port', port);
+  logError(e);
 }
 
 module.exports = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };

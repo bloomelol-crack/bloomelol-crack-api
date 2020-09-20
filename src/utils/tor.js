@@ -1,11 +1,11 @@
 /* eslint-disable no-await-in-loop */
-const { check } = require('@lefcott/filter-json');
-const tor = require('tor-request');
+import { check } from '@lefcott/filter-json';
+import tor from 'tor-request';
 
-const { TOR_PASSWORD } = require('../../env.json');
+import { TOR_PASSWORD } from 'env.json';
 
-const { wait } = require('./wait');
-const { getCookies, setCookies } = require('./cookies');
+import { wait } from './wait';
+import { getCookies } from './cookies';
 
 tor.TorControlPort.password = TOR_PASSWORD;
 const limits = [
@@ -51,7 +51,7 @@ function TorRequest({ options, timeout = 30000, id } = {}) {
     tor.request(options, (error, response, body) => {
       if (resolved) return;
       if (error) {
-        console.error(error);
+        logError(error);
         return resolve(null);
       }
       const { statusCode: status, headers } = response;
@@ -69,25 +69,24 @@ const restartTor = async () => {
   restartTorPromise = new Promise(async resolve => {
     const newTorSession = () =>
       tor.newTorSession(async error => {
-        console.log('Start Waiting');
-        error && console.error(error);
+        log('Start Waiting');
+        error && logError(error);
         // await run('sudo killall -HUP tor');
         await wait(4000);
-        const waitingIPChange = true;
         let currentIPTry = 0;
         while (currentIPTry < maxIPTries) {
           const ipResponse = await TorRequest({ options: { url: 'http://checkip.amazonaws.com' } });
           if (!ipResponse || ipResponse.status !== 200) {
-            console.log('BAD IP RESPONSE', ipResponse);
+            logError('BAD IP RESPONSE', ipResponse);
             resolve(true);
             restartTorPromise = null;
             for (let ii = 0; ii < limits.length; ii += 1) limits[ii].current = 0;
             return;
           }
           const newIP = ipResponse.body.trim();
-          console.log('\nGot IP', newIP, '\n');
+          log('\nGot IP', newIP, '\n');
           if (newIP !== currentIP) {
-            console.log('\nDifferent than', currentIP, '\n');
+            log('\nDifferent than', currentIP, '\n');
             currentIP = newIP;
             resolve(true);
             restartTorPromise = null;
@@ -137,7 +136,7 @@ async function UnlimitedTorRequest(configs) {
     for (let ii = 0; ii < config._limitIndexes.length; ii += 1) {
       const limit = limits[config._limitIndexes[ii]];
       if (check(response, limit.limitWhen)) {
-        console.log('---- Detected limit, restarting...');
+        log('---- Detected limit, restarting...');
         await restartTor();
         return UnlimitedTorRequest(configs);
       }

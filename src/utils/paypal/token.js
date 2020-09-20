@@ -1,6 +1,6 @@
 const { axios } = require('../request');
 const rollbar = require('../rollbar');
-const env = require('../../../env.json');
+const env = require('env.json');
 const { wait } = require('../wait');
 
 let token = null;

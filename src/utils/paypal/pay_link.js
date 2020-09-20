@@ -2,7 +2,7 @@ const { uuid } = require('uuidv4');
 
 const { axios } = require('../request');
 const rollbar = require('../rollbar');
-const env = require('../../../env.json');
+const env = require('env.json');
 const { paypalPayment } = require('../../database/models');
 
 const { getToken } = require('./token');

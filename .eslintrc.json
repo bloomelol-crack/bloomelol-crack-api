@@ -15,6 +15,11 @@
       "babel-plugin-root-import": {}
     }
   },
+  "globals": {
+    "globalThis": "readonly",
+    "log": "readonly",
+    "logError": "readonly"
+  },
   "parserOptions": {
     "parser": "babel-eslint",
     "sourceType": "module",

@@ -2,7 +2,7 @@ const mustache = require('mustache');
 
 const fs = require('fs');
 
-const { EMAIL, EMAIL_USER } = require('../../env.json');
+const { EMAIL, EMAIL_USER } = require('env.json');
 
 const rollbar = require('./rollbar');
 const projectDir = require('./projectDir');

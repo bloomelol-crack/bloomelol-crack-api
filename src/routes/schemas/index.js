@@ -9,7 +9,7 @@ import url from 'url';
 import { router } from 'utils/middlewares';
 import rollbar from '../../utils/rollbar';
 import projectDir from '../../utils/projectDir';
-import env from '../../../env.json';
+import env from 'env.json';
 
 const SCHEMA = {
   REQUEST_TYPES: ['query', 'body', 'params', 'headers'],
@@ -40,7 +40,7 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
   const { method } = req;
   const { path } = req.route;
   if (!schema) {
-    console.warn(
+    logError(
       `Couldn't find validations for path "${path}" and method "${method}". Schema: "${schemaName}". Calling next()`
     );
     return next();

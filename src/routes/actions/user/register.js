@@ -3,7 +3,7 @@ import { encrypt, largeID } from 'utils/passwords';
 import { send, getEmail } from 'utils/emails';
 import rollbar from 'utils/rollbar';
 import { LANGUAGES } from 'routes/actions/user/constants';
-import env from '../../../../env.json';
+import env from 'env.json';
 
 export const register = async (req, res) => {
   const { name, surname, email, password } = req.body;

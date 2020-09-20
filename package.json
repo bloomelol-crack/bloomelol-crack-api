@@ -9,7 +9,7 @@
     "reap": "node scripts/reap",
     "build": "node scripts/build",
     "redis": "rdcli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
-    "dev": "nodemon src --exec babel-node"
+    "dev": "nodemon --exec babel-node src"
   },
   "engines": {
     "node": "14.5.0"
@@ -46,10 +46,13 @@
     "colors": "^1.4.0",
     "connect-redis": "^4.0.4",
     "cors": "^2.8.5",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "geoip-lite": "^1.4.2",
     "https-proxy-agent": "^5.0.0",
+    "iohook": "^0.6.6",
+    "keypress": "^0.2.1",
     "moment": "^2.25.3",
     "mongoose": "^5.9.12",
     "mongoose-lean-defaults": "^0.4.1",

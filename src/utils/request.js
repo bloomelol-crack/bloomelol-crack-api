@@ -1,16 +1,14 @@
 /* eslint-disable no-await-in-loop */
-const { uuid } = require('uuidv4');
-const { check } = require('@lefcott/filter-json');
-const { default: axios } = require('axios');
+import { request } from 'database/models';
+import { NODE_ENV } from 'env.json';
 
-const os = require('os');
+import { uuid } from 'uuidv4';
 
-const { request } = require('../database/models');
-const { NODE_ENV } = require('../../env.json');
+import { check } from '@lefcott/filter-json';
+import axios from 'axios';
 
-const { wait } = require('./wait');
-const { Tor } = require('./tor');
-const rollbar = require('./rollbar');
+import { Tor } from './tor';
+import rollbar from './rollbar';
 
 function Axios({ options, timeout = 30000, id } = {}) {
   return new Promise(resolve => {
@@ -25,7 +23,7 @@ function Axios({ options, timeout = 30000, id } = {}) {
       .catch(error => {
         clearTimeout(timeoutId);
         if (!error.response) {
-          console.error(`Request Error: ${error.code}: ${error.address}`);
+          logError(`Request Error: ${error.code}: ${error.address}`);
           return resolve(null);
         }
         const { status, data: body, headers } = error.response;
@@ -73,31 +71,31 @@ const Persist = lib => async (Configuration = {}) => {
     const { url, method, data, headers, params } = config.options;
     const reg = response
       ? {
-        uid: config.id,
-        env: NODE_ENV,
-        url,
-        method,
-        failed: false,
-        body: data,
-        headers,
-        params,
-        response: {
-          status: response.status.toString(),
-          body: response.body,
-          headers: response.headers
+          uid: config.id,
+          env: NODE_ENV,
+          url,
+          method,
+          failed: false,
+          body: data,
+          headers,
+          params,
+          response: {
+            status: response.status.toString(),
+            body: response.body,
+            headers: response.headers
+          }
         }
-      }
       : {
-        uid: config.id,
-        env: NODE_ENV,
-        url,
-        method,
-        failed: true,
-        body: data,
-        headers,
-        params,
-        response: { status: 'failed' }
-      };
+          uid: config.id,
+          env: NODE_ENV,
+          url,
+          method,
+          failed: true,
+          body: data,
+          headers,
+          params,
+          response: { status: 'failed' }
+        };
     request.save(reg);
   }
   return lib === 'axios' ? responses[0] : lib === 'tor' ? responses : responses;

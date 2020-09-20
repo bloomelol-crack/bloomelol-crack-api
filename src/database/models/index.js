@@ -50,7 +50,7 @@ const save = Model => obj =>
     const model = new Model(obj);
     model.save(saveError => {
       if (saveError) {
-        console.error(saveError);
+        logError(saveError);
         return resolve(null);
       }
       resolve(true);
@@ -60,7 +60,7 @@ const update = Model => (where, obj) =>
   new Promise(resolve => {
     Model.updateMany(where, obj, (error, data) => {
       if (error) {
-        console.error(error);
+        logError(error);
         return resolve(null);
       }
       resolve(data.nModified);
@@ -70,7 +70,7 @@ const insertOrUpdate = Model => (where, obj) =>
   new Promise(resolve => {
     Model.updateMany(where, obj, { upsert: true, setDefaultsOnInsert: true }, error => {
       if (error) {
-        console.error(error);
+        logError(error);
         return resolve(null);
       }
       resolve(true);

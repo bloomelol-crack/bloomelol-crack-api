@@ -1,5 +1,5 @@
 import { user } from 'database/models';
-import env from '../../../../env.json';
+import env from 'env.json';
 
 export const confirmRegister = async (req, res) => {
   const { confirmID } = req.params;
