@@ -10,6 +10,8 @@ const { axios } = require('../../utils/request');
 
 (async () => {
   const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
     /* headless: false, devtools: */
   });
   const page = await browser.newPage();
