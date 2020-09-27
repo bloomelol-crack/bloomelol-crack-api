@@ -1,6 +1,5 @@
-/* eslint-disable no-new-func */
-import puppeteer from 'puppeteer';
 import 'globals';
+import puppeteer from 'puppeteer';
 
 import env from '../../env.json';
 import { wait } from '../../utils/wait';
@@ -16,7 +15,9 @@ const { axios } = require('../../utils/request');
   });
   const page = await browser.newPage();
 
+  log('Going to page');
   await page.goto('https://www.leagueoflegends.com');
+  log('click button');
   await page.evaluate(() => {
     document.querySelector('.riotbar-anonymous-link.riotbar-account-action').click();
   });
@@ -37,28 +38,37 @@ const { axios } = require('../../utils/request');
   const newEmail = 'blumipoli@gmail.com';
 
   await wait(5000);
+  log('typing inputs...');
   await page.type("input[name='username']", username);
   await page.type("input[name='password']", password);
+  log('clicking login...');
   await page.evaluate(() => {
     document.querySelector('.mobile-button.mobile-button__submit').click();
   });
+  log('going to management...');
   await wait(8000);
   await page.evaluate(() => {
     document.querySelector('a[data-riotbar-account-action="management"]').click();
   });
   await wait(8000);
+  log('confirming password...');
   await page.type("input[type='password']", password);
+  log('clicking button');
   await page.click('#login-button');
   await wait(5000);
+  log('going to password');
   await page.goto('https://account.riotgames.com/account/password');
   await wait(4000);
+  log('changing password...');
   await page.type('input[data-testid="input-current-password"]', password);
   await page.type('input[data-testid="input-new-password"]', newPassword);
   await page.type('input[data-testid="input-new-password-confirm"]', newPassword);
   // TODO discomment
   // await page.click('input[data-testid="submit-new-password"]');
+  log('going to email...');
   await page.goto('https://account.riotgames.com/account/email');
   await wait(4000);
+  log('typing new email...');
   await page.type('input[data-testid="input-new-email"]', newEmail);
   await page.type('input[data-testid="input-new-email-confirm"]', newEmail);
 
