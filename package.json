@@ -9,7 +9,8 @@
     "reap": "node scripts/reap",
     "build": "node scripts/build",
     "redis": "rdcli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
-    "dev": "nodemon --exec babel-node src"
+    "dev": "nodemon --exec babel-node src",
+    "change-pass": "nodemon --exec babel-node src/tasks/change_pass"
   },
   "engines": {
     "node": "14.5.0"

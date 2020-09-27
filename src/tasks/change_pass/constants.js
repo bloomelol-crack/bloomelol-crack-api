@@ -1,0 +1,36 @@
+export const loginUrl =
+  'https://auth.riotgames.com/login#client_id=rso-web-client-prod&login_hint=las&redirect_uri=https%3A%2F%2Flogin.leagueoflegends.com%2Foauth2-callback&response_type=code&scope=openid&state=GaG7RF8Kn4h-E23fDGrEdoin9fZISmW98Dgk3ep7nLI&ui_locales=es';
+export const url = 'https://bloomebot-accounts-api.herokuapp.com/api/lol_accounts/set_credentials';
+export const emails = [
+  'bloomelolcrack@gmail.com',
+  'bloomelolcrack.addons@gmail.com',
+  'bloomelolcrack.2@hotmail.com',
+  'bloomelolcrack.3@hotmail.com',
+  'blumlolcrack.4@outlook.com',
+  'blumlolcrack.5@outlook.com',
+  'blumlolcrack.6@outlook.com',
+  'plaamcracklol.7@outlook.com',
+  'plaamcracklol.8@protonmail.com',
+  'plaamcracklol.9@protonmail.com',
+  'vlumlolcrack@outlook.com',
+  'vlumlolcrack.11@aol.com',
+  'flumlolcrack@yahoo.com',
+  'vlumlolcrack.13@aol.com',
+  'vlumlolcrack.14@aol.com',
+  'glumlolcrack.15@protonmail.ch',
+  'flumlolcrack.16@outlook.com',
+  'flumlolcrack.17@outlook.com',
+  'glumlolcracker.18.8.8@protonmail.ch',
+  'glumlolcracker.19.9.9@protonmail.com',
+  'xullolkrack.20@mail.com',
+  'xullolkrack.21@protonmail.com',
+  'xullolkracker.22@protonmail.com',
+  'nulllolkracker.23@protonmail.com',
+  'nulllolcracker.24@outlook.com',
+  'clumlolcrack.25@bloomebot.com',
+  'clumlolcrack.26@bloomebot.com',
+  'clumlolcrack.27@bloomebot.com',
+  'bumlolcrack.28@bloomebot.com',
+  'bumlolcrack.29@bloomebot.com',
+  'bumlolcrack.30@bloomebot.com'
+];
