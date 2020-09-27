@@ -3,7 +3,7 @@ const fs = require('fs');
 require('colors');
 const projectDir = require('../../src/utils/projectDir');
 
-const envPath = `${projectDir}/env.json`;
+const envPath = `${projectDir}/src/env.json`;
 
 const updateEnv = mustHaveFileKeys =>
   new Promise(resolve => {
