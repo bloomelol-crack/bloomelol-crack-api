@@ -20,9 +20,9 @@ const getPack = async (name, region) => {
 /**
  * @param {import('socket.io').Socket} socket */
 const defineGetPacks = socket => {
-  socket.on(receive.GET_PACKS, async region => {
+  socket.on(receive.GET_PACKS, async (region, type) => {
     let packs = await Promise.all(packNames.map(pack => getPack(pack, region)));
-    packs = packs.filter(pack => pack && pack.stock);
+    packs = packs.filter(pack => pack && pack.stock && pack.type === type);
     socket.emit(emit.GET_PACKS_SUCCESS, packs, region);
   });
 };
