@@ -19,3 +19,27 @@ process.on('uncaughtException', (err, origin) => {
   log(origin);
   log(err);
 });
+const { wait } = require('./utils/wait');
+
+[
+  'SIGHUP',
+  'SIGINT',
+  'SIGQUIT',
+  'SIGILL',
+  'SIGTRAP',
+  'SIGABRT',
+  'SIGBUS',
+  'SIGFPE',
+  'SIGUSR1',
+  'SIGSEGV',
+  'SIGUSR2',
+  'SIGTERM'
+].forEach(sig => {
+  process.on(sig, () => {
+    console.log('byeeee');
+    (async () => {
+      await wait(1000);
+      console.log('Exiting after 1 sec!');
+    })();
+  });
+});
