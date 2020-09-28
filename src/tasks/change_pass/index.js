@@ -42,7 +42,7 @@ const execute = async () => {
       log(
         `Retrying previous failed change, emailUpdated: ${emailUpdated}, passwordUpdated: ${passwordUpdated}`
       );
-      await redis.Delete('passwordChangeRetries', {});
+      await redis.Delete('passwordChangeRetries', { threadID: retry.threadID });
     } else {
       const response = await axios({
         options: {
@@ -64,6 +64,19 @@ const execute = async () => {
       newPassword = response.body.account.NewPassword;
       newEmail = response.body.account.NewEmail;
     }
+    if (username && password) {
+      const retry = {
+        username,
+        password,
+        newPassword,
+        newEmail,
+        passwordUpdated,
+        emailUpdated,
+        threadID: process.env.threadID
+      };
+      await redis.Add('passwordChangeRetries', retry);
+    }
+
     log('username', username);
     log('password', password);
 
@@ -113,21 +126,10 @@ const execute = async () => {
     await browser.close();
   } catch (e) {
     logError(e);
-    if (username && password && (!passwordUpdated || !emailUpdated)) {
-      const retry = {
-        username,
-        password,
-        newPassword,
-        newEmail,
-        passwordUpdated,
-        emailUpdated
-      };
-      rollbar.error(`Error changing email or pass.\nRetry:\n${JSON.stringify(retry, null, 2)}`);
-      await redis.Add('passwordChangeRetries', retry);
-    }
   }
+  await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
   await wait(10000);
   execute();
 };
 
-// if (env.NODE_ENV === 'localhost' || env.NODE_ENV === 'production') execute();
+if (env.NODE_ENV === 'localhost' || env.NODE_ENV === 'production') execute();
