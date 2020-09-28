@@ -19,7 +19,8 @@ process.on('uncaughtException', (err, origin) => {
   log(origin);
   log(err);
 });
-const { wait } = require('./utils/wait');
+
+const projectDir = require('./utils/projectDir');
 
 [
   'SIGHUP',
@@ -37,9 +38,7 @@ const { wait } = require('./utils/wait');
 ].forEach(sig => {
   process.on(sig, () => {
     console.log('byeeee');
-    (async () => {
-      await wait(1000);
-      console.log('Exiting after 1 sec!');
-    })();
+    require('child_process').exec(`npm run babel-node ${projectDir}/scripts/before_exit`);
+    console.log('Triggered script');
   });
 });

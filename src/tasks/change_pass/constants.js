@@ -1,5 +1,3 @@
-export const loginUrl =
-  'https://auth.riotgames.com/login#client_id=rso-web-client-prod&login_hint=las&redirect_uri=https%3A%2F%2Flogin.leagueoflegends.com%2Foauth2-callback&response_type=code&scope=openid&state=GaG7RF8Kn4h-E23fDGrEdoin9fZISmW98Dgk3ep7nLI&ui_locales=es';
 export const url = 'https://bloomebot-accounts-api.herokuapp.com/api/lol_accounts/set_credentials';
 export const emails = [
   'bloomelolcrack@gmail.com',

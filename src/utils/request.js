@@ -71,31 +71,31 @@ const Persist = lib => async (Configuration = {}) => {
     const { url, method, data, headers, params } = config.options;
     const reg = response
       ? {
-          uid: config.id,
-          env: NODE_ENV,
-          url,
-          method,
-          failed: false,
-          body: data,
-          headers,
-          params,
-          response: {
-            status: response.status.toString(),
-            body: response.body,
-            headers: response.headers
-          }
+        uid: config.id,
+        env: NODE_ENV,
+        url,
+        method,
+        failed: false,
+        body: data,
+        headers,
+        params,
+        response: {
+          status: response.status.toString(),
+          body: response.body,
+          headers: response.headers
         }
+      }
       : {
-          uid: config.id,
-          env: NODE_ENV,
-          url,
-          method,
-          failed: true,
-          body: data,
-          headers,
-          params,
-          response: { status: 'failed' }
-        };
+        uid: config.id,
+        env: NODE_ENV,
+        url,
+        method,
+        failed: true,
+        body: data,
+        headers,
+        params,
+        response: { status: 'failed' }
+      };
     request.save(reg);
   }
   return lib === 'axios' ? responses[0] : lib === 'tor' ? responses : responses;
