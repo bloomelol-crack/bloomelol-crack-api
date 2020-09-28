@@ -17,8 +17,10 @@ const execute = async () => {
   let newEmail = null;
   let passwordUpdated = false;
   let emailUpdated = false;
+  let browserClosed = false;
+  let browser;
   try {
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       headless: env.NODE_ENV !== 'localhost',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
@@ -127,9 +129,11 @@ const execute = async () => {
       emailUpdated = true;
     }
     await browser.close();
+    browserClosed = true;
     await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
   } catch (e) {
     logError(e);
+    if (!browserClosed) await browser.close();
   }
   await wait(10000);
   execute();
