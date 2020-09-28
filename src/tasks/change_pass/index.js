@@ -59,6 +59,7 @@ const execute = async () => {
       if (response.status === 404) throw new Error('No accounts to update');
       if (response.status !== 200) throw new Error('Error getting accounts');
       log('Response Body', response.body);
+      log(`${response.body.remaining} remaining accounts`);
       username = response.body.account.UserName;
       password = response.body.account.Password;
       newPassword = response.body.account.NewPassword;
