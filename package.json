@@ -9,6 +9,7 @@
     "reap": "node scripts/reap",
     "build": "node scripts/build",
     "redis": "redis-cli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
+    "redis-prod": "redis-cli -h redis-16115.c80.us-east-1-2.ec2.cloud.redislabs.com -a HHRhvYr9ANC9o06GAEGfydEj4B628503 -p 16115",
     "dev": "nodemon --exec babel-node src",
     "change-pass": "nodemon --exec babel-node src/tasks/change_pass",
     "babel-node": "babel-node"

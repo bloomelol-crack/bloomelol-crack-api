@@ -84,7 +84,7 @@ const execute = async () => {
     await wait(5000);
     log('typing inputs...');
     await page.type("input[name='username']", username);
-    await page.type("input[name='password']", password);
+    await page.type("input[name='password']", passwordUpdated ? newPassword : password);
     log('clicking login...');
     await page.evaluate(() => {
       document.querySelector('.mobile-button.mobile-button__submit').click();
@@ -96,7 +96,7 @@ const execute = async () => {
     });
     await wait(8000);
     log('confirming password...');
-    await page.type("input[type='password']", password);
+    await page.type("input[type='password']", passwordUpdated ? newPassword : password);
     log('clicking button');
     await page.click('#login-button');
     await wait(5000);
@@ -111,6 +111,7 @@ const execute = async () => {
       await page.click('button[data-testid="submit-new-password"]');
       log('Clicked button for changing password');
       await wait(8000);
+      passwordUpdated = true;
     }
     if (!emailUpdated) {
       log('going to email...');
@@ -123,6 +124,7 @@ const execute = async () => {
       log('Clicked button for changing email');
 
       await wait(8000);
+      emailUpdated = true;
     }
     await browser.close();
     await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
