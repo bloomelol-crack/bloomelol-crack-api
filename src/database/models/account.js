@@ -26,7 +26,9 @@ export const account = mongoose.model(
       Price: Number,
       UserID: String,
       PaypalPaymentID: String,
-      NotInRegions: [String]
+      NotInRegions: [String],
+      HasValorant: Boolean,
+      Valorant: {}
     },
     { collection: 'Accounts', timestamps: true }
   ).plugin(leanDefaults)
