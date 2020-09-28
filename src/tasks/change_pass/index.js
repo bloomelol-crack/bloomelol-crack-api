@@ -130,4 +130,4 @@ const execute = async () => {
   execute();
 };
 
-if (env.NODE_ENV === 'localhost' || env.NODE_ENV === 'production') execute();
+// if (env.NODE_ENV === 'localhost' || env.NODE_ENV === 'production') execute();
