@@ -125,10 +125,10 @@ const execute = async () => {
       await wait(8000);
     }
     await browser.close();
+    await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
   } catch (e) {
     logError(e);
   }
-  await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
   await wait(10000);
   execute();
 };
