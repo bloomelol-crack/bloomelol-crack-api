@@ -12,7 +12,8 @@ export const setCredentials = async (req, res) => {
     {
       ...userNameFilter,
       Level: { $gte: 20 },
-      NewPassword: { $exists: false }
+      NewPassword: { $exists: false },
+      $or: [{ EmailVerified: false }, { EmailVerified: { $exists: false } }]
     },
     { sort: { Level: -1 } }
   );
