@@ -4,6 +4,7 @@ export const REGION_MAPPING = {
   NA1: 'na',
   EUN1: 'eune',
   EUW: 'euw',
+  EUW1: 'euw',
   TR1: 'tr',
   OC1: 'oce',
   BR1: 'br',
