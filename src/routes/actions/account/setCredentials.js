@@ -12,7 +12,6 @@ export const setCredentials = async (req, res) => {
     {
       ...userNameFilter,
       Level: { $gte: 20 },
-      EmailVerified: false,
       NewPassword: { $exists: false }
     },
     { sort: { Level: -1 } }
