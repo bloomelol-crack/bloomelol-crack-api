@@ -80,6 +80,7 @@ const execute = async () => {
         log('No remaining accounts');
         const Accounts = await account.get({ Region: { $exists: false } }, { limit: 1 });
         if (!Accounts) throw new Error('Error getting accounts without region');
+        if (!Accounts.length) throw new Error('No accounts to set region');
         const [Account] = Accounts;
         username = Account.UserName;
         password = Account.NewPassword || Account.Password;
