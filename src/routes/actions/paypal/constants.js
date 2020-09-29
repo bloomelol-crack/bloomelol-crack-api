@@ -43,7 +43,8 @@ export const PACKS = {
     from_level: 30,
     to_level: null,
     count: 25,
-    price: 5
+    price: 5,
+    filter: { NewPassword: { $exists: true } }
   },
   PACK_2: {
     name: 'PACK_2',
@@ -52,7 +53,8 @@ export const PACKS = {
     from_level: 30,
     to_level: null,
     count: 50,
-    price: 9
+    price: 9,
+    filter: { NewPassword: { $exists: true } }
   },
   PACK_3: {
     name: 'PACK_3',
@@ -61,6 +63,7 @@ export const PACKS = {
     from_level: 30,
     to_level: null,
     count: 100,
-    price: 16
+    price: 16,
+    filter: { NewPassword: { $exists: true } }
   }
 };
