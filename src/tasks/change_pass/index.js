@@ -19,6 +19,7 @@ const execute = async () => {
   let newEmail = null;
   let passwordUpdated = false;
   let emailUpdated = false;
+  let onlyUpdateRegion = false;
   let browserClosed = false;
   let browser;
   try {
@@ -75,8 +76,15 @@ const execute = async () => {
         }
       });
       if (!response) throw new Error('Could not get accounts');
-      if (response.status === 404) throw new Error('No accounts to update');
-      if (response.status !== 200) throw new Error('Error getting accounts');
+      if (response.status === 404) {
+        log('No remaining accounts');
+        const Accounts = await account.get({ Region: { $exists: false } }, { limit: 1 });
+        if (!Accounts) throw new Error('Error getting accounts without region');
+        const [Account] = Accounts;
+        username = Account.UserName;
+        password = Account.NewPassword || Account.Password;
+        onlyUpdateRegion = true;
+      } else if (response.status !== 200) throw new Error('Error getting accounts');
       log('Response Body', response.body);
       log(`${response.body.remaining} remaining accounts`);
       username = response.body.account.UserName;
@@ -84,7 +92,7 @@ const execute = async () => {
       newPassword = response.body.account.NewPassword;
       newEmail = response.body.account.NewEmail;
     }
-    if (username && password) {
+    if (username && password && !onlyUpdateRegion) {
       const retry = {
         username,
         password,
@@ -114,46 +122,52 @@ const execute = async () => {
       document.querySelector('a[data-riotbar-account-action="management"]').click();
     });
     await wait(8000);
-    log('confirming password...');
-    await page.type("input[type='password']", passwordUpdated ? newPassword : password);
-    log('clicking button');
-    await page.click('#login-button');
-    await wait(5000);
-    if (!passwordUpdated) {
-      log('going to password');
-      await page.goto('https://account.riotgames.com/account/password');
-      await wait(4000);
-      log('changing password...');
-      await page.type('input[data-testid="input-current-password"]', password);
-      await page.type('input[data-testid="input-new-password"]', newPassword);
-      await page.type('input[data-testid="input-new-password-confirm"]', newPassword);
-      await page.click('button[data-testid="submit-new-password"]');
-      log('Clicked button for changing password');
-      await wait(8000);
-      await redis.Update(
-        'passwordChangeRetries',
-        { threadID: process.env.threadID },
-        { passwordUpdated: true }
-      );
-      passwordUpdated = true;
-    }
-    if (!emailUpdated) {
-      log('going to email...');
-      await page.goto('https://account.riotgames.com/account/email');
-      await wait(4000);
-      log(`typing new email: ${newEmail}`);
-      await page.type('input[data-testid="input-new-email"]', newEmail);
-      await page.type('input[data-testid="input-new-email-confirm"]', newEmail);
-      await page.click('button[data-testid="submit-new-email"]');
-      log('Clicked button for changing email');
+    if (!onlyUpdateRegion) {
+      log('confirming password...');
+      await page.type("input[type='password']", passwordUpdated ? newPassword : password);
+      log('clicking button');
+      await page.click('#login-button');
+      await wait(5000);
+      if (!passwordUpdated) {
+        log('going to password');
+        await page.goto('https://account.riotgames.com/account/password');
+        await wait(4000);
+        log('changing password...');
+        await page.type('input[data-testid="input-current-password"]', password);
+        await page.type('input[data-testid="input-new-password"]', newPassword);
+        await page.type('input[data-testid="input-new-password-confirm"]', newPassword);
+        await page.click('button[data-testid="submit-new-password"]');
+        log('Clicked button for changing password');
+        await wait(8000);
+        await redis.Update(
+          'passwordChangeRetries',
+          { threadID: process.env.threadID },
+          { passwordUpdated: true }
+        );
+        passwordUpdated = true;
+      }
+      if (!emailUpdated) {
+        log('going to email...');
+        await page.goto('https://account.riotgames.com/account/email');
+        await wait(4000);
+        log(`typing new email: ${newEmail}`);
+        await page.type('input[data-testid="input-new-email"]', newEmail);
+        await page.type('input[data-testid="input-new-email-confirm"]', newEmail);
+        await page.click('button[data-testid="submit-new-email"]');
+        log('Clicked button for changing email');
 
-      await wait(8000);
-      await redis.Update('passwordChangeRetries', { threadID: process.env.threadID }, { emailUpdated: true });
-      emailUpdated = true;
+        await wait(8000);
+        await redis.Update(
+          'passwordChangeRetries',
+          { threadID: process.env.threadID },
+          { emailUpdated: true }
+        );
+        emailUpdated = true;
+      }
     }
     await browser.close();
     browserClosed = true;
-    await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
+    if (!onlyUpdateRegion) await redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
   } catch (e) {
     logError(e);
     if (!browserClosed) await browser.close();
