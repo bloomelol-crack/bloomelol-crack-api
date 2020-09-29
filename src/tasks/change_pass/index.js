@@ -133,8 +133,10 @@ const execute = async () => {
         log('going to password');
         await page.goto('https://account.riotgames.com/account/password');
         await wait(4000);
-        const mfa = await page.$('input[data-testid="input-mfa"]');
-        if (mfa) {
+        const foundMfa = await page.evaluate(
+          () => !!document.querySelector('input[data-testid="input-mfa"]')
+        );
+        if (foundMfa) {
           log('Found MFA! Updating account to EmailVerified: true');
           await Promise.all([
             account.update({ UserName: username }, { $set: { EmailVerified: true } }),
