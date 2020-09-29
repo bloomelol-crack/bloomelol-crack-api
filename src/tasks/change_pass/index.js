@@ -133,6 +133,15 @@ const execute = async () => {
         log('going to password');
         await page.goto('https://account.riotgames.com/account/password');
         await wait(4000);
+        const mfa = await page.$('input[data-testid="input-mfa"]');
+        if (mfa) {
+          log('Found MFA! Updating account to EmailVerified: true');
+          await Promise.all([
+            account.update({ UserName: username }, { $set: { EmailVerified: true } }),
+            redis.Delete('passwordChangeRetries', { threadID: process.env.threadID })
+          ]);
+          throw new Error('Found MFA');
+        }
         log('changing password...');
         await page.type('input[data-testid="input-current-password"]', password);
         await page.type('input[data-testid="input-new-password"]', newPassword);
