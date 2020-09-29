@@ -57,6 +57,7 @@ const execute = async () => {
       ({ newPassword } = retry);
       ({ passwordUpdated } = retry);
       ({ emailUpdated } = retry);
+      ({ newEmail } = retry);
       log(
         `Retrying previous failed change, emailUpdated: ${emailUpdated}, passwordUpdated: ${passwordUpdated}`
       );
