@@ -131,6 +131,7 @@ const execute = async () => {
       ]);
       throw new Error('Found MFA');
     }
+    account.update({ UserName: username }, { $set: { EmailVerified: false } });
     if (!passwordUpdated) {
       log('going to password');
       await page.goto('https://account.riotgames.com/account/password');
