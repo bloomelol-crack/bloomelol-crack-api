@@ -3,7 +3,9 @@ import puppeteer from 'puppeteer';
 import UserAgent from 'user-agents';
 
 import rollbar from 'utils/rollbar';
+import { account } from 'database/models';
 import env from '../../env.json';
+import { REGION_MAPPING } from 'routes/actions/account/constants';
 import { wait } from '../../utils/wait';
 import { url, emails } from './constants';
 
@@ -26,6 +28,20 @@ const execute = async () => {
     });
     const page = await browser.newPage();
     page.setUserAgent(new UserAgent().toString());
+    page.on('response', e => {
+      try {
+        e.json()
+          .then(json => {
+            if (json && json['re-auth'] && json['re-auth'].region && username) {
+              const { region } = json['re-auth'];
+              const mappedRegion = REGION_MAPPING[region];
+              if (!mappedRegion) return rollbar.error(`Failed to map region '${region}'`);
+              account.update({ UserName: username }, { $set: { Region: mappedRegion } });
+            }
+          })
+          .catch(() => {});
+      } catch (e) {}
+    });
 
     log('Going to page');
     await page.goto('https://www.leagueoflegends.com');
@@ -113,6 +129,11 @@ const execute = async () => {
       await page.click('button[data-testid="submit-new-password"]');
       log('Clicked button for changing password');
       await wait(8000);
+      await redis.Update(
+        'passwordChangeRetries',
+        { threadID: process.env.threadID },
+        { passwordUpdated: true }
+      );
       passwordUpdated = true;
     }
     if (!emailUpdated) {
@@ -126,6 +147,7 @@ const execute = async () => {
       log('Clicked button for changing email');
 
       await wait(8000);
+      await redis.Update('passwordChangeRetries', { threadID: process.env.threadID }, { emailUpdated: true });
       emailUpdated = true;
     }
     await browser.close();
