@@ -10,5 +10,7 @@ export const REGION_MAPPING = {
   BR1: 'br',
   RU: 'ru',
   KR: 'kr',
-  PBE1: 'pbe'
+  PBE1: 'pbe',
+  JP: 'jp',
+  JP1: 'jp'
 };
