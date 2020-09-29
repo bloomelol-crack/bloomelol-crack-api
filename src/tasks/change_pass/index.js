@@ -139,8 +139,8 @@ const execute = async () => {
     if (!emailUpdated) {
       log('going to email...');
       await page.goto('https://account.riotgames.com/account/email');
-      await wait(8000);
-      log('typing new email...');
+      await wait(4000);
+      log(`typing new email: ${newEmail}`);
       await page.type('input[data-testid="input-new-email"]', newEmail);
       await page.type('input[data-testid="input-new-email-confirm"]', newEmail);
       await page.click('button[data-testid="submit-new-email"]');
