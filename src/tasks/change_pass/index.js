@@ -34,7 +34,7 @@ const execute = async () => {
           .then(json => {
             if (json && json.error === 'auth_failure' && username) {
               account.delete({ UserName: username });
-              redis.Delete('passwordChangeRetries', { threadID: retry.threadID });
+              redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
               return rollbar.error(`Deleting account with bad credentials: ${username}:${password}`);
             }
             if (json && json['re-auth'] && json['re-auth'].region && username) {
