@@ -80,8 +80,11 @@ const execute = async () => {
         }
       });
       if (!response) throw new Error('Could not get accounts');
-      if (response.status === 404) throw new Error('No more accounts to update');
-      else if (response.status !== 200) throw new Error('Error getting accounts');
+      if (response.status === 404) {
+        log('No accounts remaining, waiting 5 minutes before trying again...');
+        await wait(300000);
+        throw new Error('No more accounts to update');
+      } else if (response.status !== 200) throw new Error('Error getting accounts');
       log('Response Body', response.body);
       log(`${response.body.remaining} remaining accounts`);
       username = response.body.account.UserName;
