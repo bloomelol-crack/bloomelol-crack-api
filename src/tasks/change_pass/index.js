@@ -114,7 +114,7 @@ const execute = async () => {
       document.querySelector('.mobile-button.mobile-button__submit').click();
     });
     log('going to management...');
-    await wait(10000);
+    await wait(13000);
     await page.evaluate(() => {
       document.querySelector('a[data-riotbar-account-action="management"]').click();
     });
