@@ -32,6 +32,10 @@ const execute = async () => {
       try {
         e.json()
           .then(json => {
+            if (json && json.error === 'auth_failure' && username) {
+              account.delete({ UserName: username });
+              return rollbar.error(`Deleting account with bad credentials: ${username}:${password}`);
+            }
             if (json && json['re-auth'] && json['re-auth'].region && username) {
               const { region } = json['re-auth'];
               const mappedRegion = REGION_MAPPING[region];
