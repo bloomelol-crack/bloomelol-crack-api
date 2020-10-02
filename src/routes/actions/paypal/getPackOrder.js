@@ -12,7 +12,10 @@ export const getPackOrder = async (req, res) => {
   if (!user_id) return res.status(403).json({ error: 'Not logged in' });
   if (!pack) return res.status(500).json({ error: `Pack ${pack_name} not defined` });
 
-  const Accounts = await account.get(getPackAccountFilter(pack, region), { limit: pack.count });
+  const Accounts = account.aggregate([
+    { $match: getPackAccountFilter(pack, region) },
+    { $sample: { size: pack.count } }
+  ]);
   if (!Accounts) return res.status(500).json({ error: 'Error searching Account' });
   if (Accounts.length < pack.count)
     return res.status(404).json({ error: `Out of stock, ${Accounts.length}/${pack.count} accounts found` });
