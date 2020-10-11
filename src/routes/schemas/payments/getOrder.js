@@ -44,6 +44,11 @@ export const getOrder = {
         .valid(...Object.keys(HACKS))
         .required(),
       otherwise: joi.forbidden()
+    }),
+    licence_id: joi.when('type', {
+      is: ORDER_TYPES.HACK,
+      then: joi.number().required(),
+      otherwise: joi.forbidden()
     })
   })
 };
