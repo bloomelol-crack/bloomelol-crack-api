@@ -1,5 +1,3 @@
-const { message } = require('../../../database/models');
-
 const { emit, receive, broadcast } = require('./constants');
 
 /**
@@ -17,7 +15,7 @@ const definePostMessage = socket => {
       Status: 'Sent',
       createdAt: Date.now()
     };
-    const saved = await message.save(newMessage);
+    const saved = await Message.save(newMessage);
     if (!saved) return socket.emit(emit.MESSAGE_SEND_ERROR, messageUid);
 
     socket.broadcast.emit(broadcast.MESSAGE_CREATED, newMessage);

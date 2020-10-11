@@ -1,11 +1,12 @@
 import 'load_env';
 import 'globals';
+import 'database';
 import throng from 'throng';
 import env from './env.json';
 
 const start = threadID => {
   process.env.threadID = threadID;
-  require('./utils/middlewares');
+  require('./utils');
   require('./routes/schemas');
   require('./database');
   require('./tasks');

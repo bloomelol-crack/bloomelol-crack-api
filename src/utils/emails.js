@@ -4,10 +4,6 @@ const fs = require('fs');
 
 const { EMAIL, EMAIL_USER } = require('env.json');
 
-const rollbar = require('./rollbar');
-const projectDir = require('./projectDir');
-const { ses } = require('./aws');
-
 const templates = {};
 mustache.escape = text => text;
 
@@ -27,7 +23,7 @@ const send = (from, to, subject, text, html) =>
       return resolve(null);
     }
     to = Array.isArray(to) ? to : [to];
-    ses.sendEmail(
+    aws.ses.sendEmail(
       {
         Destination: { ToAddresses: to },
         Message: {
@@ -100,4 +96,4 @@ const getEmail = (template, lang, data) => {
   };
 };
 
-module.exports = { send, getDataErrors, templates, getEmail };
+globalThis.emails = { send, getDataErrors, templates, getEmail };

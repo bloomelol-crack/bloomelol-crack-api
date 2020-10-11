@@ -1,4 +1,4 @@
-import { HACKS } from './constants';
+import { HACKS } from '../../../constants';
 
 /**
  * @param {import('express').Request} req

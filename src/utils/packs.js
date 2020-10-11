@@ -8,9 +8,9 @@ const getPackAccountFilter = (pack, region) => ({
   Level: getLevelFilter(pack),
   ...(!region || region === 'any' ? {} : { Region: region }),
   ...(pack.email_verified ? { EmailVerified: pack.email_verified } : {}),
-  PaypalPaymentID: { $exists: false },
+  PaymentID: { $exists: false },
   UserID: { $exists: false },
   ...(pack.filter || {})
 });
 
-module.exports = { getLevelFilter, getPackAccountFilter };
+globalThis.packs = { getLevelFilter, getPackAccountFilter };

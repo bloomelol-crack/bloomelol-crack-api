@@ -2,7 +2,7 @@
 import Rollbar from 'rollbar';
 import env from 'env.json';
 
-module.exports = new Rollbar({
+globalThis.rollbar = new Rollbar({
   accessToken: env.ROLLBAR_ACCESS_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,

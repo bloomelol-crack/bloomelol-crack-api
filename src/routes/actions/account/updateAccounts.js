@@ -1,7 +1,5 @@
 import moment from 'moment';
 
-import { account } from 'database/models';
-
 import { REGION_MAPPING } from './constants';
 
 export const updateAccounts = async (req, res) => {
@@ -18,7 +16,7 @@ export const updateAccounts = async (req, res) => {
     Region = REGION_MAPPING[Region] || null;
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
-      if (code === 'summonernotcreated') account.update({ UserName }, { $set: { Region, Level: 0 } });
+      if (code === 'summonernotcreated') Account.update({ UserName }, { $set: { Region, Level: 0 } });
 
       continue;
     }
@@ -44,10 +42,10 @@ export const updateAccounts = async (req, res) => {
     accountNames[i] = UserName;
     updates.push(
       (async () => {
-        const Accounts = await account.get({ UserName });
-        if (!Accounts) return null;
-        if (!Accounts.length)
-          return account.save({
+        const accounts = await Account.get({ UserName });
+        if (!accounts) return null;
+        if (!accounts.length)
+          return Account.save({
             UserName,
             Password,
             Region,
@@ -61,8 +59,8 @@ export const updateAccounts = async (req, res) => {
             Skins
           });
         let eloUpdate = {};
-        if (Accounts[0].Level !== Level) eloUpdate = { Elo: 'unknown' };
-        return account.update(
+        if (accounts[0].Level !== Level) eloUpdate = { Elo: 'unknown' };
+        return Account.update(
           { UserName },
           {
             $set: {

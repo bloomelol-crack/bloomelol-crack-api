@@ -1,8 +1,6 @@
-import { sessionMiddleware } from 'utils/middlewares';
-
 export const logout = {
   method: 'post',
   paths: '/logout',
-  middlewares: sessionMiddleware,
+  middlewares: middlewares.sessionMiddleware,
   errorMessage: 'Bad parameters'
 };

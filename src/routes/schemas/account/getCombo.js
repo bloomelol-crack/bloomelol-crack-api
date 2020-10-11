@@ -1,6 +1,6 @@
 import joi from '@hapi/joi';
 
-import { REGIONS } from 'Constants';
+import { REGIONS } from '../../../constants';
 
 export const getCombo = {
   method: 'post',

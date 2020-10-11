@@ -1,8 +1,6 @@
-import { sessionMiddleware } from 'utils/middlewares';
-
 export const getCurrentUser = {
   method: 'get',
   paths: '/session/current_user',
-  middlewares: sessionMiddleware,
+  middlewares: middlewares.sessionMiddleware,
   errorMessage: 'Bad parameters'
 };

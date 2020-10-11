@@ -1,5 +1,3 @@
-const { message } = require('../../../database/models');
-
 const { receive, broadcast } = require('./constants');
 
 /**
@@ -8,7 +6,7 @@ const defineEmitReceivedMessage = socket => {
   socket.on(receive.MESSAGE_RECEIVED, async messageUids => {
     if (!messageUids || !messageUids.length) return;
     socket.broadcast.emit(broadcast.MESSAGE_RECEIVED, messageUids);
-    message.update({ Uid: { $in: messageUids } }, { $set: { Status: 'Received' } });
+    Message.update({ Uid: { $in: messageUids } }, { $set: { Status: 'Received' } });
   });
 };
 

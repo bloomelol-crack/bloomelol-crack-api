@@ -1,5 +1,3 @@
-const { message } = require('../../../database/models');
-
 const { emit, receive } = require('./constants');
 
 /**
@@ -7,9 +5,9 @@ const { emit, receive } = require('./constants');
 const defineGetMessages = socket => {
   socket.on(receive.GET_MESSAGES, async ({ skip, count }) => {
     if (!count) return socket.emit(emit.GET_MESSAGES_FAILURE);
-    const Messages = await message.get({}, { sort: { _id: -1 }, skip, limit: count });
-    if (!Messages) return socket.emit(emit.GET_MY_ACCOUNTS_FAILURE);
-    socket.emit(emit.GET_MESSAGES_SUCCESS, Messages.reverse());
+    const messages = await Message.get({}, { sort: { _id: -1 }, skip, limit: count });
+    if (!messages) return socket.emit(emit.GET_MY_ACCOUNTS_FAILURE);
+    socket.emit(emit.GET_MESSAGES_SUCCESS, messages.reverse());
   });
 };
 

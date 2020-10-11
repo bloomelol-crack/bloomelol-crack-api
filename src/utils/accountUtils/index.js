@@ -11,4 +11,4 @@ const getAccountPrice = account =>
     (ELO_PRICES[account.Elo] || 0)
   ).toFixed(2);
 
-module.exports = { getAccountPrice };
+globalThis.accountUtils = { getAccountPrice };

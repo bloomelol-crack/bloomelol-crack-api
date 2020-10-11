@@ -1,5 +1,3 @@
-const redis = require('../../../utils/redis');
-
 const { REGION_MAPPING } = require('./constants');
 
 const programRegions = Object.keys(REGION_MAPPING);

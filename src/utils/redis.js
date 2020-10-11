@@ -1,13 +1,9 @@
 import { check } from '@lefcott/filter-json';
-
 import Redis from 'redis';
 
 import env from 'env.json';
 
-import rollbar from './rollbar';
-
 const redis = Redis.createClient(env.REDISCLOUD_URL);
-
 let active = false;
 
 redis.on('error', err => {
@@ -163,4 +159,7 @@ redis.Update = (key, where = {}, update, strRegisters) =>
     });
   });
 
-module.exports = redis;
+/**
+ * @type { import('redis').RedisClient & {Find: Function, Add: Function, Set: Function, Get: Function, Delete: Function, Update: Function, isActive: Function}}
+ */
+globalThis.redis = redis;

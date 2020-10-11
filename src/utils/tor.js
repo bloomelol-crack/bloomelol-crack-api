@@ -4,9 +4,6 @@ import tor from 'tor-request';
 
 import { TOR_PASSWORD } from 'env.json';
 
-import { wait } from './wait';
-import { getCookies } from './cookies';
-
 tor.TorControlPort.password = TOR_PASSWORD;
 const limits = [
   {
@@ -37,7 +34,7 @@ const limits = [
 function TorRequest({ options, timeout = 30000, id } = {}) {
   return new Promise(async resolve => {
     let resolved = false;
-    const timeoutId = setTimeout(() => {
+    setTimeout(() => {
       resolved = true;
       resolve(false);
     }, timeout);
@@ -55,7 +52,7 @@ function TorRequest({ options, timeout = 30000, id } = {}) {
         return resolve(null);
       }
       const { statusCode: status, headers } = response;
-      resolve({ status, body, headers });
+      resolve({ status, body, headers, id });
     });
   });
 }
@@ -102,7 +99,6 @@ const restartTor = async () => {
   return restartTorPromise;
 };
 
-let firstAfterRestart;
 /**
  * Checks rate and makes request with Tor
  * @param {TorConfiguration[]} configs Configuration for the request
@@ -145,12 +141,11 @@ async function UnlimitedTorRequest(configs) {
     const setCookie = Array.isArray(response.headers['set-cookie']) ? response.headers['set-cookie'] : null;
     if (!setCookie) continue;
     configs[i + 1].options.headers = configs[i + 1].options.headers || {};
-    const prevCookie = configs[i + 1].options.headers.cookie || '';
-    configs[i + 1].options.headers.cookie = getCookies(setCookie);
+    configs[i + 1].options.headers.cookie = cookies.getCookies(setCookie);
   }
   return responses;
 }
 
-module.exports = { Tor: UnlimitedTorRequest };
+globalThis.tor = { Tor: UnlimitedTorRequest };
 
 // sudo /etc/init.d/tor restart

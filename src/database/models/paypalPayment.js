@@ -7,6 +7,7 @@ export const paypalPayment = mongoose.model(
     {
       UserID: { type: String, required: true },
       OrderID: { type: String, required: true },
+      Action: { type: String, required: true }, // assign_accounts | associate_hack
       OrderStatus: { type: String, required: true },
       Amount: { type: Number, required: true },
       Currency: { type: String, required: true },

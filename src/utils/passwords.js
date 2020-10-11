@@ -1,5 +1,5 @@
-const { uuid } = require('uuidv4');
-const bcrypt = require('bcryptjs');
+import { uuid } from 'uuidv4';
+import bcrypt from 'bcryptjs';
 
 const encrypt = pass =>
   new Promise(resolve => bcrypt.hash(pass, 6, (err, hash) => resolve(err ? null : hash)));
@@ -19,4 +19,4 @@ const randomCode = digits => {
   return code;
 };
 
-module.exports = { encrypt, compare: bcrypt.compareSync, largeID, randomCode };
+globalThis.passwords = { encrypt, compare: bcrypt.compareSync, largeID, randomCode };

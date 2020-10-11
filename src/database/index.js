@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+import './models';
 import { MONGODB_URL } from 'env.json';
 
 mongoose.set('useCreateIndex', true);

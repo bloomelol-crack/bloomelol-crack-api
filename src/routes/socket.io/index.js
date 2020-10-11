@@ -1,6 +1,3 @@
-const { socketIo } = require('../../utils/middlewares');
-const redis = require('../../utils/redis');
-
 const allAccounts = require('./all_accounts');
 const myAccounts = require('./my_accounts');
 const packs = require('./packs');
@@ -8,7 +5,7 @@ const messages = require('./messages');
 const logins = require('./logins');
 const { USER_SOCKETS_KEY, receive, emit } = require('./constants/connection');
 
-socketIo.sockets.on('connect', socket => {
+middlewares.socketIo.sockets.on('connect', socket => {
   let userId;
 
   socket.emit(emit.WHO_ARE_YOU);
@@ -26,6 +23,6 @@ socketIo.sockets.on('connect', socket => {
   logins.define(socket);
 });
 
-redis.Delete(USER_SOCKETS_KEY, {});
+export const { socketIo } = middlewares;
 
-module.exports = { socketIo };
+redis.Delete(USER_SOCKETS_KEY, {});

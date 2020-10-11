@@ -6,4 +6,4 @@ const haveSameElements = (arr1 = [], arr2 = []) => {
 
 const randomSort = () => (Math.random() > 0.5 ? 1 : -1);
 
-module.exports = { haveSameElements, randomSort };
+globalThis.arrays = { haveSameElements, randomSort };

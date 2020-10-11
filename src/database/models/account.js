@@ -25,7 +25,7 @@ export const account = mongoose.model(
       MachineIndex: Number,
       Price: Number,
       UserID: String,
-      PaypalPaymentID: String,
+      PaymentID: String,
       NotInRegions: [String],
       HasValorant: Boolean,
       Valorant: {}

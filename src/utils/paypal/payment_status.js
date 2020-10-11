@@ -1,9 +1,7 @@
-const { axios } = require('../request');
-const env = require('env.json');
+import env from '../../env.json';
+import { getToken } from './token';
 
-const { getToken } = require('./token');
-
-const getPaymentStatus = async order_id => {
+export const getPaymentStatus = async order_id => {
   const token = await getToken();
   if (!token) return null;
   const options = {
@@ -11,7 +9,5 @@ const getPaymentStatus = async order_id => {
     method: 'get',
     headers: { Authorization: `Bearer ${token}` }
   };
-  return axios({ options });
+  return request.axios({ options });
 };
-
-module.exports = { getPaymentStatus };

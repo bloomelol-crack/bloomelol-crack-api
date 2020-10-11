@@ -1,10 +1,7 @@
-const { axios } = require('../request');
-const rollbar = require('../rollbar');
-const env = require('env.json');
+import env from '../../env.json';
+import { getToken } from './token';
 
-const { getToken } = require('./token');
-
-const captureOrder = async order_id => {
+export const captureOrder = async order_id => {
   const token = await getToken();
   if (!token) return null;
   const options = {
@@ -12,9 +9,9 @@ const captureOrder = async order_id => {
     method: 'post',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
   };
-  const response = await axios({ options });
+  const response = await request.axios({ options });
   if (!response || response.status < 200 || response.status > 299) {
-    rollbar.error(
+    logError(
       `Failed to capture PayPal order.\nRequest:\n${JSON.stringify(
         options,
         null,
@@ -25,5 +22,3 @@ const captureOrder = async order_id => {
   }
   return response;
 };
-
-module.exports = { captureOrder };

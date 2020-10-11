@@ -1,7 +1,4 @@
-const { axios } = require('../request');
-const rollbar = require('../rollbar');
-const env = require('env.json');
-const { wait } = require('../wait');
+import env from '../../env.json';
 
 let token = null;
 
@@ -12,7 +9,7 @@ const updateToken = async () => {
     params: { grant_type: 'client_credentials' },
     auth: { username: env.PAYPAL_CLIENT_ID, password: env.PAYPAL_SECRET }
   };
-  const response = await axios({ options });
+  const response = await request.axios({ options });
   if (!response || response.status !== 200) {
     rollbar.error(
       `Failed to get PayPal token.\nRequest:\n${JSON.stringify(
@@ -29,7 +26,7 @@ const updateToken = async () => {
   token = access_token;
 };
 
-const getToken = async ({ _tries = 8 } = {}) => {
+export const getToken = async ({ _tries = 8 } = {}) => {
   if (!token) await updateToken();
   if (!token && _tries >= 0) {
     await wait(5000);
@@ -37,5 +34,3 @@ const getToken = async ({ _tries = 8 } = {}) => {
   }
   return token;
 };
-
-module.exports = { getToken };

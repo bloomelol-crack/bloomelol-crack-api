@@ -1,12 +1,7 @@
-const { uuid } = require('uuidv4');
-
-const { axios } = require('../request');
-const rollbar = require('../rollbar');
-const env = require('env.json');
-const { paypalPayment } = require('../../database/models');
-
-const { getToken } = require('./token');
-const { getRandomService } = require('./constants');
+import env from 'env.json';
+import { getToken } from './token';
+import { getRandomService } from './constants';
+import { PAYMENT_PLATFORMS } from '../../constants';
 
 const [webUrl] = env.WEB_ORIGINS.split(/\s*,\s*/g);
 
@@ -15,9 +10,10 @@ const [webUrl] = env.WEB_ORIGINS.split(/\s*,\s*/g);
  * @param {string} user_id
  * @param {number} price
  * @param {string} currency
- * @returns {{link: string, order: {id: string, status: string}}>}
+ * @param {string} action
+ * @returns {{link: string, order: {id: string, status: string}, payment: object}>}
  */
-const getOrder = async (user_id, price, currency) => {
+export const getOrder = async (user_id, price, currency, action) => {
   if (!price || !currency) {
     rollbar.error(`Tried to create a payment with price "${price}" and currency ${currency}`);
     return { link: null, order: null };
@@ -47,7 +43,7 @@ const getOrder = async (user_id, price, currency) => {
       }
     }
   };
-  const response = await axios({ options });
+  const response = await request.axios({ options });
   if (!response || response.status < 200 || response.status > 299) {
     rollbar.error(
       `Failed to get PayPal payment link.\nRequest:\n${JSON.stringify(
@@ -58,18 +54,18 @@ const getOrder = async (user_id, price, currency) => {
     );
     return { link: null, order: null };
   }
-  const [{ href: Link }] = response.body.links.filter(l => l.rel === 'approve');
+  const [{ href: Link }] = response.body.links.filter(link => link.rel === 'approve');
   const { id: OrderID, status: OrderStatus } = response.body;
-  paypalPayment.save({
+  const payment = await Payment.save({
     UserID: user_id,
     OrderID,
+    Platform: PAYMENT_PLATFORMS.PAYPAL,
+    Action: action,
     OrderStatus,
     Amount: price,
     Currency: currency,
     Link,
     Active: false
   });
-  return { link: Link, order: response.body };
+  return { link: Link, order: response.body, payment };
 };
-
-module.exports = { getOrder };

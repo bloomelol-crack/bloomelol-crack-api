@@ -32,4 +32,4 @@ const setCookies = (cookie, set) => {
   return cookie;
 };
 
-module.exports = { getCookies, jsonCookie, strCookie, setCookies };
+globalThis.cookies = { getCookies, jsonCookie, strCookie, setCookies };

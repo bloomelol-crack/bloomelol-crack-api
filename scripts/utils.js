@@ -1,6 +1,5 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
-const fs = require('fs');
 const { exec } = require('child_process');
 require('colors');
 

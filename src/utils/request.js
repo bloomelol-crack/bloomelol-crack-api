@@ -1,14 +1,9 @@
 /* eslint-disable no-await-in-loop */
-import { request } from 'database/models';
-import { NODE_ENV } from 'env.json';
-
 import { uuid } from 'uuidv4';
-
 import { check } from '@lefcott/filter-json';
 import axios from 'axios';
 
-import { Tor } from './tor';
-import rollbar from './rollbar';
+import { NODE_ENV } from 'env.json';
 
 function Axios({ options, timeout = 30000, id } = {}) {
   return new Promise(resolve => {
@@ -53,7 +48,7 @@ const Persist = lib => async (Configuration = {}) => {
   }
   let responses = [];
   if (lib === 'axios') responses.push(await Axios(Configuration[0]));
-  if (lib === 'tor') responses = await Tor(Configuration);
+  if (lib === 'tor') responses = await tor.Tor(Configuration);
   for (let i = 0; i < Configuration.length; i += 1) {
     const config = Configuration[i];
     if (!config.persist) continue;
@@ -69,8 +64,9 @@ const Persist = lib => async (Configuration = {}) => {
       if (!success || !check(response, condition)) return;
     }
     const { url, method, data, headers, params } = config.options;
-    const reg = response
-      ? {
+    let reg;
+    if (response)
+      reg = {
         uid: config.id,
         env: NODE_ENV,
         url,
@@ -84,8 +80,9 @@ const Persist = lib => async (Configuration = {}) => {
           body: response.body,
           headers: response.headers
         }
-      }
-      : {
+      };
+    else
+      reg = {
         uid: config.id,
         env: NODE_ENV,
         url,
@@ -96,7 +93,7 @@ const Persist = lib => async (Configuration = {}) => {
         params,
         response: { status: 'failed' }
       };
-    request.save(reg);
+    Request.save(reg);
   }
   return lib === 'axios' ? responses[0] : lib === 'tor' ? responses : responses;
 };
@@ -135,4 +132,4 @@ const polling = (
     }, interval);
   });
 
-module.exports = { axios: Persist('axios'), tor: Persist('tor'), polling };
+globalThis.request = { axios: Persist('axios'), tor: Persist('tor'), polling };

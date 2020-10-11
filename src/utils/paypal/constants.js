@@ -1,4 +1,4 @@
-const SERVICES = [
+export const SERVICES = [
   'Servicios de PHP',
   'Backend en Node.js',
   'Landing page',
@@ -10,9 +10,4 @@ const SERVICES = [
   'Asesoramiento en PHP'
 ];
 
-module.exports = Object.freeze({
-  SERVICES,
-  getRandomService() {
-    return SERVICES[Math.floor(Math.random() * SERVICES.length)];
-  }
-});
+export const getRandomService = () => SERVICES[Math.floor(Math.random() * SERVICES.length)];

@@ -14,6 +14,14 @@ export const user = mongoose.model(
       Language: { type: String, default: LANGUAGES.EN },
       EmailVerified: { type: Boolean, default: false },
       ConfirmID: String,
+      Hacks: [
+        {
+          Code: String,
+          Enabled: Boolean,
+          PaymentID: String,
+          ExpirationDate: Date
+        }
+      ],
       Permissions: {
         ViewLogins: { type: Boolean, default: false }
       }

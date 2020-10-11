@@ -1,9 +1,7 @@
-import { account } from 'database/models';
-
 export const getCombo = async (req, res) => {
   const { region, count, min_level, not_in_regions } = req.body;
   let notFoundOnRegion = false;
-  let Accounts = await account.get(
+  let accounts = await Account.get(
     {
       NotInRegions: { $ne: region },
       Level: { $gte: min_level },
@@ -13,10 +11,10 @@ export const getCombo = async (req, res) => {
     },
     { limit: count, sort: { Level: -1 }, projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
   );
-  if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
-  if (!Accounts.length) {
+  if (!accounts) return res.status(500).json({ error: 'Problem finding accounts' });
+  if (!accounts.length) {
     notFoundOnRegion = true;
-    Accounts = await account.get(
+    accounts = await Account.get(
       {
         NotInRegions: { $ne: region },
         Level: { $gte: min_level },
@@ -24,9 +22,9 @@ export const getCombo = async (req, res) => {
       },
       { limit: count, sort: { $Level: -1 }, projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
     );
-    if (!Accounts) return res.status(500).json({ error: 'Problem finding accounts' });
+    if (!accounts) return res.status(500).json({ error: 'Problem finding accounts' });
   }
-  if (!Accounts.length)
+  if (!accounts.length)
     return res
       .status(404)
       .send(`No encontramos cuentas con nivel mayor o igual a ${min_level} en "${region}".`);
@@ -37,6 +35,6 @@ export const getCombo = async (req, res) => {
         notFoundOnRegion
           ? `INFO: ESTAS CUENTAS SON DE TODAS LAS REGIONES (no encontramos en "${region}.op.gg")\n\n`
           : ''
-      }${Accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n')}\n`
+      }${accounts.map(acc => `${acc.UserName}:${acc.NewPassword || acc.Password}`).join('\n')}\n`
     );
 };

@@ -1,5 +1,5 @@
-const { getOrder } = require('./pay_link');
-const { getPaymentStatus } = require('./payment_status');
-const { captureOrder } = require('./capture_order');
+import { getOrder } from './pay_link';
+import { getPaymentStatus } from './payment_status';
+import { captureOrder } from './capture_order';
 
-module.exports = { getOrder, getPaymentStatus, captureOrder };
+globalThis.paypal = { getOrder, getPaymentStatus, captureOrder };

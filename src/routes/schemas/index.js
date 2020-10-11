@@ -6,9 +6,6 @@ import joi from '@hapi/joi';
 import fs from 'fs';
 import url from 'url';
 
-import { router } from 'utils/middlewares';
-import rollbar from '../../utils/rollbar';
-import projectDir from '../../utils/projectDir';
 import env from 'env.json';
 
 const SCHEMA = {
@@ -80,7 +77,7 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
 const getRoute = (method, paths, schemaName, schema, epName, callbacks) => {
   if (!Array.isArray(callbacks)) callbacks = [callbacks];
   const validator = getValidator(schemaName, schema);
-  router[method](paths, validator, ...callbacks);
+  middlewares.router[method](paths, validator, ...callbacks);
   return req =>
     new Promise(resolve => {
       if (!req) {
@@ -93,7 +90,7 @@ const getRoute = (method, paths, schemaName, schema, epName, callbacks) => {
       const endings = statusCode => ({
         send: body => resolve({ statusCode, body }),
         json: body => resolve({ statusCode, body }),
-        redirect: url => resolve({ statusCode, body: { message: `Redirecting to ${url}` } }),
+        redirect: _url => resolve({ statusCode, body: { message: `Redirecting to ${_url}` } }),
         zip: () => resolve({ statusCode, body: { message: 'Zipping file' } }),
         render: file => resolve({ statusCode, body: { message: `Rendering file ${file}` } }),
         sendFile: file => resolve({ statusCode, body: { message: `Sending file ${file}` } })
@@ -137,7 +134,7 @@ const getRoutes = () => {
     if (!actions[name]) {
       rollbar.error(
         `No action was found for schema "${name}". Won't define associated routes.
-Please define it in "server/routes/actions/${name}.js"`
+Please define it in "src/routes/actions/${name}.js"`
       );
       continue;
     }
@@ -150,7 +147,7 @@ Please define it in "server/routes/actions/${name}.js"`
       if (!actions[name][epName]) {
         rollbar.error(
           `No action was found for schema "${name}" and endpoint "${epName}". Won't define that endpoint.
-Please review "server/routes/actions/${name}.js"`
+Please review "src/routes/actions/${name}.js"`
         );
         continue;
       }

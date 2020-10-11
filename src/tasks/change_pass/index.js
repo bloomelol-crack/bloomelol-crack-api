@@ -2,15 +2,9 @@ import 'globals';
 import puppeteer from 'puppeteer';
 import UserAgent from 'user-agents';
 
-import rollbar from 'utils/rollbar';
-import { account } from 'database/models';
 import env from '../../env.json';
 import { REGION_MAPPING } from 'routes/actions/account/constants';
-import { wait } from '../../utils/wait';
 import { url, emails } from './constants';
-
-const { axios } = require('../../utils/request');
-const redis = require('../../utils/redis');
 
 const execute = async () => {
   let username = null;
@@ -33,7 +27,7 @@ const execute = async () => {
         e.json()
           .then(json => {
             if (json && json.error === 'auth_failure' && username) {
-              account.delete({ UserName: username });
+              Account.delete({ UserName: username });
               redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
               return rollbar.error(`Deleting account with bad credentials: ${username}:${password}`);
             }
@@ -41,11 +35,13 @@ const execute = async () => {
               const { region } = json['re-auth'];
               const mappedRegion = REGION_MAPPING[region];
               if (!mappedRegion) return rollbar.error(`Failed to map region '${region}'`);
-              account.update({ UserName: username }, { $set: { Region: mappedRegion } });
+              Account.update({ UserName: username }, { $set: { Region: mappedRegion } });
             }
           })
           .catch(() => {});
-      } catch (e) {}
+      } catch (error) {
+        ('do nothing');
+      }
     });
 
     log('Going to page');
@@ -68,7 +64,7 @@ const execute = async () => {
       );
       await redis.Delete('passwordChangeRetries', { threadID: retry.threadID });
     } else {
-      const response = await axios({
+      const response = await request.axios({
         options: {
           url,
           method: 'post',
@@ -131,7 +127,7 @@ const execute = async () => {
     if (foundMfa) {
       log('Found MFA! Updating account to EmailVerified: true');
       await Promise.all([
-        account.update(
+        Account.update(
           { UserName: username },
           { $set: { EmailVerified: true }, $unset: { NewEmail: 1, NewPassword: 1 } }
         ),
@@ -139,7 +135,7 @@ const execute = async () => {
       ]);
       throw new Error('Found MFA');
     }
-    account.update({ UserName: username }, { $set: { EmailVerified: false } });
+    Account.update({ UserName: username }, { $set: { EmailVerified: false } });
     if (!passwordUpdated) {
       log('going to password');
       await page.goto('https://account.riotgames.com/account/password');

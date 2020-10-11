@@ -9,9 +9,6 @@ const http = require('http');
 
 const env = require('env.json');
 
-const redis = require('./redis');
-const rollbar = require('./rollbar');
-
 const webOrigins = env.WEB_ORIGINS.split(/\s*,\s*/g);
 const app = express();
 const server = http.createServer(app);
@@ -69,4 +66,4 @@ try {
   logError(e);
 }
 
-module.exports = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };
+globalThis.middlewares = { app, router, sessionMiddleware, socketIo: socketIo.listen(server) };
