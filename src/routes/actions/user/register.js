@@ -23,7 +23,7 @@ export const register = async (req, res) => {
   if (!users) return res.status(500).json({ error: 'Problem finding users after register' });
   [user] = users;
   if (!user) return res.status(500).json({ error: 'User not found after register.' });
-  req.session.user = user;
+  req.session.user_id = user._id;
   req.session.save();
   res.status(200).json({ redirectTo: '/dashboard' });
 

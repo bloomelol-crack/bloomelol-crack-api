@@ -41,7 +41,8 @@ export const activate = async (req, res) => {
       const { hack } = req.session;
       if (!hack) return res.status(400).json({ error: 'hack not in session' });
       const userUdpated = await User.updateOrPush(
-        { _id: user_id, 'Hacks.Code': hack.Code },
+        { _id: user_id },
+        { 'Hacks.Code': hack.Code },
         { 'Hacks.$': hack }
       );
       if (!userUdpated)

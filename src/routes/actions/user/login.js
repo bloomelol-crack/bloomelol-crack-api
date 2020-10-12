@@ -6,7 +6,7 @@ export const login = async (req, res) => {
   if (!user) return res.status(403).json({ error: 'Wrong email or password.' });
   if (!passwords.compare(password, user.Password))
     return res.status(403).json({ error: 'Wrong email or password.' });
-  req.session.user = user;
+  req.session.user_id = user._id;
   req.session.save();
   res.status(200).json({ redirectTo: '/dashboard' });
   Login.save({ UserID: user._id, UserName: user.Name, UserSurname: user.Surname, IP: req.ip });

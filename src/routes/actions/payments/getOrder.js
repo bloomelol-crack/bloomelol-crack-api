@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { PAYMENT_PLATFORMS, ORDER_ACTIONS, ORDER_TYPES, PACKS, HACKS } from '../../../constants';
+import { PAYMENT_PLATFORMS, ORDER_ACTIONS, ORDER_TYPES, PACKS, HACKS, ERROR_CODES } from '../../../constants';
 
 /**
  * Get Payment order
@@ -9,7 +9,7 @@ import { PAYMENT_PLATFORMS, ORDER_ACTIONS, ORDER_TYPES, PACKS, HACKS } from '../
  */
 export const getOrder = async (req, res) => {
   const { platform, type } = req.query;
-  const { _id: user_id } = req.session.user || {};
+  const { user_id } = req.session;
   if (!user_id) return res.status(403).json({ error: 'Not logged in' });
 
   let orderAction;
@@ -56,9 +56,22 @@ export const getOrder = async (req, res) => {
       if (!hack) return res.status(500).json({ error: `Hack ${hack_code} is not defined` });
       const licence = hack.licences.find((_licence, i) => i === licence_id);
       if (!licence) return res.status(500).json({ error: `Licence with id ${licence_id} is not defined` });
+
+      const users = await User.get({ _id: user_id });
+      if (!users) return res.status(500).json({ error: 'Failed to get user' });
+      if (!users.length) return res.status(404).json({ error: 'User not found' });
+      const [user] = users;
+      const [userHack] = user.Hacks.filter(_userHack => _userHack.Code === hack_code && _userHack.Enabled);
+      if (userHack)
+        return res.status(409).json({
+          error: 'Hack is already puchased by this user',
+          error_code: ERROR_CODES.ALREADY_PURCHASED,
+          hack: userHack
+        });
+
       ({ price } = licence);
       const expirationDate = moment().add(licence.months, 'months');
-      afterOrder = async payment => {
+      afterOrder = payment => {
         req.session.hack = {
           Code: hack_code,
           Enabled: false,

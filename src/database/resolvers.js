@@ -63,11 +63,15 @@ const update = Model => (where, obj) =>
  * Updates one array element in one document or pushes to it
  * @param {import('mongoose').Model} Model
  */
-const updateOrPush = Model => (where, obj) =>
+const updateOrPush = Model => (where, arrayWhere, obj) =>
   new Promise(async resolve => {
-    const foundDocs = await count(Model)(where);
+    const completeWhere = { ...where, ...arrayWhere };
+    const foundDocs = await count(Model)(completeWhere);
     if (foundDocs === null) return resolve(null);
     if (foundDocs === 0) {
+      obj = Object.fromEntries(
+        Object.entries(obj).map(([key, value]) => [key.substring(0, key.length - 2), value])
+      );
       return Model.updateOne(where, { $addToSet: obj }, (error, data) => {
         if (error) {
           logError(error);
@@ -76,7 +80,7 @@ const updateOrPush = Model => (where, obj) =>
         resolve(data.nModified);
       });
     }
-    Model.updateOne(where, { $set: obj }, (error, data) => {
+    Model.updateOne(completeWhere, { $set: obj }, (error, data) => {
       if (error) {
         logError(error);
         return resolve(null);
