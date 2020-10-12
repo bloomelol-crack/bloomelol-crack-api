@@ -1,4 +1,3 @@
-import { socketIo } from '../../routes/socket.io';
 import { broadcastGetPacks } from '../../routes/socket.io/packs';
 import { emit } from './constants';
 

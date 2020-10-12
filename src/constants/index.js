@@ -4,3 +4,4 @@ export * from './orders';
 export * from './packs';
 export * from './platforms';
 export * from './regions';
+export * from './socketEvents';

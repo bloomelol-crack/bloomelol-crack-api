@@ -13,3 +13,4 @@ import './passwords';
 import './request';
 import './tor';
 import './paypal';
+import './socketIo';

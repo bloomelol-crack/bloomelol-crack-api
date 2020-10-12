@@ -28,6 +28,6 @@ export const broadcastGetPacks = async () => {
   REGIONS.forEach(async region => {
     let packs = await Promise.all(packNames.map(pack => getPack(pack, region)));
     packs = packs.filter(pack => pack && pack.stock);
-    middlewares.socketIo.emit(broadcast.PACKS_UPDATED, packs, region);
+    socketIo.emit(broadcast.PACKS_UPDATED, packs, region);
   });
 };

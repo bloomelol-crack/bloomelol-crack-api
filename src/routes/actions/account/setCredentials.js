@@ -1,7 +1,5 @@
 import { uuid } from 'uuidv4';
 
-import { socketIo } from 'routes/socket.io';
-
 import { broadcast } from 'routes/socket.io/all_accounts/constants';
 
 export const setCredentials = async (req, res) => {

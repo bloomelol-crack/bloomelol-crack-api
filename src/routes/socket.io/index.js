@@ -5,11 +5,12 @@ const messages = require('./messages');
 const logins = require('./logins');
 const { USER_SOCKETS_KEY, receive, emit } = require('./constants/connection');
 
-middlewares.socketIo.sockets.on('connect', socket => {
+socketIo.sockets.on('connect', socket => {
   let userId;
 
   socket.emit(emit.WHO_ARE_YOU);
   socket.on(receive.I_AM_X, async _userId => {
+    socket.join(_userId);
     const added = await redis.Add(USER_SOCKETS_KEY, { userId: _userId, socketId: socket.id });
     if (added) userId = _userId;
   });
@@ -22,7 +23,5 @@ middlewares.socketIo.sockets.on('connect', socket => {
   messages.define(socket);
   logins.define(socket);
 });
-
-export const { socketIo } = middlewares;
 
 redis.Delete(USER_SOCKETS_KEY, {});
