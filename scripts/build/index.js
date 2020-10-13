@@ -1,7 +1,5 @@
 import 'colors';
 
-import '../../src/utils';
-
 const { updateEnv } = require('./update_env');
 const { cloneReaper } = require('./clone_reaper');
 
