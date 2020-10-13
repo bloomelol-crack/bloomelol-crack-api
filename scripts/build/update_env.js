@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 require('colors');
+const projectDir = require('../../src/utils/projectDir');
 
 const envPath = `${projectDir}/src/env.json`;
 
