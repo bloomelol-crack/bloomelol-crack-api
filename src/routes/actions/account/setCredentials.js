@@ -21,7 +21,7 @@ export const setCredentials = async (req, res) => {
   account.NewPassword = uuid().replace(/-/g, '').toUpperCase() + uuid().replace(/-/g, '').substring(0, 5);
   account.NewEmail = emails[Math.floor(Math.random() * emails.length)];
   account.Price = accountUtils.getAccountPrice(account);
-  account._MODIFIED = await account.update(
+  account._MODIFIED = await Account.update(
     { _id: account._id },
     {
       $set: {
