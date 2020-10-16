@@ -22,6 +22,7 @@ export const account = mongoose.model(
         Champs: Number,
         Skins: Number,
         Elo: String,
+        Images: [String],
         LastPlay: Date
       },
       HasValorant: Boolean,
