@@ -29,7 +29,9 @@ const execute = async () => {
             if (json && json.error === 'auth_failure' && username) {
               Account.delete({ UserName: username });
               redis.Delete('passwordChangeRetries', { threadID: process.env.threadID });
-              return rollbar.error(`Deleting account with bad credentials: ${username}:${password}`);
+              return rollbar.error(
+                `Deleting account with bad credentials: ${username}:${password} (new password: ${newPassword})`
+              );
             }
             if (json && json['re-auth'] && json['re-auth'].region && username) {
               const { region } = json['re-auth'];
@@ -103,6 +105,7 @@ const execute = async () => {
 
     log('username', username);
     log('password', password);
+    log('newPassword', newPassword);
 
     await wait(5000);
     log('typing inputs...');
