@@ -16,7 +16,8 @@ export const updateAccounts = async (req, res) => {
     Region = REGION_MAPPING[Region] || null;
     if (row.length === 3) {
       const code = row[2].replace(/\s+/g, '').toLowerCase();
-      if (code === 'summonernotcreated') Account.update({ UserName }, { $set: { Region, Level: 0 } });
+      if (code === 'summonernotcreated')
+        Account.update({ UserName }, { $set: { 'LOL.Region': Region, Level: 0 } });
 
       continue;
     }
@@ -48,31 +49,33 @@ export const updateAccounts = async (req, res) => {
           return Account.save({
             UserName,
             Password,
-            Region,
             EmailVerified,
-            LastPlay,
-            BlueEssence,
-            Level,
-            RP,
-            Refunds,
-            Champs,
-            Skins
-          });
-        let eloUpdate = {};
-        if (accounts[0].Level !== Level) eloUpdate = { Elo: 'unknown' };
-        return Account.update(
-          { UserName },
-          {
-            $set: {
+            LOL: {
               Region,
-              EmailVerified,
-              LastPlay,
               BlueEssence,
+              LastPlay,
               Level,
               RP,
               Refunds,
               Champs,
-              Skins,
+              Skins
+            }
+          });
+        let eloUpdate = {};
+        if (accounts[0].LOL.Level !== Level) eloUpdate = { 'LOL.Elo': 'unknown' };
+        return Account.update(
+          { UserName },
+          {
+            $set: {
+              EmailVerified,
+              'LOL.Region': Region,
+              'LOL.LastPlay': LastPlay,
+              'LOL.BlueEssence': BlueEssence,
+              'LOL.Level': Level,
+              'LOL.RP': RP,
+              'LOL.Refunds': Refunds,
+              'LOL.Champs': Champs,
+              'LOL.Skins': Skins,
               ...eloUpdate
             }
           }

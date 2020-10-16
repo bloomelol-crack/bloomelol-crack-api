@@ -7,8 +7,8 @@ const amountByLevel = 0.015;
 const getAccountPrice = account =>
   +(
     priceReference +
-    (account.Level - levelReference) * amountByLevel +
-    (ELO_PRICES[account.Elo] || 0)
+    (account.LOL.Level - levelReference) * amountByLevel +
+    (ELO_PRICES[account.LOL.Elo] || 0)
   ).toFixed(2);
 
 globalThis.accountUtils = { getAccountPrice };

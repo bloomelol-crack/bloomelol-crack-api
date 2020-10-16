@@ -4,12 +4,16 @@ export const getCombo = async (req, res) => {
   let accounts = await Account.get(
     {
       NotInRegions: { $ne: region },
-      Level: { $gte: min_level },
-      Refunds: { $exists: false },
+      'LOL.Level': { $gte: min_level },
+      'LOL.Refunds': { $exists: false },
       ...(region === 'any' ? {} : { FromUrl: new RegExp(`${region}.op.gg/`) }),
       ...(not_in_regions ? { NotInRegions: { $elemMatch: { $in: not_in_regions } } } : {})
     },
-    { limit: count, sort: { Level: -1 }, projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
+    {
+      limit: count,
+      sort: { 'LOL.Level': -1 },
+      projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 }
+    }
   );
   if (!accounts) return res.status(500).json({ error: 'Problem finding accounts' });
   if (!accounts.length) {
@@ -17,10 +21,14 @@ export const getCombo = async (req, res) => {
     accounts = await Account.get(
       {
         NotInRegions: { $ne: region },
-        Level: { $gte: min_level },
-        Refunds: { $exists: false }
+        'LOL.Level': { $gte: min_level },
+        'LOL.Refunds': { $exists: false }
       },
-      { limit: count, sort: { $Level: -1 }, projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 } }
+      {
+        limit: count,
+        sort: { 'LOL.Level': -1 },
+        projection: { _id: 0, UserName: 1, Password: 1, NewPassword: 1 }
+      }
     );
     if (!accounts) return res.status(500).json({ error: 'Problem finding accounts' });
   }

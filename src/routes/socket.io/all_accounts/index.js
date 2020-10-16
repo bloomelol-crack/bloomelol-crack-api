@@ -10,12 +10,13 @@ const define = socket => {
       {
         EmailVerified: false,
         NewPassword: { $exists: true },
-        Region: { $exists: true },
+        'LOL.Region': { $exists: true },
+        'LOL.BlueEssence': { $exists: true },
         UserID: { $exists: false },
         PaymentID: { $exists: false },
-        $or: [{ LastPlay: { $type: 10 } }, { createdAt: { $lte: moment().subtract(7, 'days') } }]
+        $or: [{ 'LOL.LastPlay': { $type: 10 } }, { createdAt: { $lte: moment().subtract(7, 'days') } }]
       },
-      { sort: { Level: -1 }, projection: { UserName: 0, Password: 0, NewPassword: 0 } }
+      { sort: { 'LOL.Level': -1 }, projection: { UserName: 0, Password: 0, NewPassword: 0 } }
     );
     if (!accounts) return socket.emit(constants.emit.GET_ACCOUNTS_FAILURE);
     accounts.forEach(account => (account.Price = accountUtils.getAccountPrice(account)));

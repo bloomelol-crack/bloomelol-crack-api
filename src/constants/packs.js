@@ -14,7 +14,7 @@ export const PACKS = {
     count: 25,
     price: 5,
     filter: {
-      Level: { $type: 10 },
+      'LOL.Level': { $type: 10 },
       $or: [{ EmailVerified: true }, { EmailVerified: false, NewPassword: { $exists: true } }]
     }
   },

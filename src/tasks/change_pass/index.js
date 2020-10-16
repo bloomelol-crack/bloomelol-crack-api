@@ -35,7 +35,7 @@ const execute = async () => {
               const { region } = json['re-auth'];
               const mappedRegion = REGION_MAPPING[region];
               if (!mappedRegion) return rollbar.error(`Failed to map region '${region}'`);
-              Account.update({ UserName: username }, { $set: { Region: mappedRegion } });
+              Account.update({ UserName: username }, { $set: { 'LOL.Region': mappedRegion } });
             }
           })
           .catch(() => {});

@@ -13,22 +13,24 @@ export const account = mongoose.model(
       Email: String,
       EmailVerified: Boolean,
       NewEmail: String,
-      Region: String,
-      BlueEssence: Number,
-      Level: Number,
-      RP: Number,
-      Refunds: Number,
-      Champs: Number,
-      Skins: Number,
-      Elo: String,
-      LastPlay: Date,
+      LOL: {
+        Region: String,
+        BlueEssence: Number,
+        Level: Number,
+        RP: Number,
+        Refunds: Number,
+        Champs: Number,
+        Skins: Number,
+        Elo: String,
+        LastPlay: Date
+      },
+      HasValorant: Boolean,
+      Valorant: {},
       MachineIndex: Number,
       Price: Number,
       UserID: String,
       PaymentID: String,
-      NotInRegions: [String],
-      HasValorant: Boolean,
-      Valorant: {}
+      NotInRegions: [String]
     },
     { collection: 'Accounts', timestamps: true }
   ).plugin(leanDefaults)

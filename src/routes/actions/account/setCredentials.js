@@ -7,7 +7,7 @@ export const setCredentials = async (req, res) => {
   const accounts = await Account.get(
     {
       ...userNameFilter,
-      Level: { $gte: 20 },
+      'LOL.Level': { $gte: 20 },
       NewPassword: { $exists: false },
       $or: [{ EmailVerified: false }, { EmailVerified: { $exists: false } }]
     },
@@ -15,7 +15,7 @@ export const setCredentials = async (req, res) => {
   );
   if (!accounts) return res.status(500).json({ error: 'Problem finding accounts' });
   if (!accounts.length) return res.status(404).json({ error: 'Accounts not found for updating' });
-  const ReapedAccounts = accounts.filter(acc => acc.Region);
+  const ReapedAccounts = accounts.filter(acc => acc.LOL.Region);
   const [account] = ReapedAccounts.length ? ReapedAccounts : accounts;
   const { emails } = req.body;
   account.NewPassword = uuid().replace(/-/g, '').toUpperCase() + uuid().replace(/-/g, '').substring(0, 5);
