@@ -7,7 +7,6 @@ export const setCredentials = async (req, res) => {
   const accounts = await Account.get(
     {
       ...userNameFilter,
-      'LOL.Level': { $gte: 20 },
       NewPassword: { $exists: false },
       $or: [{ EmailVerified: false }, { EmailVerified: { $exists: false } }]
     },
