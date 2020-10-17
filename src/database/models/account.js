@@ -25,7 +25,6 @@ export const account = mongoose.model(
         Images: [String],
         LastPlay: Date
       },
-      HasValorant: Boolean,
       Valorant: {},
       MachineIndex: Number,
       Price: Number,
