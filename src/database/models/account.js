@@ -15,6 +15,7 @@ export const account = mongoose.model(
       NewEmail: String,
       LOL: {
         Region: String,
+        Banned: Boolean,
         BlueEssence: Number,
         Level: Number,
         RP: Number,
