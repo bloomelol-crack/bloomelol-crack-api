@@ -18,5 +18,15 @@ export const HACKS = {
       { price: 4, months: 6 },
       { price: 7, months: 12 }
     ]
+  },
+  CS1_6: {
+    code: 'CS1_6',
+    name: 'Counter Strike 1.6',
+    licences: [
+      { price: 1.5, months: 1 },
+      { price: 2.5, months: 2 },
+      { price: 4, months: 6 },
+      { price: 7, months: 12 }
+    ]
   }
 };
