@@ -11,7 +11,7 @@ export const HACKS = {
   },
   FNAF2: {
     code: 'FNAF2',
-    name: "Five Nights At Freddy's 2",
+    name: "Five Nights At Freddy's 2 Multiplayer",
     licences: [
       { price: 1.5, months: 1 },
       { price: 2.5, months: 2 },
