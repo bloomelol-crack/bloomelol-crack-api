@@ -1,69 +1,28 @@
+const getPack = (name, type, email_verified, from_level, to_level, count, price) => ({
+  name,
+  type,
+  email_verified,
+  from_level,
+  to_level,
+  count,
+  price
+});
+
 export const PACKS = {
-  BASIC: {
-    name: 'BASIC',
-    type: 'verified_accounts',
-    email_verified: true,
-    from_level: 30,
-    to_level: 99,
-    count: 10,
-    price: 5.03
-  },
-  GOOD_LUCK: {
-    name: 'GOOD_LUCK',
-    type: 'verified_accounts',
-    count: 25,
-    price: 5,
-    filter: {
-      'LOL.Level': { $type: 10 },
-      $or: [{ EmailVerified: true }, { EmailVerified: false, NewPassword: { $exists: true } }]
-    }
-  },
-  ADVANCED: {
-    name: 'ADVANCED',
-    type: 'verified_accounts',
-    email_verified: true,
-    from_level: 100,
-    to_level: 199,
-    count: 10,
-    price: 10.04
-  },
-  PREMIUM: {
-    name: 'PREMIUM',
-    type: 'verified_accounts',
-    email_verified: true,
-    from_level: 200,
-    to_level: null,
-    count: 10,
-    price: 15.05
-  },
-  PACK_1: {
-    name: 'PACK_1',
-    type: 'non_verified_accounts',
-    email_verified: false,
-    from_level: 30,
-    to_level: null,
-    count: 25,
-    price: 5,
-    filter: { NewPassword: { $exists: true } }
-  },
-  PACK_2: {
-    name: 'PACK_2',
-    type: 'non_verified_accounts',
-    email_verified: false,
-    from_level: 30,
-    to_level: null,
-    count: 50,
-    price: 9,
-    filter: { NewPassword: { $exists: true } }
-  },
-  PACK_3: {
-    name: 'PACK_3',
-    type: 'non_verified_accounts',
-    email_verified: false,
-    from_level: 30,
-    to_level: null,
-    count: 100,
-    price: 16,
-    filter: { NewPassword: { $exists: true } }
-  }
+  BASIC: getPack('BASIC', 'verified_accounts', true, 30, 99, 10, 5.03),
+  GOOD_LUCK: getPack('GOOD_LUCK', 'verified_accounts', 25, 5, {
+    'LOL.Level': { $type: 10 },
+    $or: [{ EmailVerified: true }, { EmailVerified: false, NewPassword: { $exists: true } }]
+  }),
+  ADVANCED: getPack('ADVANCED', 'verified_accounts', true, 100, 199, 10, 10.04),
+  PREMIUM: getPack('PREMIUM', 'verified_accounts', true, 200, null, 10, 15.05),
+  PACK_1: getPack('PACK_1', 'non_verified_accounts', false, 30, null, 25, 5, {
+    NewPassword: { $exists: true }
+  }),
+  PACK_2: getPack('PACK_2', 'non_verified_accounts', false, 30, null, 50, 9, {
+    NewPassword: { $exists: true }
+  }),
+  PACK_3: getPack('PACK_3', 'non_verified_accounts', false, 30, null, 100, 16, {
+    NewPassword: { $exists: true }
+  })
 };
