@@ -1,28 +1,38 @@
 /** @typedef {object} Licence @property {number} price @property {number} months */
+/** @typedef {object} Hack @property {string} code @property {string} name @property {Licence[]} licences */
 
-/** @param {string} code @param {string} name @param {Licence[]} licences  */
-const getHack = (code, name, licences) => ({ code, name, licences });
-
-/** @param {number} price @param {number} months @returns {Licence}  */
-const getLicence = (price, months) => ({ price, months });
+/** @param {Hack} hack @returns {Hack}  */
+const getHack = hack => hack;
 
 export const HACKS = {
-  AOE2: getHack('AOE2', 'Age Of Empires II', [
-    getLicence(1.5, 1),
-    getLicence(2.5, 2),
-    getLicence(4, 6),
-    getLicence(7, 12)
-  ]),
-  FNAF2: getHack('FNAF2', "Five Nights At Freddy's 2 Multiplayer", [
-    getLicence(1.5, 1),
-    getLicence(2.5, 2),
-    getLicence(4, 6),
-    getLicence(7, 12)
-  ]),
-  CS1_6: getHack('CS1_6', 'Counter Strike 1.6', [
-    getLicence(1.5, 1),
-    getLicence(2.5, 2),
-    getLicence(4, 6),
-    getLicence(7, 12)
-  ])
+  AOE2: getHack({
+    code: 'AOE2',
+    name: 'Age Of Empires II',
+    licences: [
+      { price: 1.5, months: 1 },
+      { price: 2.5, months: 2 },
+      { price: 4, months: 6 },
+      { price: 7, months: 12 }
+    ]
+  }),
+  FNAF2: getHack({
+    code: 'FNAF2',
+    name: "Five Nights At Freddy's 2 Multiplayer",
+    licences: [
+      { price: 1.5, months: 1 },
+      { price: 2.5, months: 2 },
+      { price: 4, months: 6 },
+      { price: 7, months: 12 }
+    ]
+  }),
+  CS1_6: getHack({
+    code: 'CS1_6',
+    name: 'Counter Strike 1.6',
+    licences: [
+      { price: 1.5, months: 1 },
+      { price: 2.5, months: 2 },
+      { price: 4, months: 6 },
+      { price: 7, months: 12 }
+    ]
+  })
 };
