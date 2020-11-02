@@ -1,5 +1,8 @@
 {
-  "similar-code": {
-    "enabled": false
+  "version": "2",
+  "checks": {
+    "similar-code": {
+      "enabled": false
+    }
   }
 }
