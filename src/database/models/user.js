@@ -18,6 +18,7 @@ export const user = mongoose.model(
         {
           Code: String,
           Enabled: Boolean,
+          AllowedSessions: Number,
           PaymentID: String,
           ExpirationDate: Date,
           Controls: [

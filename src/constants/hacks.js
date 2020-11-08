@@ -9,15 +9,26 @@
 const getHack = hack => hack;
 
 export const HACKS = {
+  LOL_LEVELING_BOT: getHack({
+    code: 'LOL_LEVELING_BOT',
+    name: 'LOL Leveling Bot',
+    testDays: 7,
+    licences: [
+      { price: 1.5, sessionCoef: 1.08, months: 1 },
+      { price: 2.5, sessionCoef: 1.08, months: 3 },
+      { price: 3.5, sessionCoef: 1.08, months: 6 },
+      { price: 5, sessionCoef: 1.08, months: 12 }
+    ]
+  }),
   AOE2: getHack({
     code: 'AOE2',
     name: 'Age Of Empires II',
     testDays: 0,
     licences: [
-      { price: 1.5, months: 1 },
-      { price: 2.5, months: 2 },
-      { price: 4, months: 6 },
-      { price: 7, months: 12 }
+      { price: 1.5, sessionCoef: 0, months: 1 },
+      { price: 2.5, sessionCoef: 0, months: 2 },
+      { price: 4, sessionCoef: 0, months: 6 },
+      { price: 7, sessionCoef: 0, months: 12 }
     ]
   }),
   FNAF2: getHack({
@@ -25,10 +36,10 @@ export const HACKS = {
     name: "Five Nights At Freddy's 2 Multiplayer",
     testDays: 0,
     licences: [
-      { price: 1.5, months: 1 },
-      { price: 2.5, months: 2 },
-      { price: 4, months: 6 },
-      { price: 7, months: 12 }
+      { price: 1.5, sessionCoef: 0, months: 1 },
+      { price: 2.5, sessionCoef: 0, months: 2 },
+      { price: 4, sessionCoef: 0, months: 6 },
+      { price: 7, sessionCoef: 0, months: 12 }
     ]
   }),
   CS1_6: getHack({
@@ -36,21 +47,10 @@ export const HACKS = {
     name: 'Counter Strike 1.6',
     testDays: 0,
     licences: [
-      { price: 1.5, months: 1 },
-      { price: 2.5, months: 2 },
-      { price: 4, months: 6 },
-      { price: 7, months: 12 }
-    ]
-  }),
-  LOL_LEVELING_BOT: getHack({
-    code: 'LOL_LEVELING_BOT',
-    name: 'LOL Leveling Bot',
-    testDays: 7,
-    licences: [
-      { price: 1.5, sessionCoef: 1.12, months: 1 },
-      { price: 2.5, sessionCoef: 1.12, months: 3 },
-      { price: 3.5, sessionCoef: 1.12, months: 6 },
-      { price: 5, sessionCoef: 1.12, months: 12 }
+      { price: 1.5, sessionCoef: 0, months: 1 },
+      { price: 2.5, sessionCoef: 0, months: 2 },
+      { price: 4, sessionCoef: 0, months: 6 },
+      { price: 7, sessionCoef: 0, months: 12 }
     ]
   })
 };
