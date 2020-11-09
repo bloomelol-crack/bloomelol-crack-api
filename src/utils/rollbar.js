@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import Rollbar from 'rollbar';
-import env from 'env.json';
+import env from '../env.json';
 
 globalThis.rollbar = new Rollbar({
   accessToken: env.ROLLBAR_ACCESS_TOKEN,

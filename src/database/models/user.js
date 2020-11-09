@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import leanDefaults from 'mongoose-lean-defaults';
 
-import { LANGUAGES } from 'routes/schemas/user/constants';
+import { LANGUAGES } from '../../routes/schemas/user/constants';
 
 export const user = mongoose.model(
   'User',

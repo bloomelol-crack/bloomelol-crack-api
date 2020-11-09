@@ -13,6 +13,7 @@ export const HACKS = {
     code: 'LOL_LEVELING_BOT',
     name: 'LOL Leveling Bot',
     testDays: 7,
+    limitSessions: true,
     licences: [
       { price: 1.5, sessionCoef: 1.08, months: 1 },
       { price: 2.5, sessionCoef: 1.08, months: 3 },
@@ -24,6 +25,7 @@ export const HACKS = {
     code: 'AOE2',
     name: 'Age Of Empires II',
     testDays: 0,
+    limitSessions: false,
     licences: [
       { price: 1.5, sessionCoef: 0, months: 1 },
       { price: 2.5, sessionCoef: 0, months: 2 },
@@ -35,6 +37,7 @@ export const HACKS = {
     code: 'FNAF2',
     name: "Five Nights At Freddy's 2 Multiplayer",
     testDays: 0,
+    limitSessions: false,
     licences: [
       { price: 1.5, sessionCoef: 0, months: 1 },
       { price: 2.5, sessionCoef: 0, months: 2 },
@@ -46,6 +49,7 @@ export const HACKS = {
     code: 'CS1_6',
     name: 'Counter Strike 1.6',
     testDays: 0,
+    limitSessions: false,
     licences: [
       { price: 1.5, sessionCoef: 0, months: 1 },
       { price: 2.5, sessionCoef: 0, months: 2 },

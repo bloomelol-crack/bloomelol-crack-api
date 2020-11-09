@@ -1,8 +1,8 @@
-const mustache = require('mustache');
+import mustache from 'mustache';
 
-const fs = require('fs');
+import fs from 'fs';
 
-const { EMAIL, EMAIL_USER } = require('env.json');
+import { EMAIL, EMAIL_USER } from '../env.json';
 
 const templates = {};
 mustache.escape = text => text;

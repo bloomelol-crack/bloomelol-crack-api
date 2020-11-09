@@ -1,7 +1,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
-const { exec } = require('child_process');
-require('colors');
+import 'colors';
+import { exec } from 'child_process';
 
 const execOne = (command, wait) =>
   new Promise(resolve => {
@@ -26,7 +26,7 @@ const execOne = (command, wait) =>
     });
   });
 
-module.exports.run = async commands => {
+export const run = async commands => {
   // Parallel commands
   if (!Array.isArray(commands)) commands = [commands];
   const promises = [];
@@ -35,7 +35,7 @@ module.exports.run = async commands => {
   return Promise.all(promises);
 };
 
-module.exports.runWait = async commands => {
+export const runWait = async commands => {
   // Sequential commands
   if (!Array.isArray(commands)) commands = [commands];
   const results = [];
@@ -43,7 +43,7 @@ module.exports.runWait = async commands => {
   return results;
 };
 
-module.exports.runInterval = async (commands, interval) =>
+export const runInterval = async (commands, interval) =>
   new Promise(resolve => {
     // Sequential commands
     if (!Array.isArray(commands)) commands = [commands];
@@ -60,7 +60,7 @@ module.exports.runInterval = async (commands, interval) =>
     }
   });
 
-module.exports.getOptions = () => {
+export const getOptions = () => {
   const params = process.argv.slice(2);
   const obj = { params: [] };
   let currKey = '';

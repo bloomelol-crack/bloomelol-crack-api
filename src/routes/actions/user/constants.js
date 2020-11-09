@@ -1,1 +1,1 @@
-export * from 'routes/schemas/user/constants';
+export * from '../../../routes/schemas/user/constants';

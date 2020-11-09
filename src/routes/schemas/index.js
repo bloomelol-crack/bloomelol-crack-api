@@ -6,7 +6,7 @@ import joi from '@hapi/joi';
 import fs from 'fs';
 import url from 'url';
 
-import env from 'env.json';
+import env from '../../env.json';
 
 const SCHEMA = {
   REQUEST_TYPES: ['query', 'body', 'params', 'headers'],

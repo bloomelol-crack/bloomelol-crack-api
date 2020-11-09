@@ -1,4 +1,4 @@
-import env from 'env.json';
+import env from '../../env.json';
 import { getToken } from './token';
 import { getRandomService } from './constants';
 import { PAYMENT_PLATFORMS } from '../../constants';

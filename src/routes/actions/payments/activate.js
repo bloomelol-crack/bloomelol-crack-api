@@ -1,5 +1,5 @@
-import { broadcast } from 'routes/socket.io/all_accounts/constants';
-import { broadcastGetPacks } from 'routes/socket.io/packs';
+import { broadcast } from '../../../routes/socket.io/all_accounts/constants';
+import { broadcastGetPacks } from '../../../routes/socket.io/packs';
 import { ORDER_TYPES } from '../../../constants';
 
 export const activate = async (req, res) => {

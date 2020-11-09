@@ -1,6 +1,6 @@
-const moment = require('moment');
+import moment from 'moment';
 
-const { run } = require('./utils');
+import { run } from './utils';
 
 let command = 'cd AccountAutoreaper';
 command += '; git config user.email "bloomelolcrack.addons@gmail.com"';

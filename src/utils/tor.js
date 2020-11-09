@@ -2,7 +2,7 @@
 import { check } from '@lefcott/filter-json';
 import tor from 'tor-request';
 
-import { TOR_PASSWORD } from 'env.json';
+import { TOR_PASSWORD } from '../env.json';
 
 tor.TorControlPort.password = TOR_PASSWORD;
 const limits = [

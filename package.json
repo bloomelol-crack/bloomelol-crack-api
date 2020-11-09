@@ -5,13 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node scripts/before_start; nodemon src --exec babel-node --max-old-space-size=4096",
-    "reap": "node scripts/reap",
-    "build": "babel-node scripts/build",
+    "start": "node -r esm scripts/before_start; nodemon -r esm src",
+    "reap": "node -r esm scripts/reap",
+    "build": "node -r esm scripts/build",
     "redis": "redis-cli -h redis-11927.c85.us-east-1-2.ec2.cloud.redislabs.com -a xrQZFXhONBTwqTqITz22OupfOOIV8Tqh -p 11927",
     "redis-prod": "redis-cli -h redis-16115.c80.us-east-1-2.ec2.cloud.redislabs.com -a HHRhvYr9ANC9o06GAEGfydEj4B628503 -p 16115",
-    "dev": "nodemon --exec babel-node src",
-    "change-pass": "nodemon --exec babel-node src/tasks/change_pass",
+    "dev": "nodemon -r esm src",
+    "change-pass": "nodemon -r esm src/tasks/change_pass",
     "babel-node": "babel-node"
   },
   "engines": {
@@ -50,6 +50,7 @@
     "connect-redis": "^4.0.4",
     "cors": "^2.8.5",
     "debug": "^4.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "geoip-lite": "^1.4.2",

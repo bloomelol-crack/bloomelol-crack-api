@@ -1,7 +1,7 @@
 import { check } from '@lefcott/filter-json';
 import Redis from 'redis';
 
-import env from 'env.json';
+import env from '../env.json';
 
 const redis = Redis.createClient(env.REDISCLOUD_URL);
 let active = false;

@@ -1,6 +1,6 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
-import { broadcast } from 'routes/socket.io/all_accounts/constants';
+import { broadcast } from '../../../routes/socket.io/all_accounts/constants';
 
 export const setCredentials = async (req, res) => {
   const userNameFilter = req.params.user_name ? { UserName: req.params.user_name } : {};

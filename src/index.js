@@ -1,6 +1,6 @@
-import 'load_env';
-import 'globals';
-import 'database';
+import './load_env';
+import './globals';
+import './database';
 import throng from 'throng';
 import env from './env.json';
 

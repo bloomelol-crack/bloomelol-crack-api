@@ -1,4 +1,5 @@
 import { SOCKET_EVENTS } from '../../constants';
+import { getUserSockets } from '../../routes/socket.io/utils';
 
 export const associateHack = async payment => {
   const usersUpdated = await User.update(
@@ -13,7 +14,12 @@ export const associateHack = async payment => {
   const users = await User.get({ 'Hacks.PaymentID': payment._id });
   if (!users)
     logError(`Could not get user after payment for sending update event, payment id: ${payment._id}`);
+  log('users.length', users.length);
   users.forEach(user => {
-    socketIo.to(user._id).emit(SOCKET_EVENTS.emit.USER_UPDATED, user);
+    const userSockets = getUserSockets(user._id);
+    log('userSockets.length', userSockets.length);
+    userSockets.forEach(userSocket => {
+      userSocket.emit(SOCKET_EVENTS.emit.USER_UPDATED, user);
+    });
   });
 };
