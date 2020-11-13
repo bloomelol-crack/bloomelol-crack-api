@@ -13,5 +13,5 @@ export const getAccountToReap = async (req, res) => {
   );
   if (!accounts) return res.status(500).json({ error: 'Error finding accounts' });
   if (!accounts.length) return res.status(404).json({ message: 'No more accounts to reap' });
-  res.status(200).json({ accounts });
+  res.status(200).json({ account: accounts[0] });
 };

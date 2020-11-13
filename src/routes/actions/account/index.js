@@ -1,3 +1,4 @@
+export * from './getAccountToReap';
 export * from './setCredentials';
 export * from './getPendingAccounts';
 export * from './updateAccounts';
