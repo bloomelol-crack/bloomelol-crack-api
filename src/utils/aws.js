@@ -3,7 +3,6 @@ import Aws from 'aws-sdk';
 import env from 'env.json';
 
 const { SES_REGION, SES_ACCESS_KEY, SES_SECRET_KEY } = env;
-const { SNS_REGION, SNS_ACCESS_KEY, SNS_SECRET_KEY } = env;
 
 const ses = new Aws.SES({
   accessKeyId: SES_ACCESS_KEY,
@@ -11,10 +10,4 @@ const ses = new Aws.SES({
   region: SES_REGION
 });
 
-const sns = new Aws.SNS({
-  accessKeyId: SNS_ACCESS_KEY,
-  secretAccessKey: SNS_SECRET_KEY,
-  region: SNS_REGION
-});
-
-globalThis.aws = { ses, sns };
+globalThis.aws = { ses };
