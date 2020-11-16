@@ -1,3 +1,3 @@
-const { updateEnv } = require('./build/update_env');
+import { updateEnv } from './build/update_env';
 
 updateEnv(false);

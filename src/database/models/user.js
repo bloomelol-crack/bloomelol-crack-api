@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import leanDefaults from 'mongoose-lean-defaults';
 
-import { LANGUAGES } from 'routes/schemas/user/constants';
+import { LANGUAGES } from '../../routes/schemas/user/constants';
 
 export const user = mongoose.model(
   'User',
@@ -18,6 +18,7 @@ export const user = mongoose.model(
         {
           Code: String,
           Enabled: Boolean,
+          AllowedSessions: Number,
           PaymentID: String,
           ExpirationDate: Date,
           Controls: [

@@ -1,9 +1,9 @@
-import 'globals';
+import '../../globals';
 import puppeteer from 'puppeteer';
 import UserAgent from 'user-agents';
 
 import env from '../../env.json';
-import { REGION_MAPPING } from 'routes/actions/account/constants';
+import { REGION_MAPPING } from '../../routes/actions/account/constants';
 import { url, emails } from './constants';
 
 const execute = async () => {

@@ -1,12 +1,11 @@
 import moment from 'moment';
 
-import { PAYMENT_PLATFORMS, ORDER_ACTIONS, ORDER_TYPES, PACKS, HACKS, ERROR_CODES } from '../../../constants';
+import { PAYMENT_PLATFORMS, ORDER_ACTIONS, ORDER_TYPES } from '../../../../constants';
+import { PACKS, HACKS, ERROR_CODES } from '../../../../constants';
+import { getLicencePrice } from './utils';
 
-/**
- * Get Payment order
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- */
+/** Get Payment order
+ * @param {import('express').Request} req @param {import('express').Response} res */
 export const getOrder = async (req, res) => {
   const { platform, type } = req.query;
   const { user_id } = req.session;
@@ -49,7 +48,7 @@ export const getOrder = async (req, res) => {
       break;
     }
     case ORDER_TYPES.HACK: {
-      const { hack_code, licence_id } = req.query;
+      const { hack_code, licence_id, sessions } = req.query;
       const hack = HACKS[hack_code];
       orderAction = ORDER_ACTIONS.ASSOCIATE_HACK;
 
@@ -69,12 +68,13 @@ export const getOrder = async (req, res) => {
           hack: userHack
         });
 
-      ({ price } = licence);
+      price = getLicencePrice(licence, sessions);
       const expirationDate = moment().add(licence.months, 'months');
       afterOrder = payment => {
         req.session.hack = {
           Code: hack_code,
           Enabled: false,
+          AllowedSessions: sessions,
           ExpirationDate: expirationDate,
           PaymentID: payment._id
         };

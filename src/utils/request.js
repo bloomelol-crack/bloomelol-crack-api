@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { check } from '@lefcott/filter-json';
 import axios from 'axios';
 
-import { NODE_ENV } from 'env.json';
+import { NODE_ENV } from '../env.json';
 
 function Axios({ options, timeout = 30000, id } = {}) {
   return new Promise(resolve => {

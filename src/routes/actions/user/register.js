@@ -1,5 +1,5 @@
-import { LANGUAGES } from 'routes/actions/user/constants';
-import env from 'env.json';
+import { LANGUAGES } from '../../../routes/actions/user/constants';
+import env from '../../../env.json';
 
 export const register = async (req, res) => {
   const { name, surname, email, password } = req.body;
@@ -33,5 +33,5 @@ export const register = async (req, res) => {
     VerificationLink: `${env.URL_PREFIX}${env.DOMAIN_NAME}/api/confirm_register/${ConfirmID}`
   });
   const sent = await emails.send(null, email, 'Register', text, html);
-  if (!sent) return rollbar.error(`Could not send email to user ${User.Name} ${User.Surname}`);
+  if (!sent) return rollbar.error(`Could not send email to user ${formatUser(user)}`);
 };

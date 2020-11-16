@@ -45,6 +45,11 @@ export const getOrder = {
         .required(),
       otherwise: joi.forbidden()
     }),
+    sessions: joi.when('type', {
+      is: ORDER_TYPES.HACK,
+      then: joi.number().min(0).max(50).required(),
+      otherwise: joi.forbidden()
+    }),
     licence_id: joi.when('type', {
       is: ORDER_TYPES.HACK,
       then: joi.number().required(),

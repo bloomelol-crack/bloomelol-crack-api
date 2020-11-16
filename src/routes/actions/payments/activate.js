@@ -1,11 +1,10 @@
-import { broadcast } from 'routes/socket.io/all_accounts/constants';
-import { broadcastGetPacks } from 'routes/socket.io/packs';
+import { broadcast } from '../../../routes/socket.io/all_accounts/constants';
+import { broadcastGetPacks } from '../../../routes/socket.io/packs';
 import { ORDER_TYPES } from '../../../constants';
 
 export const activate = async (req, res) => {
   const { order_id: bodyOrderID } = req.body;
-  const { order_id, order_type } = req.session;
-  const { user_id } = req.session;
+  const { order_id, order_type, user_id } = req.session;
 
   if (!user_id) return res.status(403).json({ error: 'Not logged in' });
   if (!order_id) return res.status(400).json({ error: 'order_id not in session' });

@@ -7,7 +7,7 @@ const socketIo = require('socket.io');
 
 const http = require('http');
 
-const env = require('env.json');
+const env = require('../env.json');
 
 const webOrigins = env.WEB_ORIGINS.split(/\s*,\s*/g);
 const app = express();
